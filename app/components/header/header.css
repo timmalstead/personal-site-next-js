@@ -1,0 +1,24 @@
+.header-component {
+    --header-background-color: #cacdce;
+
+    display: flex;
+    background-color: var(--header-background-color);
+    height: 4rem;
+    padding: 0 10rem;
+    position: sticky;
+    top: 0;
+
+    .polygon {
+        position: relative;
+        width: 15rem;
+        height: 6rem;
+        background-color: var(--highlight-color);
+        clip-path: polygon(0% 0%, 0% 100%, 100% 80%, 100% 0%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .header-component {
+        --header-background-color: #1b1919;
+    }
+}
