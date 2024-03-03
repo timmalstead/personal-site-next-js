@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Noto_Sans } from "next/font/google"
+import Header from "./components/header"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
@@ -16,7 +17,10 @@ const RootLayout = ({
     children: React.ReactNode
 }>) => (
     <html lang="en">
-        <body className={notoSans.className}>{children}</body>
+        <body className={notoSans.className}>
+            <Header />
+            {children}
+        </body>
     </html>
 )
 
