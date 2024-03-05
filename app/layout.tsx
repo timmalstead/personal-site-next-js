@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: { template: "%s | Timothy Malstead", default: "Timothy Malstead" },
     description:
         "The website of Timothy Malstead, a software engineer and artist from the United States.",
+    viewport: "width=device-width, initial-scale=1.0",
 }
 
 const RootLayout = ({
