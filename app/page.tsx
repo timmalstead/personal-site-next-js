@@ -1,8 +1,5 @@
 // import Image from "next/image"
-import "./home-page.css"
 
-const Home = () => {
-    return <main className="home-page"></main>
-}
+const Home = () => <main></main>
 
 export default Home

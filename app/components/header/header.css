@@ -1,9 +1,7 @@
-.header-component {
-    --header-background-color: #cacdce;
-
+header {
     display: flex;
-    background-color: var(--header-background-color);
-    height: 4rem;
+    background-color: var(--contrast-color);
+    height: var(--header-height);
     padding: 0 10rem;
     position: sticky;
     top: 0;
@@ -15,10 +13,18 @@
         background-color: var(--highlight-color);
         clip-path: polygon(0% 0%, 0% 100%, 100% 80%, 100% 0%);
     }
-}
 
-@media (prefers-color-scheme: dark) {
-    .header-component {
-        --header-background-color: #1b1919;
+    nav {
+        display: inherit;
+
+        ul {
+            display: inherit;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+            li {
+                margin-left: 3rem;
+            }
+        }
     }
 }

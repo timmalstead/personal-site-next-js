@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import type { ReactNode } from "react"
 import { Noto_Sans } from "next/font/google"
 import Header from "./components/header"
 import "./globals.css"
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 const RootLayout = ({
     children,
 }: Readonly<{
-    children: React.ReactNode
+    children: ReactNode
 }>) => (
     <html lang="en">
         <body className={notoSans.className}>
