@@ -1,13 +1,15 @@
 import NextLink from "next/link"
+import ClientHeader from "./ClientHeader"
 import { routes } from "../../constants"
 import "./header.css"
 
-// use intersection observer && figure out if mouse is going down or up
 const Header = () => (
-    <header>
+    <ClientHeader>
         <div className="banner-container">
             <div className="fold" />
-            <div className="banner" />
+            <div className="banner">
+                <NextLink href={routes[0].path}>Tim</NextLink>
+            </div>
             <div className="fold" />
         </div>
         <nav>
@@ -18,8 +20,9 @@ const Header = () => (
                     </li>
                 ))}
             </ul>
+            <span>color theme switcher</span>
         </nav>
-    </header>
+    </ClientHeader>
 )
 
 export default Header
