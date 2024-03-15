@@ -5,6 +5,8 @@ import styles from "./ClientHeader.module.css"
 
 // use intersection observer && figure out if mouse is going down or up
 // could i make the initial use state a query to the window
+// maybe only display the switcher if js is enabled?
+// for links, change text decoration style to underline on hover?
 const ClientHeader = ({ children }: { children: ReactNode }) => {
     const [positionClass, setPositionClass] = useState<"static" | "sticky">(
         "static"
