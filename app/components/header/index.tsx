@@ -8,7 +8,9 @@ const Header = () => (
         <div className="banner-container">
             <div className="fold" />
             <div className="banner">
-                <NextLink href={routes[0].path}>Timothy Malstead</NextLink>
+                <NextLink title={routes[0].title} href={routes[0].path}>
+                    Timothy Malstead
+                </NextLink>
             </div>
             <div className="fold" />
         </div>
@@ -20,7 +22,6 @@ const Header = () => (
                     </li>
                 ))}
             </ul>
-            <span>color theme switcher</span>
         </nav>
     </ClientHeader>
 )

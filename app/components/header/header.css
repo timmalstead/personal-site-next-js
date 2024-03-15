@@ -7,11 +7,10 @@ header {
     top: 0;
 
     .banner-container {
-        --fold-size: 0.6rem;
+        --fold-size: 0.7rem;
 
         width: 15rem;
-        height: fit-content;
-        transition: width 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
         .fold {
             width: 16.65rem;
             transition: inherit;
@@ -28,7 +27,6 @@ header {
             align-items: center;
             justify-content: center;
             position: relative;
-            width: 100%;
             height: var(--header-height);
             background-color: var(--highlight-color);
             z-index: 1;
@@ -36,7 +34,6 @@ header {
 
             a {
                 text-decoration: none;
-                font-weight: bold;
                 color: var(--contrast-lowlight-color);
             }
         }
@@ -45,14 +42,13 @@ header {
     nav {
         display: inherit;
         width: 100%;
-        justify-content: space-between;
         align-items: center;
 
         ul {
             display: inherit;
             list-style: none;
             li {
-                margin-left: 3rem;
+                margin-left: 3vw;
             }
         }
     }
@@ -63,7 +59,7 @@ header {
         .banner-container {
             .banner {
                 a {
-                    font-size: 10.5cqw;
+                    font-size: 11cqw;
                 }
             }
         }
@@ -78,7 +74,7 @@ header {
 
 @media screen and (max-width: 1280px) {
     header {
-        justify-content: center;
+        padding: 0 3rem;
 
         .banner-container {
             width: 14rem;
@@ -87,20 +83,34 @@ header {
                 width: 15.5rem;
             }
         }
-
-        nav {
-            display: none;
-        }
     }
 }
 
 @media screen and (max-width: 600px) {
     header {
+        flex-direction: column;
+        align-items: center;
         .banner-container {
             width: 13rem;
 
             .fold {
                 width: 14.42rem;
+            }
+        }
+
+        nav {
+            width: auto;
+            transform: skewX(-5deg);
+            padding: 0 0.1rem 0.1rem 0.1rem;
+            background-color: var(--contrast-color);
+
+            ul {
+                li {
+                    margin-left: 4vw;
+                    &:first-of-type {
+                        margin-left: 0;
+                    }
+                }
             }
         }
     }
