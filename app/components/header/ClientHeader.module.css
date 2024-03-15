@@ -1,0 +1,13 @@
+.sticky {
+    position: sticky;
+    top: 0;
+}
+
+.static {
+    position: static;
+}
+
+.spacer {
+    height: 50vh;
+    visibility: hidden;
+}
