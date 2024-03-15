@@ -9,7 +9,7 @@ const Header = () => (
             <div className="fold" />
             <div className="banner">
                 <NextLink title={routes[0].title} href={routes[0].path}>
-                    Timothy Malstead
+                    timothy_malstead
                 </NextLink>
             </div>
             <div className="fold" />

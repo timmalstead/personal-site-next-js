@@ -34,6 +34,7 @@ header {
 
             a {
                 text-decoration: none;
+                font-family: var(--font-mono);
                 color: var(--contrast-lowlight-color);
             }
         }
@@ -59,7 +60,7 @@ header {
         .banner-container {
             .banner {
                 a {
-                    font-size: 11cqw;
+                    font-size: 10cqw;
                 }
             }
         }
