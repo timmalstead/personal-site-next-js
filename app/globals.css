@@ -2,13 +2,13 @@
     --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
         "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
         "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-    --header-height: 4rem;
-    --small-breakpoint: 900px;
+    --header-height: 3rem;
     --text-color: #333;
     --background-color: #e6e6e6;
     --contrast-color: #cacdce;
     --highlight-color: #fff642;
     --contrast-highlight-color: #f3d343;
+    --contrast-lowlight-color: #f3c743;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +18,7 @@
         --contrast-color: #393533;
         --highlight-color: #42e3ff;
         --contrast-highlight-color: #2bb9e8;
+        --contrast-lowlight-color: #368ad3;
     }
 }
 
@@ -44,4 +45,10 @@ main {
 a {
     color: inherit;
     text-decoration: dotted underline;
+}
+
+@media screen and (min-width: 1280px) {
+    body {
+        font-size: min(1vw, 2rem);
+    }
 }
