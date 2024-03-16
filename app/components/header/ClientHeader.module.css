@@ -1,13 +1,17 @@
-.sticky {
+.hr {
+    visibility: hidden;
+}
+
+.show,
+.hide {
     position: sticky;
+    transition: top 0.2s;
+}
+
+.show {
     top: 0;
 }
 
-.static {
-    position: static;
-}
-
-.spacer {
-    height: 50vh;
-    visibility: hidden;
+.hide {
+    top: calc(-2 * var(--header-height));
 }

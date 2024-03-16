@@ -46,6 +46,10 @@ a {
     color: inherit;
     text-underline-offset: 0.2rem;
     text-decoration: dotted underline;
+
+    &:hover {
+        text-decoration: solid underline;
+    }
 }
 
 @media screen and (min-width: 1800px) {
