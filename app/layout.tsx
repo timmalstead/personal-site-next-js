@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { Noto_Sans } from "next/font/google"
 import Header from "./components/header"
+import Footer from "./components/footer"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
@@ -26,6 +27,7 @@ const RootLayout = ({
         <body className={notoSans.className}>
             <Header />
             {children}
+            <Footer />
         </body>
     </html>
 )

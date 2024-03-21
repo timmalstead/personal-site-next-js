@@ -45,10 +45,10 @@ main {
 a {
     color: inherit;
     text-underline-offset: 0.2rem;
-    text-decoration: dotted underline;
+    text-decoration: none;
 
     &:hover {
-        text-decoration: solid underline;
+        text-decoration: dotted underline;
     }
 }
 
