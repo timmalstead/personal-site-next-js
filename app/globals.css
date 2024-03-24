@@ -47,7 +47,9 @@ a {
     text-underline-offset: 0.2rem;
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: dotted underline;
     }
 }

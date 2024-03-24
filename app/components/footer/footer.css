@@ -1,0 +1,10 @@
+footer {
+    height: 12rem;
+    background: radial-gradient(
+        circle at left,
+        var(--contrast-color) 60%,
+        var(--background-color)
+    );
+    clip-path: polygon(0% 25%, 0% 100%, 100% 100%, 100% 0%);
+    padding-top: 3.25rem;
+}
