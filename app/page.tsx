@@ -1,5 +1,6 @@
 // import Image from "next/image"
+// remember that this can be asychronous and can fetch data
 
-const Home = () => <main style={{ height: "10000px" }}></main>
+const Home = () => <main>this is the home page</main>
 
 export default Home
