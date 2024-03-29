@@ -3,16 +3,17 @@
         "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
         "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
     --header-height: 3rem;
-    --text-color: #646464;
-    --background-color: #e6e6e6;
-    --contrast-color: #cacdce;
-    --highlight-color: #fff642;
-    --contrast-highlight-color: #f3d343;
-    --contrast-lowlight-color: #f3c743;
-}
 
-@media (prefers-color-scheme: dark) {
-    :root {
+    &.light {
+        --text-color: #646464;
+        --background-color: #e6e6e6;
+        --contrast-color: #cacdce;
+        --highlight-color: #fff642;
+        --contrast-highlight-color: #f3d343;
+        --contrast-lowlight-color: #f3c743;
+    }
+
+    &.dark {
         --text-color: #efefe4;
         --background-color: #1b1919;
         --contrast-color: #393533;

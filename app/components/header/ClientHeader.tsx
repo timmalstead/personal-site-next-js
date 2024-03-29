@@ -1,7 +1,7 @@
 "use client"
 // scroll direction hook adapted from Robin Wieruch's blog: https://www.robinwieruch.de/react-hook-scroll-direction/
 // maybe only display the switcher if js is enabled?
-// rounded polygon on the footer?
+
 import { ReactNode, useLayoutEffect, useState, useRef, useEffect } from "react"
 import styles from "./ClientHeader.module.css"
 
@@ -72,7 +72,7 @@ const ClientHeader = ({ children }: { children: ReactNode }) => {
     return (
         <>
             <header className={styles[positionClass]}>{children}</header>
-            <hr ref={hrRef} className={styles.hr} />
+            <hr ref={hrRef} className={styles.hr} aria-hidden={true} />
         </>
     )
 }
