@@ -108,9 +108,14 @@ header {
             }
         }
 
+        .banner-container {
+            --fold-size: 0;
+        }
+
         nav {
-            transform: skewX(-5deg);
-            padding: 0 0.3rem 0.1rem 0.3rem;
+            display: inherit;
+            justify-content: center;
+            width: 100vw;
             background-color: var(--contrast-color);
 
             ul {
@@ -118,6 +123,14 @@ header {
                     margin-left: 4vw;
                 }
             }
+        }
+    }
+}
+
+@media (prefers-reduced-motion) {
+    header {
+        .banner-container {
+            transition: none;
         }
     }
 }

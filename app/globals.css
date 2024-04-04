@@ -41,6 +41,7 @@ body {
 
 main {
     min-height: calc(100vh - var(--header-height));
+    padding-top: 0.5rem;
     /* temp height */
     height: 3000px;
 }
@@ -60,5 +61,11 @@ a {
 @media screen and (min-width: 1800px) {
     body {
         font-size: min(1vw, 2rem);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    main {
+        padding-top: 1.5rem;
     }
 }

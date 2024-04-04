@@ -43,9 +43,11 @@ const ColorSwitcher = ({ colorModeProp }: ColorSwitcherProps) => {
         setColorMode(colorKey[`${checked}`])
     }
 
+    const capitalizedColorMode = `${colorMode[0].toUpperCase()}${colorMode.slice(1)}`
+
     return (
         <li>
-            <label htmlFor="color-switcher">Color Switcher</label>
+            <label htmlFor="color-switcher">{capitalizedColorMode} Theme</label>
             <input
                 checked={colorMode === "dark"}
                 onChange={onChange}
