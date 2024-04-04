@@ -44,7 +44,7 @@ const ColorSwitcher = ({ colorModeProp }: ColorSwitcherProps) => {
     }
 
     return (
-        <>
+        <li>
             <label htmlFor="color-switcher">Color Switcher</label>
             <input
                 checked={colorMode === "dark"}
@@ -52,7 +52,7 @@ const ColorSwitcher = ({ colorModeProp }: ColorSwitcherProps) => {
                 type="checkbox"
                 id="color-switcher"
             />
-        </>
+        </li>
     )
 }
 

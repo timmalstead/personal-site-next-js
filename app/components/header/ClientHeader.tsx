@@ -1,6 +1,5 @@
 "use client"
 // scroll direction hook adapted from Robin Wieruch's blog: https://www.robinwieruch.de/react-hook-scroll-direction/
-// maybe only display the switcher if js is enabled?
 
 import { ReactNode, useLayoutEffect, useState, useRef, useEffect } from "react"
 import styles from "./ClientHeader.module.css"

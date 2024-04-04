@@ -1,0 +1,14 @@
+.user-settings {
+    position: fixed;
+    z-index: 1;
+    right: 2rem;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    li {
+        display: inherit;
+        justify-content: space-between;
+        min-width: 10rem;
+    }
+}
