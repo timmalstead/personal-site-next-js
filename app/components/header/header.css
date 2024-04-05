@@ -68,14 +68,6 @@ header {
     }
 }
 
-@media (prefers-reduced-motion) {
-    header {
-        .banner-container {
-            transition: none;
-        }
-    }
-}
-
 @media screen and (min-width: 1280px) {
     header {
         --header-height: 4rem;
@@ -123,14 +115,6 @@ header {
                     margin-left: 4vw;
                 }
             }
-        }
-    }
-}
-
-@media (prefers-reduced-motion) {
-    header {
-        .banner-container {
-            transition: none;
         }
     }
 }

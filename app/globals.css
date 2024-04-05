@@ -69,3 +69,9 @@ a {
         padding-top: 1.5rem;
     }
 }
+
+@media (prefers-reduced-motion) {
+    * {
+        transition-duration: 0.01s !important;
+    }
+}

@@ -8,13 +8,6 @@
     transition: top 0.2s;
 }
 
-@media (prefers-reduced-motion) {
-    .show,
-    .hide {
-        transition: none;
-    }
-}
-
 .show {
     top: 0;
 }
