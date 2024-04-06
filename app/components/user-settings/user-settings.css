@@ -1,12 +1,15 @@
 details.user-settings {
     --settings-width: 8rem;
     --settings-offset: 2rem;
+    --settings-padding: 0.5rem;
 
     position: fixed;
     z-index: 1;
     right: var(--settings-offset);
     bottom: var(--settings-offset);
     min-width: var(--settings-width);
+    padding: var(--settings-padding);
+    background-color: var(--contrast-color);
 
     summary {
         list-style: none;
@@ -18,25 +21,36 @@ details.user-settings {
         }
     }
 
+    ul {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        min-width: var(--settings-width);
+        right: var(--settings-offset);
+        bottom: calc(2.25 * var(--settings-offset));
+        padding: var(--settings-padding);
+        background-color: var(--contrast-color);
+        border-bottom: 0.1rem solid;
+        border-image: linear-gradient(
+                90deg,
+                var(--contrast-color) 5%,
+                var(--text-color) 10%,
+                var(--text-color) 90%,
+                var(--contrast-color) 95%
+            )
+            1;
+
+        li {
+            display: inherit;
+            justify-content: space-between;
+        }
+    }
+
     &[open] {
         summary {
             &::after {
                 transform: rotateX(0.5turn);
             }
-        }
-    }
-
-    ul {
-        position: fixed;
-        min-width: var(--settings-width);
-        display: flex;
-        flex-direction: column;
-        right: inherit;
-        bottom: calc(2 * var(--settings-offset));
-
-        li {
-            display: inherit;
-            justify-content: space-between;
         }
     }
 }
