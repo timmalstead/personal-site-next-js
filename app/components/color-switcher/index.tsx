@@ -2,10 +2,6 @@
 import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react"
 import type { ColorMode } from "../../types"
 
-interface ColorSwitcherProps {
-    colorModeProp: ColorMode
-}
-
 const colorKey: { [key: string]: ColorMode } = {
     light: "dark",
     dark: "light",
@@ -13,7 +9,7 @@ const colorKey: { [key: string]: ColorMode } = {
     false: "light",
 }
 
-const ColorSwitcher = ({ colorModeProp }: ColorSwitcherProps) => {
+const ColorSwitcher = ({ colorModeProp }: { colorModeProp: ColorMode }) => {
     const [colorMode, setColorMode] = useState<ColorMode>(colorModeProp)
     useEffect(() => {
         const colorQuery = matchMedia("(prefers-color-scheme: dark)")

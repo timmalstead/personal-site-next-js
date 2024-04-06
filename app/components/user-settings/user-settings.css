@@ -1,7 +1,8 @@
 details.user-settings {
-    --settings-width: 8rem;
+    --settings-width: 10rem;
     --settings-offset: 2rem;
-    --settings-padding: 0.5rem;
+    --settings-padding: 0.5rem 1rem;
+    --settings-transition: padding 0.2s, bottom 0.2s, right 0.2s, min-width 0.2s;
 
     position: fixed;
     z-index: 1;
@@ -10,6 +11,7 @@ details.user-settings {
     min-width: var(--settings-width);
     padding: var(--settings-padding);
     background-color: var(--contrast-color);
+    transition: var(--settings-transition);
 
     summary {
         list-style: none;
@@ -30,6 +32,8 @@ details.user-settings {
         bottom: calc(2.25 * var(--settings-offset));
         padding: var(--settings-padding);
         background-color: var(--contrast-color);
+        transition: var(--settings-transition);
+
         border-bottom: 0.1rem solid;
         border-image: linear-gradient(
                 90deg,
@@ -52,5 +56,28 @@ details.user-settings {
                 transform: rotateX(0.5turn);
             }
         }
+    }
+}
+
+/* will need to change marker from arrow to an image to make this media query work with icons instead of text */
+@media screen and (max-width: 600px) {
+    details.user-settings {
+        --settings-width: 9rem;
+        --settings-offset: 1.5rem;
+        --settings-padding: 0.25rem 0.5rem;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    details.user-settings {
+        --settings-width: 12rem;
+        --settings-offset: 2.5rem;
+    }
+}
+
+@media screen and (min-width: 2800px) {
+    details.user-settings {
+        --settings-width: 15rem;
+        --settings-offset: 3rem;
     }
 }
