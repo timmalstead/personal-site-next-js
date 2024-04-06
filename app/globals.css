@@ -3,6 +3,7 @@
         "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
         "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
     --header-height: 3rem;
+    --non-blocking-no-duration: 0.01s;
 
     &.light {
         --text-color: #646464;
@@ -72,6 +73,10 @@ a {
 
 @media (prefers-reduced-motion) {
     * {
-        transition-duration: 0.01s !important;
+        transition-duration: var(--non-blocking-no-duration) !important;
+
+        &::after {
+            transition-duration: var(--non-blocking-no-duration) !important;
+        }
     }
 }

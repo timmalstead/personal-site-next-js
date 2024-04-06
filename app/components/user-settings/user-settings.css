@@ -1,14 +1,42 @@
-.user-settings {
+details.user-settings {
+    --settings-width: 8rem;
+    --settings-offset: 2rem;
+
     position: fixed;
     z-index: 1;
-    right: 2rem;
-    bottom: 2rem;
-    display: flex;
-    flex-direction: column;
+    right: var(--settings-offset);
+    bottom: var(--settings-offset);
+    min-width: var(--settings-width);
 
-    li {
-        display: inherit;
+    summary {
+        list-style: none;
+        display: flex;
         justify-content: space-between;
-        min-width: 10rem;
+        &::after {
+            content: "⬇";
+            transition: transform 0.2s;
+        }
+    }
+
+    &[open] {
+        summary {
+            &::after {
+                transform: rotateX(0.5turn);
+            }
+        }
+    }
+
+    ul {
+        position: fixed;
+        min-width: var(--settings-width);
+        display: flex;
+        flex-direction: column;
+        right: inherit;
+        bottom: calc(2 * var(--settings-offset));
+
+        li {
+            display: inherit;
+            justify-content: space-between;
+        }
     }
 }
