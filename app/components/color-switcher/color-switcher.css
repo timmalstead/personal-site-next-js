@@ -17,26 +17,28 @@ li.color-switcher {
 
         &::before {
             content: "☾ ";
-            filter: grayscale(1);
             opacity: 0.25;
         }
 
         &::after {
             content: "☀";
-            filter: grayscale(0);
             opacity: 1;
         }
 
         &:checked {
             &::before {
-                filter: grayscale(0);
                 opacity: 1;
             }
 
             &::after {
-                filter: grayscale(1);
                 opacity: 0.25;
             }
         }
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    li.color-switcher > input[type="checkbox"] {
+        font-size: 2rem;
     }
 }
