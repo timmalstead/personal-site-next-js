@@ -1,0 +1,42 @@
+li.color-switcher {
+    align-items: center;
+
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: var(--text-color);
+        padding: 0 0.5rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        font-size: 1.5rem;
+
+        &::before,
+        &::after {
+            color: var(--background-color);
+            transition: all 0.3s;
+        }
+
+        &::before {
+            content: "☾ ";
+            filter: grayscale(1);
+            opacity: 0.25;
+        }
+
+        &::after {
+            content: "☀";
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        &:checked {
+            &::before {
+                filter: grayscale(0);
+                opacity: 1;
+            }
+
+            &::after {
+                filter: grayscale(1);
+                opacity: 0.25;
+            }
+        }
+    }
+}

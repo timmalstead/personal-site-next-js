@@ -1,9 +1,11 @@
 details.user-settings {
-    --settings-width: 10rem;
+    --settings-width: 13rem;
     --settings-offset: 2rem;
     --settings-padding: 0.5rem 1rem;
     --settings-transition: padding 0.2s, bottom 0.2s, right 0.2s, min-width 0.2s;
 
+    cursor: default;
+    user-select: none;
     position: fixed;
     z-index: 1;
     right: var(--settings-offset);
@@ -19,6 +21,7 @@ details.user-settings {
         justify-content: space-between;
         &::after {
             content: "⬇";
+            cursor: pointer;
             transition: transform 0.2s;
         }
     }
@@ -60,9 +63,10 @@ details.user-settings {
 }
 
 /* will need to change marker from arrow to an image to make this media query work with icons instead of text */
+/* would this be a good candidate for a container query? */
 @media screen and (max-width: 600px) {
     details.user-settings {
-        --settings-width: 9rem;
+        --settings-width: 11rem;
         --settings-offset: 1.5rem;
         --settings-padding: 0.25rem 0.5rem;
     }
@@ -70,14 +74,14 @@ details.user-settings {
 
 @media screen and (min-width: 2000px) {
     details.user-settings {
-        --settings-width: 12rem;
+        --settings-width: 15rem;
         --settings-offset: 2.5rem;
     }
 }
 
 @media screen and (min-width: 2800px) {
     details.user-settings {
-        --settings-width: 15rem;
+        --settings-width: 18rem;
         --settings-offset: 3rem;
     }
 }

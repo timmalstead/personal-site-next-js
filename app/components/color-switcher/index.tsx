@@ -1,6 +1,7 @@
 "use client"
 import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react"
 import type { ColorMode } from "../../types"
+import "./color-switcher.css"
 
 const colorKey: { [key: string]: ColorMode } = {
     light: "dark",
@@ -40,13 +41,13 @@ const ColorSwitcher = ({ colorModeProp }: { colorModeProp: ColorMode }) => {
     }
 
     return (
-        <li>
-            <label htmlFor="color-switcher">{colorMode} theme</label>
+        <li className="color-switcher">
+            <label htmlFor="color-switch-input">{colorMode} theme</label>
             <input
                 checked={colorMode === "dark"}
                 onChange={onChange}
                 type="checkbox"
-                id="color-switcher"
+                id="color-switch-input"
             />
         </li>
     )

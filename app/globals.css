@@ -75,6 +75,7 @@ a {
     * {
         transition-duration: var(--non-blocking-no-duration) !important;
 
+        &::before,
         &::after {
             transition-duration: var(--non-blocking-no-duration) !important;
         }
