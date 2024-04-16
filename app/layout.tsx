@@ -31,7 +31,7 @@ const RootLayout = ({
     const colorMode = colorModeCookie || colorModeHeader || colorModeDefault
     return (
         <html lang="en" className={colorMode}>
-            <body className={notoSans.className}>
+            <body className={notoSans.className} data-testid="background">
                 <Header />
                 {children}
                 <UserSettings>
