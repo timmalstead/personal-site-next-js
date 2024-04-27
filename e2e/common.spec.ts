@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test"
+import { test, expect, Page, Locator } from "@playwright/test"
 
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
@@ -23,7 +23,13 @@ test.describe("Color themes", () => {
             color
         )
 
-    // how can we test the media query inside the color switcher?
+    const findColorSwitcher = async (page: Page): Promise<Locator> => {
+        const settings = page.getByText("settings")
+        await settings.click()
+
+        const colorSwitcher = page.getByText(/theme/)
+        return colorSwitcher
+    }
 
     test("Color theme should switch when color switcher is clicked", async ({
         page,
@@ -32,18 +38,57 @@ test.describe("Color themes", () => {
 
         await bgShouldBe(page, lightColor)
 
-        const settings = page.getByText("settings")
-        await settings.click()
-
-        const colorSwitcher = page.getByText(/theme/)
-
+        const colorSwitcher = await findColorSwitcher(page)
         await colorSwitcher.click()
+
         await bgShouldBe(page, darkColor)
 
         await colorSwitcher.click()
         await bgShouldBe(page, lightColor)
         await page.close()
     })
+
+    test("Page should switch color themes when the system's color theme is switched", async ({
+        page,
+    }) => {
+        await page.goto("/")
+        await bgShouldBe(page, lightColor)
+
+        await page.emulateMedia({ colorScheme: "dark" })
+        await bgShouldBe(page, darkColor)
+
+        await page.emulateMedia({ colorScheme: "light" })
+        await bgShouldBe(page, lightColor)
+
+        await page.close()
+    })
+
+    const persistingColorTestCases = [
+        {
+            testName: "Light theme should persist and maintain on page reload",
+            expectedColor: lightColor,
+        },
+        {
+            testName: "Dark theme should persist and maintain on page reload",
+            expectedColor: darkColor,
+        },
+    ]
+
+    for (const { testName, expectedColor } of persistingColorTestCases)
+        test(testName, async ({ page }) => {
+            await page.goto("/")
+
+            if (expectedColor === darkColor)
+                await findColorSwitcher(page).then((colorSwitcher) =>
+                    colorSwitcher.click()
+                )
+
+            await bgShouldBe(page, expectedColor)
+            await page.reload()
+            await bgShouldBe(page, expectedColor)
+
+            await page.close()
+        })
 
     const loadingColorTestCases = [
         {
