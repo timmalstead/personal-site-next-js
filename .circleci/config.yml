@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
     onepassword: onepassword/secrets@1.0.0
-    docker: circleci/docker@2.4.0
+    docker: circleci/docker@2.6.0
 jobs:
     build_next_js:
         docker:
@@ -11,18 +11,29 @@ jobs:
             - onepassword/install-cli:
                   version: 2.18.0
             - onepassword/export:
+                  var-name: REGISTRY
+                  secret-reference: op://personal-site-gcp/artifact-registry-creds/registry
+            - onepassword/export:
+                  var-name: IMAGE
+                  secret-reference: op://personal-site-gcp/artifact-registry-creds/next-js-image
+            - onepassword/export:
                   var-name: DOCKER_LOGIN
-                  secret-reference: op://personal-site-gcp/dockerHub/username
+                  secret-reference: op://personal-site-gcp/artifact-registry-creds/username
             - onepassword/export:
                   var-name: DOCKER_PASSWORD
-                  secret-reference: op://personal-site-gcp/dockerHub/password
+                  secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
             - setup_remote_docker
             - checkout
-            - docker/check
+            - run:
+                  name: Persist latest build sha
+                  command: op item edit latest_next_js sha=$CIRCLE_SHA1
+            - docker/check:
+                  registry: $REGISTRY
             - docker/build:
-                  image: timmalstead/personal-site-next-js
+                  image: $REGISTRY/$IMAGE
             - docker/push:
-                  image: timmalstead/personal-site-next-js
+                  registry: $REGISTRY
+                  image: $IMAGE
             - run:
                   name: Persist latest build sha
                   command: op item edit latest_next_js sha=$CIRCLE_SHA1
