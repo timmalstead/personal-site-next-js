@@ -1,0 +1,8 @@
+.gitignore
+.circleci/
+
+node_modules/
+e2e/
+
+README.md
+playwright.config.ts

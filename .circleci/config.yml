@@ -1,0 +1,40 @@
+version: 2.1
+orbs:
+    onepassword: onepassword/secrets@1.0.0
+    docker: circleci/docker@2.4.0
+jobs:
+    build_next_js:
+        docker:
+            - image: cimg/base:current
+        resource_class: medium
+        steps:
+            - onepassword/install-cli:
+                  version: 2.18.0
+            - onepassword/export:
+                  var-name: DOCKER_LOGIN
+                  secret-reference: op://personal-site-gcp/dockerHub/username
+            - onepassword/export:
+                  var-name: DOCKER_PASSWORD
+                  secret-reference: op://personal-site-gcp/dockerHub/password
+            - setup_remote_docker
+            - checkout
+            - docker/check
+            - docker/build:
+                  image: timmalstead/personal-site-next-js
+            - docker/push:
+                  image: timmalstead/personal-site-next-js
+            - run:
+                  name: Persist latest build sha
+                  command: op item edit latest_next_js sha=$CIRCLE_SHA1
+            # - run:
+            #       name: Trigger infra build pipeline
+            #       command: |
+            #           curl --request POST \
+            #             --url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \
+            #             --header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
+workflows:
+    build:
+        jobs:
+            - build_next_js:
+                  context:
+                      - personal_site
