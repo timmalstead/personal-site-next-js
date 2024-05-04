@@ -1,4 +1,5 @@
 import { test, expect, Page, Locator } from "@playwright/test"
+import { testUrl } from "../playwright.config"
 
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
@@ -148,7 +149,7 @@ test.describe("Color themes", () => {
                     {
                         name: cookieName,
                         value: cookieValue,
-                        url: "http://127.0.0.1:3000/",
+                        url: testUrl,
                     },
                 ])
 

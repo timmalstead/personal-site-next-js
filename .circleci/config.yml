@@ -3,11 +3,29 @@ orbs:
     onepassword: onepassword/secrets@1.0.0
     docker: circleci/docker@2.6.0
 jobs:
+    testing:
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.42.1-jammy
+        resource_class: medium
+        steps:
+            - checkout
+            - run:
+                  name: Install dependencies
+                  command: npm ci
+            - run:
+                  name: Run lint and tests
+                  command: npm test
+            - persist_to_workspace:
+                  root: ~/project
+                  paths:
+                      - .
     build_next_js:
         docker:
             - image: cimg/base:current
-        resource_class: medium
+        resource_class: small
         steps:
+            - attach_workspace:
+                  at: ~/project
             - onepassword/install-cli:
                   version: 2.18.0
             - onepassword/export:
@@ -23,10 +41,6 @@ jobs:
                   var-name: DOCKER_PASSWORD
                   secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
             - setup_remote_docker
-            - checkout
-            - run:
-                  name: Persist latest build sha
-                  command: op item edit latest_next_js sha=$CIRCLE_SHA1
             - docker/check:
                   registry: $REGISTRY
             - docker/build:
@@ -46,6 +60,9 @@ jobs:
 workflows:
     build:
         jobs:
+            - testing
             - build_next_js:
+                  requires:
+                      - testing
                   context:
                       - personal_site

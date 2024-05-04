@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "PORT=8080 node .next/standalone/server.js",
         "lint": "next lint",
+        "test": "npm run lint & npm run e2e",
         "e2e": "playwright test",
         "image:build": "docker build -t personal-site-next-js .",
         "image:run": "docker run -p 8080:8080 --name=personal-site-next-js personal-site-next-js"
