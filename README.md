@@ -28,6 +28,12 @@ Change the `CMD` directive at the end of [Dockerfile](Dockerfile) to `CMD npm ru
 
 > Note that there may be additional work to be done in the `Dockerfile` to change things back to a "traditional" Next.js setup, but changing the `CMD` directive is probably a good start.
 
+## Preview env authorization
+
+To view the preview env, you need to use a token obtained from `gcloud auth print-identity-token` and add it as an `authorization` header with a value of `Bearer {{TOKEN}}`
+
+Or proxy it using `npm run proxy:preview`.
+
 ## Learn More about Next.js
 
 To learn more about Next.js, take a look at the following resources:
