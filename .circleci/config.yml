@@ -60,7 +60,11 @@ jobs:
 workflows:
     build:
         jobs:
-            - testing
+            - testing:
+                  filters:
+                      branches:
+                          only:
+                              - main
             - build_next_js:
                   requires:
                       - testing

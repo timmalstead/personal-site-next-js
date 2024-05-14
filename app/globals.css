@@ -6,12 +6,12 @@
     --non-blocking-no-duration: 0.01s;
 
     &.light {
-        --text-color: #646464;
+        --text-color: #4d4d4d;
         --background-color: #e6e6e6;
         --contrast-color: #cacdce;
         --highlight-color: #fff642;
         --contrast-highlight-color: #f3d343;
-        --contrast-lowlight-color: #f3c743;
+        --contrast-lowlight-color: #d8a817;
     }
 
     &.dark {
@@ -20,7 +20,7 @@
         --contrast-color: #393533;
         --highlight-color: #42e3ff;
         --contrast-highlight-color: #2bb9e8;
-        --contrast-lowlight-color: #368ad3;
+        --contrast-lowlight-color: #196fbb;
     }
 }
 
