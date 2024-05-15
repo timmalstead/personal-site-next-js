@@ -12,7 +12,7 @@ li.color-switcher {
         &::before,
         &::after {
             color: var(--background-color);
-            transition: all 0.3s;
+            transition: all var(--transition-duration);
         }
 
         &::before {

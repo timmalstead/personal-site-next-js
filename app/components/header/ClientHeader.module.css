@@ -5,7 +5,7 @@
 .show,
 .hide {
     position: sticky;
-    transition: top 0.2s;
+    transition: top var(--transition-duration);
 }
 
 .show {

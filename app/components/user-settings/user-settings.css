@@ -2,7 +2,9 @@ details.user-settings {
     --settings-width: 13rem;
     --settings-offset: 2rem;
     --settings-padding: 0.5rem 1rem;
-    --settings-transition: padding 0.2s, bottom 0.2s, right 0.2s, min-width 0.2s;
+    --settings-transition: padding var(--transition-duration),
+        bottom var(--transition-duration), right var(--transition-duration),
+        min-width var(--transition-duration);
 
     cursor: default;
     user-select: none;
@@ -22,7 +24,7 @@ details.user-settings {
         &::after {
             content: "⬇";
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform var(--transition-duration);
         }
     }
 
@@ -50,6 +52,11 @@ details.user-settings {
         li {
             display: inherit;
             justify-content: space-between;
+            margin-top: 0.5rem;
+
+            &:first-of-type {
+                margin-top: 0;
+            }
         }
     }
 

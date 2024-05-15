@@ -3,7 +3,13 @@ import type { ReactNode } from "react"
 import type { ColorMode } from "./types"
 import { Noto_Sans } from "next/font/google"
 import { cookies, headers } from "next/headers"
-import { Header, Footer, UserSettings, ColorSwitcher } from "./components"
+import {
+    Header,
+    Footer,
+    UserSettings,
+    ColorSwitcher,
+    ReduceMotion,
+} from "./components"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
@@ -35,6 +41,7 @@ const RootLayout = ({
                 <Header />
                 {children}
                 <UserSettings>
+                    <ReduceMotion />
                     <ColorSwitcher colorModeProp={colorMode as ColorMode} />
                 </UserSettings>
                 <Footer />
