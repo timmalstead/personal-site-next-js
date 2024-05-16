@@ -1,6 +1,6 @@
 import NextLink from "next/link"
 import ClientHeader from "./ClientHeader"
-import { routes } from "../../_helpers/constants"
+import { routes } from "../../_utils/constants"
 import "./header.css"
 
 const Header = () => (

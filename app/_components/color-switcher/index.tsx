@@ -1,6 +1,6 @@
 "use client"
-import type { ColorMode, A11yKeyObject } from "../../_helpers/types"
-import { useA11yValue } from "../../_helpers/useA11yValue"
+import type { ColorMode, A11yKeyObject } from "../../_utils/types"
+import { useA11yValue } from "../../_utils/useA11yValue"
 import "./color-switcher.css"
 
 const colorToggleId = "color-switch-input"
