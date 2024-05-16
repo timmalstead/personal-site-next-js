@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
-import type { ColorMode } from "./types"
+import type { ColorMode } from "./_helpers/types"
 import { Noto_Sans } from "next/font/google"
 import { cookies, headers } from "next/headers"
 import {
@@ -9,7 +9,7 @@ import {
     UserSettings,
     ColorSwitcher,
     ReduceMotion,
-} from "./components"
+} from "./_components"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
