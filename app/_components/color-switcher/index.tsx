@@ -1,5 +1,5 @@
 "use client"
-import type { ColorMode, A11yKeyObject } from "../../_utils/types"
+import type { ColorMode, A11yKeyObject } from "../../_utils/sharedTypes"
 import { useA11yValue } from "../../_utils/useA11yValue"
 import "./color-switcher.css"
 

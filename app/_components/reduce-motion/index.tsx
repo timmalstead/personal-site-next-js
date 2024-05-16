@@ -1,6 +1,6 @@
 "use client"
 import { useA11yValue } from "../../_utils/useA11yValue"
-import type { ReducedMotion, A11yKeyObject } from "../../_utils/types"
+import type { ReducedMotion, A11yKeyObject } from "../../_utils/sharedTypes"
 
 const reducedMotionId = "reduced-motion-input"
 const motionKey: A11yKeyObject<ReducedMotion> = {
@@ -9,6 +9,8 @@ const motionKey: A11yKeyObject<ReducedMotion> = {
     true: "reduce",
     false: "no-preference",
 }
+
+// need to add styles, considering various screen sizes, and also e2e testing
 const ReduceMotion = ({
     reducedMotionProp,
 }: {

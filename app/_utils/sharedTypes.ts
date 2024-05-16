@@ -1,8 +1,3 @@
-export interface Route {
-    path: string
-    title: string
-}
-
 export interface A11yKeyObject<T> {
     true: T
     false: T

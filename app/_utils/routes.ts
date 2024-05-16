@@ -1,4 +1,7 @@
-import type { Route } from "./types"
+interface Route {
+    path: string
+    title: string
+}
 
 export const routes: Route[] = [
     { path: "/", title: "home" },

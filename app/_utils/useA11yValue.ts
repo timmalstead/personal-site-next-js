@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react"
-import type { A11yKeyObject } from "./types"
+import type { A11yKeyObject } from "./sharedTypes"
 
 export const useA11yValue = <T>({
     initialValue,
