@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
-import type { ColorMode } from "./_helpers/types"
-import { Noto_Sans } from "next/font/google"
 import { cookies, headers } from "next/headers"
+import type { ColorMode, ReducedMotion } from "./_helpers/types"
+import { Noto_Sans } from "next/font/google"
 import {
     Header,
     Footer,
@@ -30,19 +30,40 @@ const RootLayout = ({
 }: Readonly<{
     children: ReactNode
 }>) => {
-    const colorModeCookie = cookies().get("colorMode")?.value
-    const colorModeHeader = headers().get("Sec-CH-Prefers-Color-Scheme")
-    const colorModeDefault = "light"
+    const getA11yValue = <T extends unknown>({
+        cookieName,
+        headerName,
+        defaultName,
+    }: {
+        cookieName?: string
+        headerName?: string
+        defaultName: string
+    }): T => {
+        const cookie = !!cookieName && cookies().get(cookieName)?.value
+        const header = !!headerName && headers().get(headerName)
+        return (cookie || header || defaultName) as T
+    }
 
-    const colorMode = colorModeCookie || colorModeHeader || colorModeDefault
+    const colorMode = getA11yValue<ColorMode>({
+        cookieName: "colorMode",
+        headerName: "Sec-CH-Prefers-Color-Scheme",
+        defaultName: "light",
+    })
+
+    const reducedMotion = getA11yValue<ReducedMotion>({
+        cookieName: "reducedMotion",
+        headerName: "Sec-CH-Prefers-Reduced-Motion",
+        defaultName: "no-preference",
+    })
+
     return (
-        <html lang="en" className={colorMode}>
+        <html dir="ltr" lang="en" className={`${colorMode} ${reducedMotion}`}>
             <body className={notoSans.className} data-testid="background">
                 <Header />
                 {children}
                 <UserSettings>
-                    <ReduceMotion />
-                    <ColorSwitcher colorModeProp={colorMode as ColorMode} />
+                    <ReduceMotion reducedMotionProp={reducedMotion} />
+                    <ColorSwitcher colorModeProp={colorMode} />
                 </UserSettings>
                 <Footer />
             </body>

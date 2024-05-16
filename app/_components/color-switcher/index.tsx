@@ -1,9 +1,10 @@
 "use client"
-import { ChangeEvent, useEffect, useLayoutEffect, useState } from "react"
-import type { ColorMode } from "../../_helpers/types"
+import type { ColorMode, A11yKeyObject } from "../../_helpers/types"
+import { useA11yValue } from "../../_helpers/useA11yValue"
 import "./color-switcher.css"
 
-const colorKey: { [key: string]: ColorMode } = {
+const colorToggleId = "color-switch-input"
+const colorKey: A11yKeyObject<ColorMode> = {
     light: "dark",
     dark: "light",
     true: "dark",
@@ -11,43 +12,21 @@ const colorKey: { [key: string]: ColorMode } = {
 }
 
 const ColorSwitcher = ({ colorModeProp }: { colorModeProp: ColorMode }) => {
-    const [colorMode, setColorMode] = useState<ColorMode>(colorModeProp)
-    useEffect(() => {
-        const colorQuery = matchMedia("(prefers-color-scheme: dark)")
-
-        const setColorWithQuery = ({ matches }: MediaQueryListEvent) => {
-            setColorMode(colorKey[`${matches}`])
-        }
-
-        colorQuery.addEventListener("change", setColorWithQuery)
-        return () => colorQuery.removeEventListener("change", setColorWithQuery)
-    }, [])
-
-    useLayoutEffect(() => {
-        document.documentElement.classList.add(colorMode)
-        document.documentElement.classList.remove(colorKey[colorMode])
-    }, [colorMode])
-
-    useEffect(() => {
-        requestIdleCallback(() => {
-            document.cookie = `colorMode=${colorMode}`
-        })
-    }, [colorMode])
-
-    const onChange = ({
-        target: { checked },
-    }: ChangeEvent<HTMLInputElement>) => {
-        setColorMode(colorKey[`${checked}`])
-    }
+    const [colorMode, toggleColorMode] = useA11yValue<ColorMode>({
+        cookieName: "colorMode",
+        initialValue: colorModeProp,
+        keyObject: colorKey,
+        matchMediaQuery: "(prefers-color-scheme: dark)",
+    })
 
     return (
         <li className="color-switcher">
-            <label htmlFor="color-switch-input">{colorMode} theme</label>
+            <label htmlFor={colorToggleId}>{colorMode} theme</label>
             <input
                 checked={colorMode === "dark"}
-                onChange={onChange}
+                onChange={toggleColorMode}
                 type="checkbox"
-                id="color-switch-input"
+                id={colorToggleId}
             />
         </li>
     )
