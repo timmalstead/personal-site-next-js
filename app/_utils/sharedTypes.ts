@@ -1,4 +1,4 @@
-export interface A11yKeyObject<T> {
+export interface A11yKey<T> {
     true: T
     false: T
     [key: string]: T

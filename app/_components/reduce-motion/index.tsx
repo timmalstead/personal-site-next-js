@@ -1,14 +1,9 @@
 "use client"
 import { useA11yValue } from "../../_utils/useA11yValue"
-import type { ReducedMotion, A11yKeyObject } from "../../_utils/sharedTypes"
+import type { ReducedMotion } from "../../_utils/sharedTypes"
+import "./reduce-motion.css"
 
 const reducedMotionId = "reduced-motion-input"
-const motionKey: A11yKeyObject<ReducedMotion> = {
-    reduce: "no-preference",
-    "no-preference": "reduce",
-    true: "reduce",
-    false: "no-preference",
-}
 
 // need to add styles, considering various screen sizes, and also e2e testing
 const ReduceMotion = ({
@@ -19,12 +14,17 @@ const ReduceMotion = ({
     const [reducedMotion, toggleReducedMotion] = useA11yValue<ReducedMotion>({
         cookieName: "reducedMotion",
         initialValue: reducedMotionProp,
-        keyObject: motionKey,
+        keyObject: {
+            reduce: "no-preference",
+            "no-preference": "reduce",
+            true: "reduce",
+            false: "no-preference",
+        },
         matchMediaQuery: "(prefers-reduced-motion: reduce)",
     })
 
     return (
-        <li>
+        <li className="reduced-motion">
             <label htmlFor={reducedMotionId}>reduced motion</label>
             <input
                 checked={reducedMotion === "reduce"}

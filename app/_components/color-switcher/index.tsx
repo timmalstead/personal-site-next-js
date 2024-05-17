@@ -1,21 +1,20 @@
 "use client"
-import type { ColorMode, A11yKeyObject } from "../../_utils/sharedTypes"
+import type { ColorMode } from "../../_utils/sharedTypes"
 import { useA11yValue } from "../../_utils/useA11yValue"
 import "./color-switcher.css"
 
 const colorToggleId = "color-switch-input"
-const colorKey: A11yKeyObject<ColorMode> = {
-    light: "dark",
-    dark: "light",
-    true: "dark",
-    false: "light",
-}
 
 const ColorSwitcher = ({ colorModeProp }: { colorModeProp: ColorMode }) => {
     const [colorMode, toggleColorMode] = useA11yValue<ColorMode>({
         cookieName: "colorMode",
         initialValue: colorModeProp,
-        keyObject: colorKey,
+        keyObject: {
+            light: "dark",
+            dark: "light",
+            true: "dark",
+            false: "light",
+        },
         matchMediaQuery: "(prefers-color-scheme: dark)",
     })
 

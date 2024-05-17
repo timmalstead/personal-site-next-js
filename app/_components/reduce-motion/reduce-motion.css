@@ -1,0 +1,28 @@
+li.reduced-motion {
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: var(--text-color);
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        display: inherit;
+        align-items: inherit;
+        justify-content: center;
+        border: 0.9rem solid var(--text-color);
+
+        &::before {
+            content: "◉";
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all var(--transition-duration);
+        }
+
+        &:checked {
+            &::before {
+                font-size: 1.5rem;
+                color: var(--contrast-color);
+            }
+        }
+    }
+}

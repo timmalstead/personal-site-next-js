@@ -1,6 +1,4 @@
 li.color-switcher {
-    align-items: center;
-
     input[type="checkbox"] {
         appearance: none;
         background-color: var(--text-color);

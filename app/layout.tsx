@@ -37,7 +37,7 @@ const RootLayout = ({
     }: {
         cookieName?: string
         headerName?: string
-        defaultName: string
+        defaultName: T
     }): T => {
         const cookie = !!cookieName && cookies().get(cookieName)?.value
         const header = !!headerName && headers().get(headerName)

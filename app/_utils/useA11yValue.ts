@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react"
-import type { A11yKeyObject } from "./sharedTypes"
+import type { A11yKey } from "./sharedTypes"
 
 export const useA11yValue = <T>({
     initialValue,
@@ -11,7 +11,7 @@ export const useA11yValue = <T>({
     cookieName: string
     matchMediaQuery: string
     initialValue: T
-    keyObject: A11yKeyObject<T>
+    keyObject: A11yKey<T>
 }): [T, (event: ChangeEvent<HTMLInputElement>) => void] => {
     const [a11yValue, setA11yValue] = useState<T>(initialValue)
     useEffect(() => {
