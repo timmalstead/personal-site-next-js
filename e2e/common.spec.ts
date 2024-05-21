@@ -1,6 +1,8 @@
 import { test, expect, Page, Locator } from "@playwright/test"
 import { testUrl } from "../playwright.config"
 
+const getRootHtmlClass = () => document.querySelector("html")?.classList.value
+
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
 }) => {
@@ -142,7 +144,7 @@ test.describe("Color themes", () => {
         expectedColor,
     } of loadingColorTestCases) {
         test(testName, async ({ browser }) => {
-            const context = await browser.newContext()
+            const context = await browser.newContext({})
 
             if (cookieName && cookieValue)
                 await context.addCookies([
@@ -166,4 +168,164 @@ test.describe("Color themes", () => {
             await context.close()
         })
     }
+})
+
+test.describe("Reduced motion", () => {
+    const [noMotion, motion] = ["reduce", "no-preference"]
+    const findReduceMotionSwitcher = async (page: Page): Promise<Locator> => {
+        const settings = page.getByText("settings")
+        await settings.click()
+
+        const reduceMotionSwitcher = page.getByText(/reduced motion/)
+        return reduceMotionSwitcher
+    }
+
+    test("System's motion preference should change when button is clicked", async ({
+        page,
+    }) => {
+        await page.goto("/")
+        let reducedMotion = await page.evaluate(getRootHtmlClass)
+        expect(reducedMotion).toContain(motion)
+
+        const reduceMotionSwitcher = await findReduceMotionSwitcher(page)
+        await reduceMotionSwitcher.click()
+
+        reducedMotion = await page.evaluate(getRootHtmlClass)
+        expect(reducedMotion).toContain(noMotion)
+
+        await page.close()
+    })
+
+    test("Page should switch reduced motion preferences when system's reduced motion preferences are switched", async ({
+        page,
+    }) => {
+        await page.goto("/")
+
+        let reducedMotion = await page.evaluate(getRootHtmlClass)
+
+        expect(reducedMotion).toContain(motion)
+        await page.emulateMedia({ reducedMotion: "reduce" })
+
+        reducedMotion = await page.evaluate(getRootHtmlClass)
+        expect(reducedMotion).toContain(noMotion)
+
+        await page.emulateMedia({ reducedMotion: "no-preference" })
+        reducedMotion = await page.evaluate(getRootHtmlClass)
+        expect(reducedMotion).toContain(motion)
+
+        await page.close()
+    })
+
+    const persistingReducedMotionTestCases = [
+        {
+            testName:
+                "Reduced motion should persist and maintain on page reload",
+            expectedMotion: noMotion,
+        },
+        {
+            testName:
+                "No preference should persist and maintain on page reload",
+            expectedMotion: motion,
+        },
+    ]
+
+    for (const { testName, expectedMotion } of persistingReducedMotionTestCases)
+        test(testName, async ({ page }) => {
+            await page.goto("/")
+
+            if (expectedMotion === "reduce") {
+                const reduceMotionSwitcher =
+                    await findReduceMotionSwitcher(page)
+                await reduceMotionSwitcher.click()
+            }
+
+            let reducedMotion = await page.evaluate(getRootHtmlClass)
+
+            expect(reducedMotion).toContain(expectedMotion)
+
+            await page.reload()
+
+            reducedMotion = await page.evaluate(getRootHtmlClass)
+
+            expect(reducedMotion).toContain(expectedMotion)
+            await page.close()
+        })
+
+    const loadingReducedMotionTestCases = [
+        {
+            testName: "Has reduced motion with reducedMotion cookie",
+            cookieName: "reducedMotion",
+            cookieValue: noMotion,
+            headerName: "",
+            headerValue: "",
+            expectedMotion: noMotion,
+        },
+        {
+            testName:
+                "Has no preference with no preference reducedMotion cookie",
+            cookieName: "reducedMotion",
+            cookieValue: motion,
+            headerName: "",
+            headerValue: "",
+            expectedMotion: motion,
+        },
+        {
+            testName: "Has no preference with no preference header",
+            cookieName: "",
+            cookieValue: "",
+            headerName: "Sec-CH-Prefers-Reduced-Motion",
+            headerValue: motion,
+            expectedMotion: motion,
+        },
+        {
+            testName: "Has reduced motion with reduced motion header",
+            cookieName: "",
+            cookieValue: "",
+            headerName: "Sec-CH-Prefers-Reduced-Motion",
+            headerValue: noMotion,
+            expectedMotion: noMotion,
+        },
+        {
+            testName: "Has no preference by default",
+            cookieName: "",
+            cookieValue: "",
+            headerName: "",
+            headerValue: "",
+            expectedMotion: motion,
+        },
+    ]
+
+    for (const {
+        testName,
+        cookieName,
+        cookieValue,
+        headerName,
+        headerValue,
+        expectedMotion,
+    } of loadingReducedMotionTestCases)
+        test(testName, async ({ browser }) => {
+            const context = await browser.newContext({})
+
+            if (cookieName && cookieValue)
+                await context.addCookies([
+                    {
+                        name: cookieName,
+                        value: cookieValue,
+                        url: testUrl,
+                    },
+                ])
+
+            const page = await context.newPage()
+
+            if (headerName && headerValue)
+                await page.setExtraHTTPHeaders({
+                    [headerName]: headerValue,
+                })
+
+            await page.goto("/")
+            const reducedMotion = await page.evaluate(getRootHtmlClass)
+            expect(reducedMotion).toContain(expectedMotion)
+            await page.close()
+            await context.close()
+        })
 })
