@@ -176,7 +176,7 @@ test.describe("Reduced motion", () => {
         const settings = page.getByText("settings")
         await settings.click()
 
-        const reduceMotionSwitcher = page.getByText(/reduced motion/)
+        const reduceMotionSwitcher = page.getByText(/motion/)
         return reduceMotionSwitcher
     }
 

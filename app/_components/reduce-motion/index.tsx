@@ -23,11 +23,14 @@ const ReduceMotion = ({
         matchMediaQuery: "(prefers-reduced-motion: reduce)",
     })
 
+    const isReducedMotion = reducedMotion === "reduce"
     return (
         <li className="reduced-motion">
-            <label htmlFor={reducedMotionId}>reduced motion</label>
+            <label htmlFor={reducedMotionId}>
+                {isReducedMotion ? "reduced" : "full"} motion
+            </label>
             <input
-                checked={reducedMotion === "reduce"}
+                checked={isReducedMotion}
                 onChange={toggleReducedMotion}
                 type="checkbox"
                 id={reducedMotionId}

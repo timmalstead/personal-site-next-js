@@ -1,10 +1,7 @@
 details.user-settings {
-    --settings-width: 13rem;
+    --settings-width: 14rem;
     --settings-offset: 2rem;
     --settings-padding: 0.5rem 1rem;
-    --settings-transition: padding var(--transition-duration),
-        bottom var(--transition-duration), right var(--transition-duration),
-        min-width var(--transition-duration);
 
     cursor: default;
     user-select: none;
@@ -12,10 +9,8 @@ details.user-settings {
     z-index: 1;
     right: var(--settings-offset);
     bottom: var(--settings-offset);
-    min-width: var(--settings-width);
     padding: var(--settings-padding);
     background-color: var(--contrast-color);
-    transition: var(--settings-transition);
 
     summary {
         list-style: none;
@@ -37,7 +32,6 @@ details.user-settings {
         bottom: calc(2.25 * var(--settings-offset));
         padding: var(--settings-padding);
         background-color: var(--contrast-color);
-        transition: var(--settings-transition);
 
         border-bottom: 0.1rem solid;
         border-image: linear-gradient(
@@ -61,7 +55,16 @@ details.user-settings {
         }
     }
 
+    &:not([open]) {
+        summary {
+            &::after {
+                margin-left: 1rem;
+            }
+        }
+    }
+
     &[open] {
+        min-width: var(--settings-width);
         summary {
             &::after {
                 transform: rotateX(0.5turn);
@@ -74,7 +77,6 @@ details.user-settings {
 /* would this be a good candidate for a container query? */
 @media screen and (max-width: 600px) {
     details.user-settings {
-        --settings-width: 11rem;
         --settings-offset: 1.5rem;
         --settings-padding: 0.25rem 0.5rem;
     }
@@ -82,14 +84,14 @@ details.user-settings {
 
 @media screen and (min-width: 2000px) {
     details.user-settings {
-        --settings-width: 15rem;
+        --settings-width: 18rem;
         --settings-offset: 2.5rem;
     }
 }
 
 @media screen and (min-width: 2800px) {
     details.user-settings {
-        --settings-width: 18rem;
+        --settings-width: 20rem;
         --settings-offset: 3rem;
     }
 }
