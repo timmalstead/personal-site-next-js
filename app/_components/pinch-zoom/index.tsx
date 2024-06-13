@@ -1,13 +1,15 @@
 "use client"
 import { useState, useEffect } from "react"
-import getZoomPercentage from "../../_utils/getZoomPercentage"
+import floatingPointToPercentage from "../../_utils/floatingPointToPercentage"
 
 const PinchZoom = () => {
     const [zoom, setZoom] = useState<string | null>(null)
 
     useEffect(() => {
         const setPinchZoom = () =>
-            setZoom(getZoomPercentage(window?.visualViewport?.scale || 1))
+            setZoom(
+                floatingPointToPercentage(window?.visualViewport?.scale || 1)
+            )
         setPinchZoom()
 
         visualViewport?.addEventListener("resize", setPinchZoom)
