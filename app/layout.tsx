@@ -9,6 +9,8 @@ import {
     UserSettings,
     ColorSwitcher,
     ReduceMotion,
+    LayoutZoom,
+    PinchZoom,
 } from "./_components"
 import "./globals.css"
 
@@ -62,6 +64,8 @@ const RootLayout = ({
                 <Header />
                 {children}
                 <UserSettings>
+                    <PinchZoom />
+                    <LayoutZoom />
                     <ReduceMotion reducedMotionProp={reducedMotion} />
                     <ColorSwitcher colorModeProp={colorMode} />
                 </UserSettings>
