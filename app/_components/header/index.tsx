@@ -1,19 +1,20 @@
 import NextLink from "next/link"
 import ClientHeader from "./ClientHeader"
 import { routes } from "../../_utils/routes"
+import type { Browser } from "../../_utils/sharedTypes"
 import "./header.css"
 
 interface HeaderProps {
-    isSafari: boolean
+    browser: Browser
 }
 
-const Header = ({ isSafari }: HeaderProps) => (
+const Header = ({ browser }: HeaderProps) => (
     <ClientHeader>
         <div className="banner-container">
             <div className="fold" />
             <div className="banner">
                 <NextLink
-                    className={isSafari ? "is-safari" : ""}
+                    className={browser === "safari" ? "is-safari" : ""}
                     title={routes[0].title}
                     href={routes[0].path}
                 >

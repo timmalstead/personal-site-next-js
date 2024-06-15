@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { cookies, headers } from "next/headers"
-import type { ColorMode, ReducedMotion } from "./_utils/sharedTypes"
+import type { ColorMode, ReducedMotion, Browser } from "./_utils/sharedTypes"
 import { Noto_Sans } from "next/font/google"
 import {
     Header,
@@ -58,20 +58,24 @@ const RootLayout = ({
         defaultName: "no-preference",
     })
 
-    // value is 0 or 1 as a string as that is the header convention
-    const isSafari = getServerValue<string>({
-        headerName: "x-is-safari",
-        defaultName: "1",
+    const browser = getServerValue<Browser>({
+        headerName: "X-Browser",
+        defaultName: "chrome",
     })
+    console.log(browser)
+
+    // it's a bummer, but the layout zoom only seems to work in Chrome
+    // which is funny considering that I copied it from MDN
+    const isChrome = browser === "chrome" || browser === "chromium"
 
     return (
         <html dir="ltr" lang="en" className={`${colorMode} ${reducedMotion}`}>
             <body className={notoSans.className} data-testid="background">
-                <Header isSafari={Boolean(+isSafari)} />
+                <Header browser={browser} />
                 {children}
                 <UserSettings>
                     <PinchZoom />
-                    <LayoutZoom />
+                    {isChrome && <LayoutZoom />}
                     <ReduceMotion reducedMotionProp={reducedMotion} />
                     <ColorSwitcher colorModeProp={colorMode} />
                 </UserSettings>
