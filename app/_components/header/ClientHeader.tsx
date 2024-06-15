@@ -6,9 +6,17 @@ import styles from "./ClientHeader.module.css"
 
 type Direction = "up" | "down"
 type Position = "show" | "hide"
+type SafariClass = "is-safari" | "is-not-safari"
 
 const THRESHOLD = 50
 const ClientHeader = ({ children }: { children: ReactNode }) => {
+    const [safariClass, setSafariClass] = useState<SafariClass>("is-not-safari")
+    useEffect(() => {
+        const agent = window.navigator.userAgent.toLowerCase()
+        const isSafari = agent.includes("safari") && !agent.includes("chrome")
+        setSafariClass(isSafari ? "is-safari" : "is-not-safari")
+    }, [])
+
     const [currentScrollDir, setCurrentScrollDir] = useState<Direction>("up")
 
     const blocking = useRef<boolean>(false)
@@ -70,7 +78,9 @@ const ClientHeader = ({ children }: { children: ReactNode }) => {
 
     return (
         <>
-            <header className={styles[positionClass]}>{children}</header>
+            <header className={`${styles[positionClass]} ${safariClass}`}>
+                {children}
+            </header>
             <hr ref={hrRef} className={styles.hr} aria-hidden={true} />
         </>
     )

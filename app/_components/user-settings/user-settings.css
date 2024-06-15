@@ -16,6 +16,12 @@ details.user-settings {
         list-style: none;
         display: flex;
         justify-content: space-between;
+
+        /* safari specific implementation 😑 */
+        &::-webkit-details-marker {
+            display: none;
+        }
+
         &::after {
             content: "⬇";
             cursor: pointer;

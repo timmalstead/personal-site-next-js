@@ -33,9 +33,12 @@ export const useA11yValue = <T>({
     }, [a11yValue, keyObject])
 
     useEffect(() => {
-        requestIdleCallback(() => {
-            document.cookie = `${cookieName}=${a11yValue}`
-        })
+        // some browsers (notably Safari) don't support requestIdleCallback 😑
+        const setA11yCookie = () =>
+            (document.cookie = `${cookieName}=${a11yValue}`)
+        if (window.requestIdleCallback)
+            window.requestIdleCallback(setA11yCookie)
+        else setA11yCookie()
     }, [a11yValue, cookieName])
 
     const toggleA11yCheckbox = ({
