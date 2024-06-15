@@ -3,31 +3,12 @@ import { testUrl } from "../playwright.config"
 
 const getRootHtmlClass = () => document.querySelector("html")?.classList.value
 
-const pinchToZoomGesture = async (page: Page): Promise<void> => {
-    const [pinchStart, thumbPinchEnd, indexFingerPinchEnd] = [
-        { x: 200, y: 200 },
-        { x: 100, y: 100 },
-        { x: 300, y: 300 },
-    ]
-
-    const cdpSession = await page.context().newCDPSession(page)
-    await cdpSession.send("Input.dispatchTouchEvent", {
-        type: "touchStart",
-        touchPoints: [pinchStart, pinchStart],
-    })
-    await cdpSession.send("Input.dispatchTouchEvent", {
-        type: "touchMove",
-        touchPoints: [thumbPinchEnd, indexFingerPinchEnd],
-    })
-    await cdpSession.send("Input.dispatchTouchEvent", {
-        type: "touchEnd",
-        touchPoints: [],
-    })
-}
-
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
+    browserName,
 }) => {
+    if (browserName === "webkit") test.fixme(true)
+
     await page.goto("/")
     const headerLink = page.getByText("timothy_malstead")
     await expect(headerLink).toBeInViewport()
@@ -220,7 +201,10 @@ test.describe("Reduced motion", () => {
 
     test("Page should switch reduced motion preferences when system's reduced motion preferences are switched", async ({
         page,
+        browserName,
     }) => {
+        if (browserName === "webkit") test.fixme(true)
+
         await page.goto("/")
 
         let reducedMotion = await page.evaluate(getRootHtmlClass)
@@ -360,6 +344,28 @@ test("displays zoom pinch percentage accurately", async ({
     browserName,
 }) => {
     test.skip(browserName !== "chromium")
+
+    const pinchToZoomGesture = async (page: Page): Promise<void> => {
+        const [pinchStart, thumbPinchEnd, indexFingerPinchEnd] = [
+            { x: 200, y: 200 },
+            { x: 100, y: 100 },
+            { x: 300, y: 300 },
+        ]
+
+        const cdpSession = await page.context().newCDPSession(page)
+        await cdpSession.send("Input.dispatchTouchEvent", {
+            type: "touchStart",
+            touchPoints: [pinchStart, pinchStart],
+        })
+        await cdpSession.send("Input.dispatchTouchEvent", {
+            type: "touchMove",
+            touchPoints: [thumbPinchEnd, indexFingerPinchEnd],
+        })
+        await cdpSession.send("Input.dispatchTouchEvent", {
+            type: "touchEnd",
+            touchPoints: [],
+        })
+    }
 
     await page.goto("/")
     const settings = page.getByText("settings")

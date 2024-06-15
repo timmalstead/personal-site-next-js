@@ -101,3 +101,9 @@ details.user-settings {
         --settings-offset: 3rem;
     }
 }
+
+@media not (scripting: enabled) {
+    details.user-settings {
+        display: none;
+    }
+}

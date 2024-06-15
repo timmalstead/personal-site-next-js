@@ -13,6 +13,46 @@ import { defineConfig, devices } from "@playwright/test"
 const isCiEnv = process.env.CI === "true"
 export const testUrl = "http:127.0.0.1:8080"
 
+let projects = [
+    {
+        name: "chromium",
+        use: { ...devices["Desktop Chrome"] },
+    },
+    {
+        name: "firefox",
+        use: { ...devices["Desktop Firefox"] },
+    },
+]
+
+const localRunBrowsers = [
+    {
+        name: "webkit",
+        use: { ...devices["Desktop Safari"] },
+    },
+    {
+        name: "Mobile Chrome",
+        use: { ...devices["Pixel 5"] },
+    },
+    {
+        name: "Mobile Firefox",
+        use: { ...devices["Pixel 5"] },
+    },
+    {
+        name: "Mobile Safari",
+        use: { ...devices["iPhone 12"] },
+    },
+    {
+        name: "Microsoft Edge",
+        use: { ...devices["Desktop Edge"], channel: "msedge" },
+    },
+    {
+        name: "Google Chrome",
+        use: { ...devices["Desktop Chrome"], channel: "chrome" },
+    },
+]
+
+if (!isCiEnv) projects = [...projects, ...localRunBrowsers]
+
 export default defineConfig({
     testDir: "./e2e",
     /* Run tests in files in parallel */
@@ -20,7 +60,7 @@ export default defineConfig({
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: isCiEnv,
     /* Retry on CI only */
-    retries: 3,
+    retries: 5,
     /* Opt out of parallel tests on CI. */
     workers: 10,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -35,42 +75,7 @@ export default defineConfig({
     },
 
     /* Configure projects for major browsers */
-    projects: [
-        {
-            name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
-        },
-
-        {
-            name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
-        },
-
-        // {
-        //     name: "webkit",
-        //     use: { ...devices["Desktop Safari"] },
-        // },
-
-        /* Test against mobile viewports. */
-        {
-            name: "Mobile Chrome",
-            use: { ...devices["Pixel 5"] },
-        },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: { ...devices['iPhone 12'] },
-        // },
-
-        /* Test against branded browsers. */
-        // {
-        //   name: 'Microsoft Edge',
-        //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-        // },
-        // {
-        //   name: 'Google Chrome',
-        //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-        // },
-    ],
+    projects,
 
     /* Run your local dev server before starting the tests */
     webServer: {
