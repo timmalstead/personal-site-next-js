@@ -3,12 +3,20 @@ import ClientHeader from "./ClientHeader"
 import { routes } from "../../_utils/routes"
 import "./header.css"
 
-const Header = () => (
+interface HeaderProps {
+    isSafari: boolean
+}
+
+const Header = ({ isSafari }: HeaderProps) => (
     <ClientHeader>
         <div className="banner-container">
             <div className="fold" />
             <div className="banner">
-                <NextLink title={routes[0].title} href={routes[0].path}>
+                <NextLink
+                    className={isSafari ? "is-safari" : ""}
+                    title={routes[0].title}
+                    href={routes[0].path}
+                >
                     timothy_malstead
                 </NextLink>
             </div>

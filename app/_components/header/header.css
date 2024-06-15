@@ -62,16 +62,11 @@ header {
             .banner {
                 a {
                     font-size: 10cqw;
-                }
-            }
-        }
-    }
-    /* safari does not support container queries 😑 */
-    header.is-safari {
-        .banner-container {
-            .banner {
-                a {
-                    font-size: initial;
+
+                    /* safari does not support container queries 😑 */
+                    &.is-safari {
+                        font-size: initial;
+                    }
                 }
             }
         }

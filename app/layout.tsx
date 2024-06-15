@@ -32,7 +32,7 @@ const RootLayout = ({
 }: Readonly<{
     children: ReactNode
 }>) => {
-    const getA11yValue = <T extends unknown>({
+    const getServerValue = <T extends unknown>({
         cookieName,
         headerName,
         defaultName,
@@ -46,22 +46,28 @@ const RootLayout = ({
         return (cookie || header || defaultName) as T
     }
 
-    const colorMode = getA11yValue<ColorMode>({
+    const colorMode = getServerValue<ColorMode>({
         cookieName: "colorMode",
         headerName: "Sec-CH-Prefers-Color-Scheme",
         defaultName: "light",
     })
 
-    const reducedMotion = getA11yValue<ReducedMotion>({
+    const reducedMotion = getServerValue<ReducedMotion>({
         cookieName: "reducedMotion",
         headerName: "Sec-CH-Prefers-Reduced-Motion",
         defaultName: "no-preference",
     })
 
+    // value is 0 or 1 as a string as that is the header convention
+    const isSafari = getServerValue<string>({
+        headerName: "x-is-safari",
+        defaultName: "1",
+    })
+
     return (
         <html dir="ltr" lang="en" className={`${colorMode} ${reducedMotion}`}>
             <body className={notoSans.className} data-testid="background">
-                <Header />
+                <Header isSafari={Boolean(+isSafari)} />
                 {children}
                 <UserSettings>
                     <PinchZoom />
