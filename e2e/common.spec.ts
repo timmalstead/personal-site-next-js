@@ -1,7 +1,29 @@
-import { test, expect, Page, Locator } from "@playwright/test"
+import { test, expect, type Page, type Locator } from "@playwright/test"
 import { testUrl } from "../playwright.config"
 
 const getRootHtmlClass = () => document.querySelector("html")?.classList.value
+
+const pinchToZoomGesture = async (page: Page): Promise<void> => {
+    const [pinchStart, thumbPinchEnd, indexFingerPinchEnd] = [
+        { x: 200, y: 200 },
+        { x: 100, y: 100 },
+        { x: 300, y: 300 },
+    ]
+
+    const cdpSession = await page.context().newCDPSession(page)
+    await cdpSession.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [pinchStart, pinchStart],
+    })
+    await cdpSession.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [thumbPinchEnd, indexFingerPinchEnd],
+    })
+    await cdpSession.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+    })
+}
 
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
@@ -328,4 +350,26 @@ test.describe("Reduced motion", () => {
             await page.close()
             await context.close()
         })
+})
+
+// TODO: find a way to get tests for layout zoom working
+
+// brazenly cribbed from https://www.martin-grandrath.de/blog/2024-05-01_testing-touch-gestures-with-playwright.html
+test("displays zoom pinch percentage accurately", async ({
+    page,
+    browserName,
+}) => {
+    test.skip(browserName !== "chromium")
+
+    await page.goto("/")
+    const settings = page.getByText("settings")
+    await settings.click()
+
+    const pinchZoomPercentage = page.getByTestId("pinch-zoom-percentage")
+
+    expect(pinchZoomPercentage).toHaveText("100%")
+
+    await pinchToZoomGesture(page)
+
+    expect(pinchZoomPercentage).toHaveText("226%")
 })

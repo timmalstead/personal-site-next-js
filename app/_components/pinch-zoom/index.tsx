@@ -19,7 +19,7 @@ const PinchZoom = () => {
     return zoom ? (
         <li>
             <label>pinch zoom</label>
-            <span>{zoom}</span>
+            <span data-testid="pinch-zoom-percentage">{zoom}</span>
         </li>
     ) : (
         <></>
