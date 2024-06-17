@@ -62,8 +62,6 @@ const RootLayout = ({
         headerName: "X-Browser",
         defaultName: "chrome",
     })
-    console.log(browser)
-
     // it's a bummer, but the layout zoom only seems to work in Chrome
     // which is funny considering that I copied it from MDN
     const isChrome = browser === "chrome" || browser === "chromium"
