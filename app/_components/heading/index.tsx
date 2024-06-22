@@ -1,0 +1,46 @@
+import type { ReactNode, DetailedHTMLProps, HTMLAttributes } from "react"
+import "./heading.css"
+import CopyButton from "./CopyButton"
+
+type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+type HeadingHash = {
+    [level in HeadingLevel]: (
+        props: DetailedHTMLProps<
+            HTMLAttributes<HTMLHeadingElement>,
+            HTMLHeadingElement
+        >
+    ) => JSX.Element
+}
+interface HeadingProps {
+    level: HeadingLevel
+    children: ReactNode
+    copy?: boolean
+}
+
+const headings: HeadingHash = {
+    h1: (props) => <h1 {...props} />,
+    h2: (props) => <h2 {...props} />,
+    h3: (props) => <h3 {...props} />,
+    h4: (props) => <h4 {...props} />,
+    h5: (props) => <h5 {...props} />,
+    h6: (props) => <h6 {...props} />,
+}
+
+const Heading = ({ level, children, copy }: HeadingProps) => {
+    const HeadingText = headings[level]
+
+    const id =
+        typeof children === "string"
+            ? children.toLowerCase().replace(/\s/g, "-")
+            : ""
+
+    const shouldDisplayCopy = Boolean(copy && id)
+    return (
+        <div id={id} className="heading-component">
+            <HeadingText>{children}</HeadingText>
+            {shouldDisplayCopy && <CopyButton id={id} />}
+        </div>
+    )
+}
+
+export default Heading

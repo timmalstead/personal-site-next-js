@@ -1,0 +1,75 @@
+div.heading-component {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 0.15rem solid;
+    border-image: linear-gradient(
+            90deg,
+            var(--contrast-color) 90%,
+            var(--background-color) 95%
+        )
+        1;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        display: inline;
+        font-weight: 250;
+    }
+
+    button {
+        margin-left: 1rem;
+        display: flex;
+
+        svg {
+            width: 1.75rem;
+            height: 1.75rem;
+            fill: var(--text-color);
+            transition: transform var(--transition-duration);
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            svg {
+                fill: var(--highlight-color);
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    div.heading-component {
+        h1 {
+            font-size: 9vw;
+        }
+        h2 {
+            font-size: 7vw;
+        }
+        h3 {
+            font-size: 5.5vw;
+        }
+        h4 {
+            font-size: 4.5vw;
+        }
+        h5 {
+            font-size: 3.5vw;
+        }
+        h6 {
+            font-size: 2.75vw;
+        }
+    }
+}
+
+@media not (scripting: enabled) {
+    div.heading-component {
+        button {
+            display: none;
+        }
+    }
+}

@@ -1,6 +1,15 @@
-// import Image from "next/image"
-// remember that this can be asychronous and can fetch data
+import { Markdown } from "./_components"
 
-const Home = () => <main>this is the home page</main>
+const Home = () => (
+    <main>
+        <Markdown># This is the Home Page</Markdown>
+        <Markdown>## This is the Home Page</Markdown>
+        <Markdown>### This is the Home Page</Markdown>
+        <Markdown>#### This is the Home Page</Markdown>
+        <Markdown>##### This is the Home Page</Markdown>
+        <Markdown>###### This is the Home Page</Markdown>
+        <Markdown>This is the Home Page</Markdown>
+    </main>
+)
 
 export default Home
