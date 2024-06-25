@@ -26,12 +26,20 @@ const headings: HeadingHash = {
     h6: (props) => <h6 {...props} />,
 }
 
+const [allCharsNotSpacesNumbersOrLowerCaseLetters, spaces] = [
+    /[^a-z0-9\s]/g,
+    /\s{1,}/g,
+]
 const Heading = ({ level, children, copy }: HeadingProps) => {
     const HeadingText = headings[level]
 
     const id =
         typeof children === "string"
-            ? children.toLowerCase().replace(/\s/g, "-")
+            ? children
+                  .toLowerCase()
+                  .trim()
+                  .replace(allCharsNotSpacesNumbersOrLowerCaseLetters, "")
+                  .replace(spaces, "-")
             : ""
 
     const shouldDisplayCopy = Boolean(copy && id)

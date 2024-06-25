@@ -36,7 +36,6 @@ div.heading-component {
         &:focus,
         &:active {
             svg {
-                fill: var(--highlight-color);
                 transform: scale(1.1);
             }
         }
