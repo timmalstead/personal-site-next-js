@@ -45,7 +45,7 @@ div.heading-component {
 @media screen and (max-width: 600px) {
     div.heading-component {
         h1 {
-            font-size: 9vw;
+            font-size: 8vw;
         }
         h2 {
             font-size: 7vw;

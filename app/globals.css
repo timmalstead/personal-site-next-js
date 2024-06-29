@@ -55,7 +55,7 @@ body {
 
 main {
     min-height: calc(100vh - var(--header-height));
-    padding-top: 0.5rem;
+    padding: 1rem 5% 0 5%;
     /* temp height */
     height: 3000px;
 }
