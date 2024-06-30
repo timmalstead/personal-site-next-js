@@ -50,7 +50,7 @@ jobs:
                   image: $IMAGE
             - run:
                   name: Persist latest build sha
-                  command: op item edit latest_next_js sha=$CIRCLE_SHA1
+                  command: op item edit application_shas next=$CIRCLE_SHA1
             - run:
                   name: Trigger infra build pipeline
                   command: |
