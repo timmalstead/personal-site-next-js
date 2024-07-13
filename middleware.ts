@@ -6,7 +6,8 @@ export const middleware = (request: NextRequest) => {
         nextUrl: { pathname },
     } = request
 
-    if (pathname.startsWith("/api")) {
+    const isApiRoute = pathname.startsWith("/api")
+    if (isApiRoute) {
         const authHeaderVal = request.headers.get("Authorization")
         const authEnvVal = process.env.MIDDLEWARE_AUTHORIZATION
         return authHeaderVal === authEnvVal
@@ -18,8 +19,12 @@ export const middleware = (request: NextRequest) => {
     const browserName = (
         (browser?.name as string) || ""
     ).toLowerCase() as Browser
+    const pageName = pathname === "/" ? "home" : pathname.slice(1)
+
     const response = NextResponse.next()
     response.headers.set("X-Browser", browserName)
+    response.headers.set("X-Pagename", pageName)
+
     return response
 }
 

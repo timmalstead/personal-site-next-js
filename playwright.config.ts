@@ -79,8 +79,11 @@ export default defineConfig({
 
     /* Run your local dev server before starting the tests */
     webServer: {
-        command: "npm run dev",
+        command: "npm run clear:next && npm run dev",
         url: testUrl,
         reuseExistingServer: !process.env.CI,
+        env: {
+            USE_TESTING_FIRESTORE: "true",
+        },
     },
 })

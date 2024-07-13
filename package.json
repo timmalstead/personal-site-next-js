@@ -5,15 +5,19 @@
     "scripts": {
         "dev": "PORT=8080 next dev",
         "build": "next build",
+        "postbuild": "cp -r .next/static .next/standalone/.next",
         "start": "PORT=8080 node .next/standalone/server.js",
         "lint": "next lint",
         "test": "npm run lint & npm run e2e",
         "e2e": "playwright test",
-        "image:build": "docker build -t personal-site-next-js .",
-        "image:run": "docker run -p 8080:8080 --name=personal-site-next-js personal-site-next-js",
+        "clear:next": "test -d .next && rm -r .next || echo 'Next.Js build directory does not exist'",
+        "secrets:local": "op inject -i env.local.tpl -o .env.local",
+        "image:build:local": "docker build --build-arg PROJECT_ID=$(op read op://personal-site-gcp/pulumiCircleCiService/project-id) -t personal-site-next-js .",
+        "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env.local personal-site-next-js",
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
     "dependencies": {
+        "@google-cloud/firestore": "^7.9.0",
         "next": "^14.2.4",
         "react": "^18",
         "react-dom": "^18",
