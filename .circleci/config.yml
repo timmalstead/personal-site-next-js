@@ -45,7 +45,6 @@ jobs:
                   registry: $REGISTRY
             - docker/build:
                   image: $REGISTRY/$IMAGE
-                  extra_build_args: --build-arg PROJECT_ID=$(op read op://personal-site-gcp/pulumiCircleCiService/project-id)
             - docker/push:
                   registry: $REGISTRY
                   image: $IMAGE

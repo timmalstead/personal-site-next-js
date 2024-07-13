@@ -11,7 +11,6 @@ RUN npm ci --omit=dev
 
 # Rebuild the source code only when needed
 FROM base AS builder
-ARG PROJECT_ID
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules

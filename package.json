@@ -12,7 +12,7 @@
         "e2e": "playwright test",
         "clear:next": "test -d .next && rm -r .next || echo 'Next.Js build directory does not exist'",
         "secrets:local": "op inject -i env.local.tpl -o .env.local",
-        "image:build:local": "docker build --build-arg PROJECT_ID=$(op read op://personal-site-gcp/pulumiCircleCiService/project-id) -t personal-site-next-js .",
+        "image:build:local": "docker build -t personal-site-next-js .",
         "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env.local personal-site-next-js",
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
