@@ -1,11 +1,10 @@
 console.info("using firestore mock")
 
 const data = {
-    users: {
-        alovelace: {
-            name: "Ada Lovelace",
-            age: 30,
-            this: "shivers me timbers",
+    test: {
+        data: {
+            title: "very important data",
+            important: true,
         },
     },
     home: {

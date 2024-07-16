@@ -84,6 +84,7 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         env: {
             USE_TESTING_FIRESTORE: "true",
+            MIDDLEWARE_AUTHORIZATION: "SUPER_SECRET_SECRET_SQUIRREL",
         },
     },
 })
