@@ -9,7 +9,8 @@
         "start": "PORT=8080 node .next/standalone/server.js",
         "lint": "next lint",
         "type:check": "tsc --noEmit",
-        "test": "npm run type:check && npm run lint & npm run e2e",
+        "version:check": "node ./scripts/confirmNodeVersion",
+        "test": "npm run version:check & npm run type:check & npm run lint && npm run e2e",
         "e2e": "playwright test",
         "clear:next": "test -d .next && rm -r .next || echo 'Next.Js build directory does not exist'",
         "secrets:local": "op inject -i env.local.tpl -o .env.local",
@@ -34,5 +35,8 @@
         "null-loader": "^4.0.1",
         "prettier": "3.2.5",
         "typescript": "^5"
+    },
+    "engines": {
+        "node": ">=20.0.0"
     }
 }
