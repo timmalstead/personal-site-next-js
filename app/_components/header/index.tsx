@@ -1,8 +1,13 @@
 import NextLink from "next/link"
 import ClientHeader from "./ClientHeader"
-import { routes } from "../../_utils/routes"
-import type { Browser } from "../../_utils/sharedTypes"
+import type { Browser, Route } from "../../_utils/sharedTypes"
 import "./header.css"
+
+// should this be a fallback? maybe get this from firestore as a rule?
+export const routes: Route[] = [
+    { path: "/about", title: "about" },
+    { path: "/blog", title: "blog" },
+]
 
 interface HeaderProps {
     browser: Browser
@@ -15,8 +20,8 @@ const Header = ({ browser }: HeaderProps) => (
             <div className="banner">
                 <NextLink
                     className={browser === "safari" ? "is-safari" : ""}
-                    title={routes[0].title}
-                    href={routes[0].path}
+                    title={"home"}
+                    href={"/"}
                 >
                     timothy_malstead
                 </NextLink>
@@ -25,7 +30,7 @@ const Header = ({ browser }: HeaderProps) => (
         </div>
         <nav>
             <ul>
-                {routes.slice(1).map(({ path, title }) => (
+                {routes.map(({ path, title }) => (
                     <li key={path}>
                         <NextLink href={path}>{title}</NextLink>
                     </li>

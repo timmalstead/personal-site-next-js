@@ -4,6 +4,11 @@ export interface A11yKey<T> {
     [key: string]: T
 }
 
+export interface Route {
+    path: string
+    title: string
+}
+
 export type ColorMode = "light" | "dark"
 export type ReducedMotion = "reduce" | "no-preference"
 export type Browser =
