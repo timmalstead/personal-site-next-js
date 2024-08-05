@@ -14,7 +14,7 @@ Open [http://localhost:8080](http://localhost:8080) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Noto_Sans, a custom Google Font.
 
 ## Standalone output
 
@@ -34,6 +34,24 @@ To view the preview env, you need to use a token obtained from `gcloud auth prin
 
 Or proxy it using `npm run proxy:preview`.
 
+## CI/CD
+
+This project use [CircleCi](https://circleci.com/) for CI/CD.
+
+This is setup using [config.yml](.circleci/config.yml) in the .circleci directory.
+
+## Page Data
+
+Page data coming from Firestore
+
+There is also a Firestore mock
+
+## Infra
+
+This project uses [Pulumi](https://www.pulumi.com/) to manage infrastrcture as code (IAC).
+
+This is managed by a seperate repo of [Pulumi code](https://github.com/timmalstead/personal-site-gcp-infra) tailored to this specific project
+
 ## Learn More about Next.js
 
 To learn more about Next.js, take a look at the following resources:
@@ -42,9 +60,3 @@ To learn more about Next.js, take a look at the following resources:
 -   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
