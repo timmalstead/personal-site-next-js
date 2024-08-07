@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "PORT=8080 next dev",
+        "dev": "USE_TESTING_FIRESTORE=true PORT=8080 next dev",
         "build": "next build",
         "postbuild": "cp -r .next/static .next/standalone/.next",
         "start": "PORT=8080 node .next/standalone/server.js",

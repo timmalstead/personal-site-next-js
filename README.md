@@ -42,9 +42,13 @@ This is setup using [config.yml](.circleci/config.yml) in the .circleci director
 
 ## Page Data
 
-Page data coming from Firestore
+Persistent data for this project is created using [Google's Firestore](https://firebase.google.com/docs/firestore) database. This is used to inject JSON controlled components into the headless app.
 
-There is also a Firestore mock
+There is also a [Firestore mock](app/_utils/firestoreMock.js) used for local development.
+
+To make use of the local Firestore mock, start a dev process using the local env var `USE_TESTING_FIRESTORE=true`.
+
+This was instituted as I thought it would be easier and less complex than using the Firestore emulator.
 
 ## Infra
 
