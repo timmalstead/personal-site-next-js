@@ -1,10 +1,13 @@
-import { firestoreDatabase } from "../../_utils/firestore"
 import { NextRequest, NextResponse } from "next/server"
+import { getContent } from "../../_utils/firestore"
+import { headers } from "next/headers"
 
 export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {
-    const docRef = firestoreDatabase.doc("test/data")
-    const firestoreData = await docRef.get().then((doc) => doc.data())
+    const firestoreData = await getContent<{
+        title: string
+        important: boolean
+    }>(headers().get("X-Pagename") as string)
 
     return NextResponse.json({
         request,

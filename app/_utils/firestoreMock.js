@@ -19,10 +19,12 @@ const generateSeparateParagraphs = (numberOfParagraphs) => {
 }
 
 const data = {
-    test: {
-        data: {
-            title: "very important data",
-            important: true,
+    api: {
+        test: {
+            content: {
+                title: "very important data",
+                important: true,
+            },
         },
     },
     home: {

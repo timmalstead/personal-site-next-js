@@ -6,15 +6,6 @@ export const middleware = (request: NextRequest) => {
         nextUrl: { pathname },
     } = request
 
-    const isApiRoute = pathname.startsWith("/api")
-    if (isApiRoute) {
-        const authHeaderVal = request.headers.get("Authorization")
-        const authEnvVal = process.env.MIDDLEWARE_AUTHORIZATION
-        return authHeaderVal === authEnvVal
-            ? NextResponse.next()
-            : NextResponse.json({ error: "Unauthorized", status: 401 })
-    }
-
     const { browser } = userAgent(request)
     const browserName = (
         (browser?.name as string) || ""
@@ -24,6 +15,14 @@ export const middleware = (request: NextRequest) => {
     const response = NextResponse.next()
     response.headers.set("X-Browser", browserName)
     response.headers.set("X-Pagename", pageName)
+
+    const isApiRoute = pathname.startsWith("/api")
+    if (isApiRoute) {
+        const authHeaderVal = request.headers.get("Authorization")
+        const authEnvVal = process.env.MIDDLEWARE_AUTHORIZATION
+        if (authHeaderVal !== authEnvVal)
+            return NextResponse.json({ error: "Unauthorized", status: 401 })
+    }
 
     return response
 }
