@@ -19,7 +19,7 @@ div.heading-component {
     h5,
     h6 {
         display: inline;
-        font-weight: 250;
+        font-weight: var(--heading-weight);
     }
 
     button {
