@@ -18,6 +18,17 @@ const generateSeparateParagraphs = (numberOfParagraphs) => {
     return generatedText
 }
 
+const getPageInfo = () => `
+## ${lorem.generateSentences(1)}
+${generateSeparateParagraphs(3)}
+## ${lorem.generateSentences(1)}
+${generateSeparateParagraphs(4)}
+## ${lorem.generateSentences(1)}
+${generateSeparateParagraphs(7)}
+## ${lorem.generateSentences(1)}
+${generateSeparateParagraphs(1)}
+`
+
 const data = {
     api: {
         test: {
@@ -32,13 +43,16 @@ const data = {
     home: {
         content: {
             text: `
-# ${lorem.generateSentences(1)}
-## ${lorem.generateSentences(1)}
-${generateSeparateParagraphs(3)}
-## ${lorem.generateSentences(1)}
-${generateSeparateParagraphs(4)}
-## ${lorem.generateSentences(1)}
-${generateSeparateParagraphs(7)}
+# Home page mock info
+${getPageInfo()}
+`,
+        },
+    },
+    about: {
+        content: {
+            text: `
+# About page mock info
+${getPageInfo()}
 `,
         },
     },
