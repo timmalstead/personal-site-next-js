@@ -26,6 +26,7 @@ test.describe("middleware", () => {
 
         const json = await response.json()
         expect(json).toEqual({
+            pageName: "api/test",
             request: {},
             firestoreData: {
                 title: "very important data",
