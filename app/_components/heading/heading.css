@@ -4,7 +4,7 @@ div.heading-component {
     justify-content: center;
     align-items: center;
     border-bottom: 0.15rem solid;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     border-image: linear-gradient(
             90deg,
             var(--contrast-color) 90%,

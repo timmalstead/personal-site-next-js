@@ -1,4 +1,8 @@
-const serverOnlyPackages = [/react-markdown/, /@google-cloud\/firestore/]
+const serverOnlyPackages = [
+    /react-markdown/,
+    /@google-cloud\/firestore/,
+    /lorem-ipsum/,
+]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 
 /** @type {import('next').NextConfig} */
