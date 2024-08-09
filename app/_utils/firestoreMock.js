@@ -22,8 +22,10 @@ const data = {
     api: {
         test: {
             content: {
-                title: "very important data",
-                important: true,
+                data: {
+                    title: "very important data",
+                    important: true,
+                },
             },
         },
     },

@@ -1,5 +1,6 @@
 import { Firestore } from "@google-cloud/firestore"
 import { cache } from "react"
+import { isEven } from "./helpers"
 
 export const firestoreDatabase = new Firestore({
     projectId: process.env.PROJECT_ID,
@@ -14,6 +15,9 @@ export const firestoreDatabase = new Firestore({
 })
 
 export const getContent = cache(async <T>(docPath: string): Promise<T> => {
-    const docRef = firestoreDatabase.doc(`${docPath}/content`)
+    const splitPath = docPath.split("/")
+    const contentPath = isEven(splitPath.length) ? "/content/data" : "/content"
+
+    const docRef = firestoreDatabase.doc(`${docPath}${contentPath}`)
     return (await docRef.get().then((doc) => doc.data())) as T
 })
