@@ -1,4 +1,6 @@
 div.heading-component {
+    --heading-button-size: 1.75rem;
+
     width: fit-content;
     display: flex;
     justify-content: center;
@@ -22,23 +24,28 @@ div.heading-component {
         font-weight: var(--heading-weight);
     }
 
-    button {
+    button,
+    a {
         margin-left: 1rem;
-        display: flex;
-
-        svg {
-            width: 1.75rem;
-            height: 1.75rem;
-            fill: var(--text-color);
-            transition: transform var(--transition-duration);
-        }
+        transition: transform var(--transition-duration);
 
         &:hover,
         &:focus-visible {
-            svg {
-                transform: scale(1.25);
-            }
+            transform: scale(1.25);
         }
+    }
+
+    button {
+        svg {
+            width: var(--heading-button-size);
+            height: var(--heading-button-size);
+            fill: var(--text-color);
+        }
+    }
+
+    a {
+        font-size: var(--heading-button-size);
+        text-decoration: none;
     }
 }
 

@@ -1,4 +1,5 @@
 import type { ReactNode, DetailedHTMLProps, HTMLAttributes } from "react"
+import NextLink from "next/link"
 import "./heading.css"
 import CopyButton from "./CopyButton"
 
@@ -46,7 +47,14 @@ const Heading = ({ level, children, copy }: HeadingProps) => {
     return (
         <div id={id} className="heading-component">
             <HeadingText>{children}</HeadingText>
-            {shouldDisplayCopy && <CopyButton id={id} />}
+            {shouldDisplayCopy && (
+                <>
+                    <CopyButton id={id} />
+                    <NextLink title={id} href={`#${id}`}>
+                        #
+                    </NextLink>
+                </>
+            )}
         </div>
     )
 }
