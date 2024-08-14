@@ -34,6 +34,8 @@ To view the preview env, you need to use a token obtained from `gcloud auth prin
 
 Or proxy it using `npm run proxy:preview`.
 
+Note that for this proxy, you will need to install and be signed into the [gcloud cli utility](https://cloud.google.com/sdk/docs/install).
+
 ## CI/CD
 
 This project use [CircleCi](https://circleci.com/) for CI/CD.
