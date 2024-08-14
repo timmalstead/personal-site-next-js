@@ -42,18 +42,28 @@ const data = {
     },
     home: {
         content: {
-            text: `
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
 # Home page mock info
 ${getPageInfo()}
 `,
+                },
+            ],
         },
     },
     about: {
         content: {
-            text: `
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
 # About page mock info
 ${getPageInfo()}
 `,
+                },
+            ],
         },
     },
 }
