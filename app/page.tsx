@@ -5,7 +5,7 @@ const Home = () => {
     const homePagePath = headers().get("X-Pagename")
     return (
         <main>
-            <Resolver dataPath={homePagePath} />
+            <Resolver dataPath={homePagePath} dataType="page" />
         </main>
     )
 }

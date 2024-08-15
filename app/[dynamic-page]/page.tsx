@@ -5,7 +5,7 @@ const DynamicPage = () => {
     const dynamicPagePath = headers().get("X-Pagename")
     return (
         <main>
-            <Resolver dataPath={dynamicPagePath} />
+            <Resolver dataPath={dynamicPagePath} dataType="page" />
         </main>
     )
 }

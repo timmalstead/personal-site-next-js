@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 
 interface ResolverProps {
     dataPath: string | null
+    dataType: "page" | "component"
 }
 
 interface ComponentMapEntry {
@@ -16,11 +17,19 @@ const componentMap: {
     [key in ComponentMapEntry["name"]]: (args: ComponentMapEntry) => ReactNode
 } = {
     Markdown: ({ text }) =>
-        text?.split("\\n").map((doc) => <Markdown key={doc}>{doc}</Markdown>),
+        text?.split("\\n").map((md, i) => {
+            const keyFromMd = `${md.slice(0, 5)}${i}`
+            return <Markdown key={keyFromMd}>{md}</Markdown>
+        }),
 }
 
+const validErrorMessages = [
+    "Cannot destructure property 'components' of '(intermediate value)'",
+    "Cannot read properties of undefined",
+]
+
 export const dynamic = "force-dynamic"
-const Resolver = async ({ dataPath }: ResolverProps) => {
+const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
         const { components } = await getContent<{
             components: ComponentMapEntry[]
@@ -32,7 +41,11 @@ const Resolver = async ({ dataPath }: ResolverProps) => {
         const errorMessage = convertedError.toString()
 
         console.error(errorMessage)
-        if (errorMessage.includes("Cannot read properties of undefined"))
+
+        if (
+            dataType === "page" &&
+            validErrorMessages.some((msg) => errorMessage.includes(msg))
+        )
             redirectToNotFound()
         return <></>
     }
