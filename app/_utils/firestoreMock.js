@@ -91,7 +91,8 @@ class Firestore {
 
         for (const key of splitKeyArray) {
             tempData = tempData[key]
-            if (tempData === undefined) break
+            if (tempData === undefined)
+                throw new Error("Cannot read properties of undefined")
         }
 
         return {
