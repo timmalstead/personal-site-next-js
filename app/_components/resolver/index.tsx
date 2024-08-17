@@ -8,13 +8,15 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
+type ComponentNames = "Markdown"
+
 interface ComponentMapEntry {
-    name: "Markdown"
+    name: ComponentNames
     text?: string
 }
 
 const componentMap: {
-    [key in ComponentMapEntry["name"]]: (args: ComponentMapEntry) => ReactNode
+    [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
 } = {
     Markdown: ({ text }) =>
         text?.split("\\n").map((md, i) => {
@@ -24,7 +26,7 @@ const componentMap: {
 }
 
 const validErrorMessages = [
-    "Cannot destructure property 'components' of '(intermediate value)'",
+    "Cannot destructure property",
     "Cannot read properties of undefined",
 ]
 

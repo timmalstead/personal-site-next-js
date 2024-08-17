@@ -8,7 +8,6 @@ interface MarkdownOptions extends Options {
     children: string
 }
 
-// could this be a function that returns the config, with additional params passed in per instance of Markdown? Should it be?
 const componentsConfig: MarkdownOptions["components"] = {
     h1: ({ children }) => <Heading level="h1">{children}</Heading>,
     h2: ({ children }) => (
