@@ -1,4 +1,3 @@
-/* prettier-ignore */
 const errorStyle = `
     main.not-found {
         display: flex;
