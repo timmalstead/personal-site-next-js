@@ -56,7 +56,15 @@ This was instituted as I thought it would be easier and less complex than using 
 
 This project uses [Pulumi](https://www.pulumi.com/) to manage infrastrcture as code (IAC).
 
-This is managed by a seperate repo of [Pulumi code](https://github.com/timmalstead/personal-site-gcp-infra) tailored to this specific project
+This is managed by a seperate repo of [Pulumi code](https://github.com/timmalstead/personal-site-gcp-infra) tailored to this specific project.
+
+## Secrets
+
+This project uses the [1Password CLI](https://developer.1password.com/docs/cli/get-started/) and a [1Password Service Account](https://developer.1password.com/docs/service-accounts/) to manage secrets locally, for CI/CD, preview environments and for production.
+
+To template secrets locally, make sure that you are [signed into the proper service account](https://developer.1password.com/docs/service-accounts/use-with-1password-cli/#get-started) and run `npm run secrets:local`.
+
+This will save `.env.local` at the root level of this project and allow you to use needed secrets for local development.
 
 ## Learn More about Next.js
 
