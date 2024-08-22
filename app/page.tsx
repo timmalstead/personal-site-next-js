@@ -6,6 +6,8 @@ const Home = () => {
     return (
         <main>
             <Resolver dataPath={homePagePath} dataType="page" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/assets/google_search_console.png" alt="image test" />
         </main>
     )
 }

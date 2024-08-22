@@ -4,8 +4,7 @@ const serverOnlyPackages = [
     /lorem-ipsum/,
 ]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
-const assetBucketUrl =
-    process.env?.ASSET_BUCKET_URL || "http://www.storage.fake/"
+const assetBucketUrl = process.env?.ASSET_BUCKET_URL || "https://placehold.co/"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
