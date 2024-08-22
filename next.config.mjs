@@ -4,7 +4,6 @@ const serverOnlyPackages = [
     /lorem-ipsum/,
 ]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
-const assetBucketUrl = process.env?.ASSET_BUCKET_URL || "https://placehold.co/"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -30,7 +29,8 @@ const nextConfig = {
     rewrites: async () => [
         {
             source: "/assets/:path*",
-            destination: `${assetBucketUrl}:path*`,
+            destination:
+                "https://storage.googleapis.com/public-site-storage-6611b8f/:path*",
         },
     ],
 }
