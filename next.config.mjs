@@ -4,6 +4,8 @@ const serverOnlyPackages = [
     /lorem-ipsum/,
 ]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
+const assetBucketUrl =
+    process.env?.ASSET_BUCKET_URL || "http://www.storage.fake/"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -26,6 +28,12 @@ const nextConfig = {
         }
         return config
     },
+    rewrites: async () => [
+        {
+            source: "/assets/:path*",
+            destination: `${assetBucketUrl}:path*`,
+        },
+    ],
 }
 
 export default nextConfig
