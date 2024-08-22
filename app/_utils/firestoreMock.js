@@ -68,8 +68,6 @@ ${getPageInfo()}
     },
 }
 
-console.info("using firestore mock")
-
 class Firestore {
     collection(collectionName) {
         return {
