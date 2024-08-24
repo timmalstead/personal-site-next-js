@@ -8,7 +8,7 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
-type ComponentNames = "Markdown"
+type ComponentNames = Lowercase<"Markdown">
 
 interface ComponentMapEntry {
     name: ComponentNames
@@ -18,7 +18,7 @@ interface ComponentMapEntry {
 const componentMap: {
     [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
 } = {
-    Markdown: ({ text }) =>
+    markdown: ({ text }) =>
         text?.split("\\n").map((md, i) => {
             const keyFromMd = `${md.slice(0, 5)}${i}`
             return <Markdown key={keyFromMd}>{md}</Markdown>
@@ -37,7 +37,9 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
             components: ComponentMapEntry[]
         }>(dataPath as string)
 
-        return components.map((props) => componentMap[props.name](props))
+        return components.map((props) =>
+            componentMap[props.name.toLowerCase() as ComponentNames](props)
+        )
     } catch (error) {
         const convertedError = error as Error
         const errorMessage = convertedError.toString()
