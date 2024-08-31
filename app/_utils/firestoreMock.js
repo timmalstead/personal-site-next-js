@@ -48,7 +48,28 @@ const data = {
                     text: `
 # Home page mock info
 ${getPageInfo()}
+
+![this is a picture of the search console"](/google_search_console.png "the search console")
+![this is a picture of the search console"](/google_search_console:w1917-h1014.png "the search console, but this time the image is optimized with width and height")
 `,
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console.png",
+                    alt: "the search console",
+                    title: "the search console, but delivered as an Image component",
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console:w1917-h1014.png",
+                    alt: "the search console",
+                    title: "the search console, but delivered as an Image component and optimized for width and height",
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console:a1917-b1014.png",
+                    alt: "the search console",
+                    title: "the search console, but without the w and h string params to see if it breaks",
                 },
             ],
         },
@@ -61,7 +82,27 @@ ${getPageInfo()}
                     text: `
 # About page mock info
 ${getPageInfo()}
+![this is a picture of the search console"](/google_search_console.png "the search console")
+![this is a picture of the search console"](/google_search_console:w1917-h1014.png "the search console, but this time the image is optimized with width and height")
 `,
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console.png",
+                    alt: "the search console",
+                    title: "the search console, but delivered as an Image component",
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console:w1917-h1014.png",
+                    alt: "the search console",
+                    title: "the search console, but delivered as an Image component and optimized for width and height",
+                },
+                {
+                    name: "Image",
+                    src: "/google_search_console:a1917-b1014.png",
+                    alt: "the search console",
+                    title: "the search console, but without the w and h string params to see if it breaks",
                 },
             ],
         },

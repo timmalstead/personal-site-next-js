@@ -1,4 +1,4 @@
-import Markdown from "../markdown"
+import { Markdown, Image, type ImageProps } from "../"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
 import type { ReactNode } from "react"
@@ -8,12 +8,12 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
-type ComponentNames = Lowercase<"Markdown">
+type ComponentNames = Lowercase<"Markdown" | "Image">
 
-interface ComponentMapEntry {
+type ComponentMapEntry = {
     name: ComponentNames
     text?: string
-}
+} & ImageProps
 
 const componentMap: {
     [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
@@ -23,6 +23,10 @@ const componentMap: {
             const keyFromMd = `${md.slice(0, 5)}${i}`
             return <Markdown key={keyFromMd}>{md}</Markdown>
         }),
+    image: ({ src, alt, ...rest }) =>
+        typeof src === "string" && (
+            <Image src={src} alt={alt || ""} {...rest} />
+        ),
 }
 
 const validErrorMessages = [
@@ -51,7 +55,6 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
             validErrorMessages.some((msg) => errorMessage.includes(msg))
         )
             redirectToNotFound()
-        return <></>
     }
 }
 

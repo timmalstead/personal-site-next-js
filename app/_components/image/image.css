@@ -1,0 +1,15 @@
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 2rem auto;
+
+    &.inline {
+        display: inline-block;
+    }
+
+    &.fill-override {
+        /* override fill behavior for NextImage */
+        position: static !important;
+    }
+}

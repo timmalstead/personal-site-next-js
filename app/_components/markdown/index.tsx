@@ -1,6 +1,6 @@
 import ReactMarkdown, { type Options } from "react-markdown"
 import NextLink from "next/link"
-import Heading from "../heading"
+import { Heading, Image } from "../"
 import { forwardRef } from "react"
 
 // making children required
@@ -20,17 +20,21 @@ const componentsConfig: MarkdownOptions["components"] = {
     h5: ({ children }) => <Heading level="h5">{children}</Heading>,
     h6: ({ children }) => <Heading level="h6">{children}</Heading>,
     a: ({ href, children }) => {
-        const isExternalLink = (href as string).startsWith("http")
-        return (
-            <NextLink
-                target={isExternalLink ? "_blank" : "_self"}
-                className="inline"
-                href={href as string}
-            >
-                {children}
-            </NextLink>
-        )
+        if (href) {
+            const isExternalLink = href.startsWith("http")
+            return (
+                <NextLink
+                    target={isExternalLink ? "_blank" : "_self"}
+                    className="inline"
+                    href={href}
+                >
+                    {children}
+                </NextLink>
+            )
+        }
     },
+    img: ({ src, alt, title }) =>
+        src && <Image src={src} alt={alt || ""} title={title} />,
 }
 
 const Markdown = forwardRef<MarkdownOptions, MarkdownOptions>(
