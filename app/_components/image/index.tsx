@@ -3,10 +3,12 @@ import { headers } from "next/headers"
 import "./image.css"
 
 export type ImageProps = NextImageProps & {
+    name?: string
     inline?: boolean
 }
 
-const Image = ({ src, inline, ...rest }: ImageProps) => {
+// unpacking name so it will not be passed to the NextImage component
+const Image = ({ src, inline, name: _name, ...rest }: ImageProps) => {
     // for static src imports
     if (typeof src !== "string")
         return (
