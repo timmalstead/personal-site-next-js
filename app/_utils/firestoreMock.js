@@ -48,28 +48,7 @@ const data = {
                     text: `
 # Home page mock info
 ${getPageInfo()}
-
-![this is a picture of the search console"](/google_search_console.png "the search console")
-![this is a picture of the search console"](/google_search_console:w1917-h1014.png "the search console, but this time the image is optimized with width and height")
 `,
-                },
-                {
-                    name: "Image",
-                    src: "/google_search_console.png",
-                    alt: "the search console",
-                    title: "the search console, but delivered as an Image component",
-                },
-                {
-                    name: "Image",
-                    src: "/google_search_console:w1917-h1014.png",
-                    alt: "the search console",
-                    title: "the search console, but delivered as an Image component and optimized for width and height",
-                },
-                {
-                    name: "Image",
-                    src: "/google_search_console:a1917-b1014.png",
-                    alt: "the search console",
-                    title: "the search console, but without the w and h string params to see if it breaks",
                 },
             ],
         },
@@ -82,27 +61,61 @@ ${getPageInfo()}
                     text: `
 # About page mock info
 ${getPageInfo()}
-![this is a picture of the search console"](/google_search_console.png "the search console")
-![this is a picture of the search console"](/google_search_console:w1917-h1014.png "the search console, but this time the image is optimized with width and height")
+`,
+                },
+            ],
+        },
+    },
+    "image-examples": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
+![a large svg, rendered via markdown and loaded without width and height](/large.svg "a large svg, rendered via markdown and loaded without width and height")
+![a large svg, rendered via markdown and optimized with width and height](/large:w1917-h1014.svg "a large svg, rendered via markdown and optimized with width and height")
 `,
                 },
                 {
                     name: "Image",
-                    src: "/google_search_console.png",
-                    alt: "the search console",
-                    title: "the search console, but delivered as an Image component",
+                    src: "/large.svg",
+                    alt: "a large svg, rendered via the Image component and loaded without width and height",
+                    title: "a large svg, rendered via the Image component and loaded without width and height",
                 },
                 {
                     name: "Image",
-                    src: "/google_search_console:w1917-h1014.png",
-                    alt: "the search console",
-                    title: "the search console, but delivered as an Image component and optimized for width and height",
+                    src: "/large:w1917-h1014.svg",
+                    alt: "a large svg, rendered via the Image component and optimized with width and height",
+                    title: "a large svg, rendered via the Image component and optimized with width and height",
                 },
                 {
                     name: "Image",
-                    src: "/google_search_console:a1917-b1014.png",
-                    alt: "the search console",
-                    title: "the search console, but without the w and h string params to see if it breaks",
+                    src: "/large:h1014-w1917.svg",
+                    alt: "a large svg, rendered via the Image component and with the height and width params swapped to see if it breaks",
+                    title: "a large svg, rendered via the Image component and with the height and width params swapped to see if it breakst",
+                },
+                {
+                    name: "Image",
+                    src: "/large:a1917-b1014.svg",
+                    alt: "a large svg, rendered via the Image component with a and b params in place of the w and h string params to see if it breaks",
+                    title: "a large svg, rendered via the Image component with a and b params in place of the w and h string params to see if it breaks",
+                },
+                {
+                    name: "Image",
+                    src: "/large:w1917-h1014.svg",
+                    alt: "a large svg, rendered via the Image component and optimized with explicit width and height props that should override the width and height in the src",
+                    title: "a large svg, rendered via the Image component and optimized with explicit width and height props that should override the width and height in the src",
+                    width: 500,
+                    height: 264,
+                },
+                {
+                    name: "Image",
+                    src: "/large:w1917-h1014.svg",
+                    alt: "a large svg, rendered via the Image component and optimized with explicit width and height props that must override the width and height in the src as well an inline props so that it will not center automatically",
+                    title: "a large svg, rendered via the Image component and optimized with explicit width and height props that must override the width and height in the src as well an inline props so that it will not center automatically",
+                    width: 500,
+                    height: 264,
+                    inline: true,
                 },
             ],
         },

@@ -1,4 +1,5 @@
 import NextImage, { type ImageProps as NextImageProps } from "next/image"
+import { headers } from "next/headers"
 import "./image.css"
 
 export type ImageProps = NextImageProps & {
@@ -16,6 +17,7 @@ const Image = ({ src, inline, ...rest }: ImageProps) => {
             />
         )
     // for remote src
+    const imagePath = headers().get("X-Pagename")
     const [startOfSlice, endOfSlice] = [src.indexOf(":") + 1, src.indexOf(".")]
     const widthAndHeight = src.slice(startOfSlice, endOfSlice)?.split("-")
 
@@ -43,9 +45,8 @@ const Image = ({ src, inline, ...rest }: ImageProps) => {
         className: `${!hasWidthAndHeight && "fill-override"} ${inline && "inline"}`,
     }
     return (
-        // TODO: will need to add the pagename header once firestore is set up with folders
         <NextImage
-            src={`/assets${src}`}
+            src={`/assets/${imagePath}${src}`}
             {...(shouldUseConditionalClasses && conditionalClasses)}
             {...sizingProps}
             {...rest}
