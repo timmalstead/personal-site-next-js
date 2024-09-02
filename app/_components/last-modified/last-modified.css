@@ -1,0 +1,4 @@
+p.last-modified > em {
+    padding: 0.05rem 0.5rem 0.05rem 0.25rem;
+    background-color: var(--contrast-color);
+}

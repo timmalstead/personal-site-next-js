@@ -1,4 +1,4 @@
-import { Markdown, Image, type ImageProps } from "../"
+import { Markdown, Image, LastModified, type ImageProps } from "../"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
 import type { ReactNode } from "react"
@@ -8,11 +8,12 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
-type ComponentNames = Lowercase<"Markdown" | "Image">
+type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified">
 
 type ComponentMapEntry = {
     name: ComponentNames
     text?: string
+    lastModifiedDate?: number
 } & ImageProps
 
 const componentMap: {
@@ -26,6 +27,10 @@ const componentMap: {
     image: ({ src, alt, ...rest }) =>
         typeof src === "string" && (
             <Image src={src} alt={alt || ""} {...rest} />
+        ),
+    lastmodified: ({ lastModifiedDate }) =>
+        lastModifiedDate && (
+            <LastModified lastModifiedDate={lastModifiedDate} />
         ),
 }
 

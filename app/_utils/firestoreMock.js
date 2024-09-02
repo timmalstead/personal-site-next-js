@@ -50,6 +50,10 @@ const data = {
 ${getPageInfo()}
 `,
                 },
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1725320604553,
+                },
             ],
         },
     },
