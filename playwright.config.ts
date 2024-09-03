@@ -18,13 +18,13 @@ let projects = [
         name: "chromium",
         use: { ...devices["Desktop Chrome"] },
     },
+]
+
+const localRunBrowsers = [
     {
         name: "firefox",
         use: { ...devices["Desktop Firefox"] },
     },
-]
-
-const localRunBrowsers = [
     {
         name: "webkit",
         use: { ...devices["Desktop Safari"] },

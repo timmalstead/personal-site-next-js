@@ -379,3 +379,24 @@ test("displays zoom pinch percentage accurately", async ({
 
     expect(pinchZoomPercentage).toHaveText("226%")
 })
+
+test("should properly render the date when the content was last modified", async ({
+    page,
+}) => {
+    const dateString = "Mon Sep 02 2024"
+    await page.goto("/")
+    const lastModifiedComponent = page.getByText(
+        `This content was last modified on ${dateString}`
+    )
+    await expect(lastModifiedComponent).toBeAttached()
+
+    const dateNode = page.getByText(dateString)
+
+    const fontStyle = await dateNode.evaluate((element) =>
+        window.getComputedStyle(element).getPropertyValue("font-style")
+    )
+
+    expect(fontStyle).toEqual("italic")
+
+    await page.close()
+})
