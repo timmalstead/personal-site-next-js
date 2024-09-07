@@ -1,6 +1,6 @@
 import "./last-modified.css"
 
-interface LastModifiedProps {
+export type LastModifiedProps = {
     // epoch date the content was last modified
     lastModifiedDate: number
 }

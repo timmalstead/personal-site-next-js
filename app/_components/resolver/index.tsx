@@ -1,4 +1,10 @@
-import { Markdown, Image, LastModified, type ImageProps } from "../"
+import {
+    Markdown,
+    Image,
+    type ImageProps,
+    LastModified,
+    type LastModifiedProps,
+} from "../"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
 import type { ReactNode } from "react"
@@ -13,8 +19,8 @@ type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified">
 type ComponentMapEntry = {
     name: ComponentNames
     text?: string
-    lastModifiedDate?: number
-} & ImageProps
+} & ImageProps &
+    LastModifiedProps
 
 const componentMap: {
     [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
