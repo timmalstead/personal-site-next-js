@@ -9,6 +9,8 @@ footer {
     );
     transition: all var(--transition-duration);
     padding: 1rem 15%;
+    position: relative;
+    z-index: 0;
 
     nav {
         margin-bottom: 1rem;

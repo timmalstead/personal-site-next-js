@@ -49,6 +49,15 @@ const data = {
 # Home page mock info
 ${getPageInfo()}
 `,
+                    useReadPercentage: false,
+                },
+                {
+                    name: "Markdown",
+                    text: `
+# Home page mock info
+${getPageInfo()}
+`,
+                    useReadPercentage: true,
                 },
                 {
                     name: "LastModified",

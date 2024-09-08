@@ -4,10 +4,11 @@ import {
     type ImageProps,
     LastModified,
     type LastModifiedProps,
+    ReadPercentage,
 } from "../"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
-import type { ReactNode } from "react"
+import { Fragment, type ReactNode } from "react"
 
 interface ResolverProps {
     dataPath: string | null
@@ -17,7 +18,8 @@ interface ResolverProps {
 type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified">
 
 type ComponentMapEntry = {
-    name: ComponentNames
+    name?: ComponentNames
+    useReadPercentage?: boolean
     text?: string
 } & ImageProps &
     LastModifiedProps
@@ -52,9 +54,14 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
             components: ComponentMapEntry[]
         }>(dataPath as string)
 
-        return components.map((props) =>
-            componentMap[props.name.toLowerCase() as ComponentNames](props)
-        )
+        return components.map(({ useReadPercentage, name, ...props }, i) => {
+            const Wrapper = useReadPercentage ? ReadPercentage : Fragment
+            return (
+                <Wrapper key={`${name}-${i}`}>
+                    {componentMap[name?.toLowerCase() as ComponentNames](props)}
+                </Wrapper>
+            )
+        })
     } catch (error) {
         const convertedError = error as Error
         const errorMessage = convertedError.toString()
