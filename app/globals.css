@@ -39,7 +39,6 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    scroll-behavior: smooth;
 
     &:focus-visible {
         outline: 0.25rem solid var(--highlight-color);

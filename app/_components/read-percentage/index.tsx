@@ -5,6 +5,8 @@ import "./read-percentage.css"
 interface ReadPercentageProps {
     children: ReactNode
 }
+
+const locator = "read-percentage"
 const ReadPercentage = ({ children }: ReadPercentageProps) => {
     const scrollRef = useRef<HTMLDivElement | null>(null)
     const [isIntersecting, setIsIntersecting] = useState<boolean>(false)
@@ -59,7 +61,8 @@ const ReadPercentage = ({ children }: ReadPercentageProps) => {
         <>
             {isIntersecting && (
                 <progress
-                    className="read-percentage"
+                    data-testid={locator}
+                    className={locator}
                     value={readPercentage}
                     max={100}
                 />
