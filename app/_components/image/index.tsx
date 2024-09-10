@@ -7,7 +7,8 @@ export type ImageProps = NextImageProps & {
     inline?: boolean
 }
 
-const Image = ({ src, inline, ...rest }: ImageProps) => {
+// unpacking name so it doesn't get passed to the NextImage component
+const Image = ({ src, inline, name: _name, ...rest }: ImageProps) => {
     // for static src imports
     if (typeof src !== "string")
         return (

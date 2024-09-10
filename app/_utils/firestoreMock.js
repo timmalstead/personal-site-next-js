@@ -67,6 +67,13 @@ Nulla deserunt labore pariatur sunt nulla. Elit fugiat sunt dolor velit ea cupid
 Eiusmod fugiat enim ipsum non. In culpa quis nostrud anim occaecat ex. Aute sint et officia pariatur occaecat. Lorem ipsum deserunt voluptate. Reprehenderit est sint magna qui. Do esse est dolore commodo cillum. In tempor exercitation laboris proident cillum nostrud. Lorem officia Lorem reprehenderit veniam. Esse ad reprehenderit voluptate in. Ullamco anim ullamco dolor ullamco deserunt. Culpa tempor enim sint ex duis cupidatat.
 `
 
+const standardImageObject = {
+    name: "Image",
+    src: "/large:w1917-h1014.svg",
+    alt: "a large svg, rendered via the Image component and optimized with width and height",
+    title: "a large svg, rendered via the Image component and optimized with width and height",
+}
+
 const data = {
     api: {
         test: {
@@ -161,12 +168,7 @@ ${staticDataForReadPercentage.repeat(5)}
                     alt: "a large svg, rendered via the Image component and loaded without width and height",
                     title: "a large svg, rendered via the Image component and loaded without width and height",
                 },
-                {
-                    name: "Image",
-                    src: "/large:w1917-h1014.svg",
-                    alt: "a large svg, rendered via the Image component and optimized with width and height",
-                    title: "a large svg, rendered via the Image component and optimized with width and height",
-                },
+                standardImageObject,
                 {
                     name: "Image",
                     src: "/large:h1014-w1917.svg",
@@ -196,6 +198,31 @@ ${staticDataForReadPercentage.repeat(5)}
                     height: 264,
                     inline: true,
                 },
+            ],
+        },
+    },
+    "array-examples": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
+# Array example page mock info
+${getPageInfo()}
+`,
+                },
+                {
+                    name: "Array",
+                    useReadPercentage: true,
+                    components: [
+                        standardImageObject,
+                        standardImageObject,
+                        standardImageObject,
+                    ],
+                },
+                standardImageObject,
+                standardImageObject,
+                standardImageObject,
             ],
         },
     },

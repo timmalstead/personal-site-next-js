@@ -15,18 +15,26 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
-type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified">
+type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified" | "Array">
+
+type ComponentMap = {
+    [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
+}
 
 type ComponentMapEntry = {
     name?: ComponentNames
     useReadPercentage?: boolean
     text?: string
+    components?: ComponentMapEntry[]
 } & ImageProps &
     LastModifiedProps
 
-const componentMap: {
-    [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
-} = {
+const renderComponentMapEntry = (
+    componentMap: ComponentMap,
+    props: ComponentMapEntry
+) => componentMap[props?.name?.toLowerCase() as ComponentNames](props)
+
+const componentMap: ComponentMap = {
     markdown: ({ text }) =>
         text?.split("\\n").map((md, i) => {
             const keyFromMd = `${md.slice(0, 5)}${i}`
@@ -39,6 +47,10 @@ const componentMap: {
     lastmodified: ({ lastModifiedDate }) =>
         lastModifiedDate && (
             <LastModified lastModifiedDate={lastModifiedDate} />
+        ),
+    array: ({ components }) =>
+        components?.map((props) =>
+            renderComponentMapEntry(componentMap, props)
         ),
 }
 
@@ -54,11 +66,11 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
             components: ComponentMapEntry[]
         }>(dataPath as string)
 
-        return components.map(({ useReadPercentage, name, ...props }, i) => {
+        return components.map(({ useReadPercentage, ...props }, i) => {
             const Wrapper = useReadPercentage ? ReadPercentage : Fragment
             return (
-                <Wrapper key={`${name}-${i}`}>
-                    {componentMap[name?.toLowerCase() as ComponentNames](props)}
+                <Wrapper key={`${props?.name}-${i}`}>
+                    {renderComponentMapEntry(componentMap, props)}
                 </Wrapper>
             )
         })
