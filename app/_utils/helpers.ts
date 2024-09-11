@@ -5,3 +5,13 @@ export const floatingPointToPercentage = (float: number) => {
     if (intString[0] === "0") intString = intString.slice(1)
     return `${intString}%`
 }
+
+export const setCookie = (cookieName: string, cookieValue: string): void => {
+    // some browsers (notably Safari) don't support requestIdleCallback 😑
+    const setDismissalCookie = () =>
+        (document.cookie = `${cookieName}=${cookieValue}`)
+
+    if (window.requestIdleCallback)
+        window.requestIdleCallback(setDismissalCookie)
+    else setDismissalCookie()
+}

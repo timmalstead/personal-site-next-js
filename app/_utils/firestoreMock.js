@@ -223,6 +223,10 @@ ${getPageInfo()}
                 standardImageObject,
                 standardImageObject,
                 standardImageObject,
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1725935835263,
+                },
             ],
         },
     },

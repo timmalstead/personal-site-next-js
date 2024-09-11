@@ -1,13 +1,43 @@
-import type { ReactNode } from "react"
+"use client"
+import { useState, useEffect, type ReactNode } from "react"
+import { setCookie } from "../../_utils/helpers"
+import type { SettingsDismiss } from "../../_utils/sharedTypes"
 import "./user-settings.css"
 
-// use a custom svg logo instead of the marker?
-// what says 'settings' that isn't a gear?
-const UserSettings = ({ children }: { children: ReactNode }) => (
-    <details className="user-settings">
-        <summary>settings</summary>
-        <ul>{children}</ul>
-    </details>
-)
+interface UserSettingsProps {
+    children: ReactNode
+    userSettingsStatusProp: SettingsDismiss
+}
+
+const UserSettings = ({
+    children,
+    userSettingsStatusProp,
+}: UserSettingsProps) => {
+    const [userSettingsStatus, setUserSettingsStatus] =
+        useState<SettingsDismiss>(userSettingsStatusProp)
+
+    useEffect(
+        () => setCookie("userSettings", userSettingsStatus),
+        [userSettingsStatus]
+    )
+
+    const handleDismissClick = (): void =>
+        setUserSettingsStatus(userSettingsStatus === "open" ? "closed" : "open")
+
+    return (
+        <div className={`user-settings ${userSettingsStatus}`}>
+            <button
+                onClick={handleDismissClick}
+                title="Click to toggle user settings"
+            >
+                ↔
+            </button>
+            <details>
+                <summary>settings</summary>
+                <ul>{children}</ul>
+            </details>
+        </div>
+    )
+}
 
 export default UserSettings

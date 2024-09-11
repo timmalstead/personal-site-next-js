@@ -11,6 +11,7 @@ export interface Route {
 
 export type ColorMode = "light" | "dark"
 export type ReducedMotion = "reduce" | "no-preference"
+export type SettingsDismiss = "closed" | "open"
 export type Browser =
     | "chrome"
     | "chromium"

@@ -1,109 +1,137 @@
-details.user-settings {
+div.user-settings {
     --settings-width: 14rem;
     --settings-offset: 2rem;
     --settings-padding: 0.5rem 1rem;
+    --settings-move: -7rem;
 
-    cursor: default;
-    user-select: none;
     position: fixed;
     z-index: 1;
     right: var(--settings-offset);
     bottom: var(--settings-offset);
-    padding: var(--settings-padding);
     background-color: var(--contrast-color);
+    display: flex;
+    transition: all var(--transition-duration);
 
-    summary {
-        list-style: none;
+    &.closed {
+        border-radius: 2rem 0 0 2rem;
+        right: var(--settings-move);
+
+        details {
+            color: var(--contrast-color);
+        }
+    }
+
+    button {
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding-left: 1rem;
+    }
 
-        /* safari specific implementation 😑 */
-        &::-webkit-details-marker {
+    &:has(details[open]) {
+        button {
             display: none;
         }
-
-        &::after {
-            content: "⬇";
-            cursor: pointer;
-            transition: transform var(--transition-duration);
-        }
     }
 
-    ul {
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        min-width: var(--settings-width);
-        right: var(--settings-offset);
-        bottom: calc(2.25 * var(--settings-offset));
+    details {
+        cursor: default;
+        user-select: none;
         padding: var(--settings-padding);
-        background-color: var(--contrast-color);
 
-        border-bottom: 0.1rem solid;
-        border-image: linear-gradient(
-                90deg,
-                var(--contrast-color) 5%,
-                var(--text-color) 10%,
-                var(--text-color) 90%,
-                var(--contrast-color) 95%
-            )
-            1;
-
-        li {
-            display: inherit;
-            align-items: center;
+        summary {
+            list-style: none;
+            display: flex;
             justify-content: space-between;
-            margin-top: 0.5rem;
 
-            &:first-of-type {
-                margin-top: 0;
+            /* safari specific implementation 😑 */
+            &::-webkit-details-marker {
+                display: none;
+            }
+
+            &::after {
+                content: "⬇";
+                cursor: pointer;
+                transition: transform var(--transition-duration);
             }
         }
-    }
 
-    &:not([open]) {
-        summary {
-            &::after {
-                margin-left: 1rem;
+        ul {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            width: var(--settings-width);
+            right: var(--settings-offset);
+            bottom: calc(2.25 * var(--settings-offset));
+            padding: var(--settings-padding);
+            background-color: var(--contrast-color);
+
+            border-bottom: 0.1rem solid;
+            border-image: linear-gradient(
+                    90deg,
+                    var(--contrast-color) 5%,
+                    var(--text-color) 10%,
+                    var(--text-color) 90%,
+                    var(--contrast-color) 95%
+                )
+                1;
+
+            li {
+                display: inherit;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 0.5rem;
+
+                &:first-of-type {
+                    margin-top: 0;
+                }
             }
         }
-    }
 
-    &[open] {
-        min-width: var(--settings-width);
-        summary {
-            &::after {
-                transform: rotateX(0.5turn);
+        &:not([open]) {
+            summary {
+                &::after {
+                    margin-left: 1rem;
+                }
+            }
+        }
+
+        &[open] {
+            width: var(--settings-width);
+            summary {
+                &::after {
+                    transform: rotateX(0.5turn);
+                }
             }
         }
     }
 }
 
-/* will need to change marker from arrow to an image to make this media query work with icons instead of text */
-/* would this be a good candidate for a container query? */
 @media screen and (max-width: 600px) {
-    details.user-settings {
+    div.user-settings {
         --settings-offset: 1.5rem;
         --settings-padding: 0.25rem 0.5rem;
+        --settings-move: -6.5rem;
     }
 }
 
 @media screen and (min-width: 2000px) {
-    details.user-settings {
+    div.user-settings {
         --settings-width: 18rem;
         --settings-offset: 2.5rem;
+        --settings-move: -8rem;
     }
 }
 
 @media screen and (min-width: 2800px) {
-    details.user-settings {
+    div.user-settings {
         --settings-width: 20rem;
         --settings-offset: 3rem;
     }
 }
 
 @media not (scripting: enabled) {
-    details.user-settings {
+    div.user-settings {
         display: none;
     }
 }

@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react"
+import { setCookie } from "./helpers"
 import type { A11yKey } from "./sharedTypes"
 
 export const useA11yValue = <T>({
@@ -32,14 +33,10 @@ export const useA11yValue = <T>({
         )
     }, [a11yValue, keyObject])
 
-    useEffect(() => {
-        // some browsers (notably Safari) don't support requestIdleCallback 😑
-        const setA11yCookie = () =>
-            (document.cookie = `${cookieName}=${a11yValue}`)
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(setA11yCookie)
-        else setA11yCookie()
-    }, [a11yValue, cookieName])
+    useEffect(
+        () => setCookie(cookieName, a11yValue as string),
+        [a11yValue, cookieName]
+    )
 
     const toggleA11yCheckbox = ({
         target: { checked },
