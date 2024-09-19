@@ -22,8 +22,8 @@ div.user-settings {
     }
 
     button {
-        display: flex;
-        align-items: center;
+        position: relative;
+        top: -0.1rem;
         cursor: pointer;
         padding-left: 1rem;
     }
