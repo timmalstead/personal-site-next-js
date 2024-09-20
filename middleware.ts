@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse, userAgent } from "next/server"
 import type { Browser } from "./app/_utils/sharedTypes"
 
-const restrictedRoutes = ["/component-data"]
+const restrictedRoutes = ["/component-data", "/blog"]
 
 export const middleware = (request: NextRequest) => {
     const {

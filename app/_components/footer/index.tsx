@@ -1,23 +1,27 @@
+import { Resolver as resolver } from "../"
 import "./footer.css"
 
 const copyRight = `© 2019 - ${new Date().getFullYear()} by Timothy Malstead - All Rights Reserved`
-const tempLinks = ["blibbity", "blah", "foo", "bar"]
 
-const Footer = () => (
-    <footer>
-        {Boolean(tempLinks.length) && (
-            <nav>
-                <ul>
-                    {tempLinks.map((link) => (
-                        <li key={link}>
-                            <span>{link}</span>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        )}
-        <span>{copyRight}</span>
-    </footer>
-)
+const Footer = async () => {
+    const footerLinks = await resolver({
+        dataPath: "footer",
+        dataType: "component",
+    })
+    return (
+        <footer>
+            {Boolean(footerLinks?.length) && (
+                <nav>
+                    <ul>
+                        {footerLinks?.map((link) => (
+                            <li key={link.toString()}>{link}</li>
+                        ))}
+                    </ul>
+                </nav>
+            )}
+            <span>{copyRight}</span>
+        </footer>
+    )
+}
 
 export default Footer

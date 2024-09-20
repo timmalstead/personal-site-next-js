@@ -237,18 +237,50 @@ ${getPageInfo()}
                     components: [
                         {
                             name: "Link",
-                            text: `about`,
+                            text: "about",
+                            href: "/about",
+                            inline: false,
+                        },
+                    ],
+                },
+            },
+        },
+        footer: {
+            content: {
+                data: {
+                    components: [
+                        {
+                            name: "Link",
+                            text: "about me",
                             href: "/about",
                             inline: false,
                         },
                         {
                             name: "Link",
-                            text: `blog`,
-                            href: "/blog",
+                            text: "data use and policies",
+                            href: "/data",
+                            inline: false,
+                        },
+                        {
+                            name: "Link",
+                            text: "why i like the web",
+                            href: "/why-i-like-the-web",
+                            inline: false,
+                        },
+                        {
+                            name: "Link",
+                            text: "manifesto",
+                            href: "/manifesto",
+                            inline: false,
                         },
                     ],
                 },
             },
+        },
+    },
+    "header-and-footer": {
+        content: {
+            components: [],
         },
     },
 }
