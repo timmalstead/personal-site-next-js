@@ -13,7 +13,9 @@ const nextConfig = {
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
             ...config.resolve.alias,
+            // had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
             _components: resolve(__dirname, "app/_components"),
+            _utils: resolve(__dirname, "app/_utils"),
         }
 
         if (!isServer)
@@ -28,7 +30,10 @@ const nextConfig = {
             console.log("Using testing Firestore")
             config.resolve.alias = {
                 ...config.resolve.alias,
-                "@google-cloud/firestore": "/app/_utils/firestoreMock",
+                "@google-cloud/firestore": resolve(
+                    __dirname,
+                    "app/_utils/firestoreMock"
+                ),
             }
         }
         return config

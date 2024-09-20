@@ -1,12 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { cookies, headers } from "next/headers"
-import type {
-    ColorMode,
-    ReducedMotion,
-    Browser,
-    SettingsDismiss,
-} from "./_utils/sharedTypes"
+import type { ColorMode, ReducedMotion, Browser, SettingsDismiss } from "_utils"
 import { Noto_Sans } from "next/font/google"
 import {
     Header,

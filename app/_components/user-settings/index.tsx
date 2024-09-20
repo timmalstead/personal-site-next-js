@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect, type ReactNode } from "react"
-import { setCookie } from "../../_utils/helpers"
-import type { SettingsDismiss } from "../../_utils/sharedTypes"
+import { setCookie, type SettingsDismiss } from "_utils"
 import "./user-settings.css"
 
 interface UserSettingsProps {

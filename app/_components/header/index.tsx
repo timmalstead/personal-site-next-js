@@ -1,6 +1,6 @@
 import ClientHeader from "./ClientHeader"
 import { Link, Resolver as resolver } from "_components"
-import type { Browser /*, Route */ } from "../../_utils/sharedTypes"
+import type { Browser /*, Route */ } from "_utils"
 import "./header.css"
 
 // TODO: should the below info be available to the resolver as a backup?

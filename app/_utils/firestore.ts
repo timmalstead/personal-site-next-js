@@ -1,5 +1,5 @@
 import { Firestore } from "@google-cloud/firestore"
-import { isEven } from "./helpers"
+import { isEven } from "_utils"
 
 export const firestoreDatabase = new Firestore({
     projectId: process.env.PROJECT_ID,

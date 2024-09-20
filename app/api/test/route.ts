@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getContent } from "../../_utils/firestore"
 import { headers } from "next/headers"
+import { getContent } from "_utils"
 
 export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {

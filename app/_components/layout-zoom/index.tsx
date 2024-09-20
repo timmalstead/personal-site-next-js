@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { floatingPointToPercentage } from "../../_utils/helpers"
+import { floatingPointToPercentage } from "_utils"
 
 const LayoutZoom = () => {
     const [zoom, setZoom] = useState<string | null>(null)

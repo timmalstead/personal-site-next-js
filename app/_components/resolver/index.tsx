@@ -8,7 +8,7 @@ import {
     Link,
     type LinkProps,
 } from "_components"
-import { getContent } from "../../_utils/firestore"
+import { getContent } from "_utils"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
 
@@ -71,6 +71,7 @@ const validErrorMessages = [
     "Cannot read properties of undefined",
 ]
 
+// make dynamic behavior dependent on environment?
 export const dynamic = "force-dynamic"
 const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
