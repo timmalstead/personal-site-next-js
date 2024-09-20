@@ -1,5 +1,5 @@
 import ClientHeader from "./ClientHeader"
-import { Link, Resolver as resolver } from "../"
+import { Link, Resolver as resolver } from "_components"
 import type { Browser /*, Route */ } from "../../_utils/sharedTypes"
 import "./header.css"
 

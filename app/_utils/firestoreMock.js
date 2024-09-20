@@ -92,6 +92,9 @@ const data = {
                     name: "Markdown",
                     text: `
 # Home page mock info
+
+[link to about page](/about)
+
 ${getPageInfo()}
 `,
                 },

@@ -16,7 +16,7 @@ import {
     ReduceMotion,
     LayoutZoom,
     PinchZoom,
-} from "./_components"
+} from "_components"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })

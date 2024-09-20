@@ -1,4 +1,4 @@
-import { Resolver } from "./_components"
+import { Resolver } from "_components"
 
 const Home = () => (
     <main>

@@ -7,7 +7,7 @@ import {
     ReadPercentage,
     Link,
     type LinkProps,
-} from "../"
+} from "_components"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"

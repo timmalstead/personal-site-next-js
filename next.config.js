@@ -1,3 +1,5 @@
+const { resolve } = require("path")
+
 const serverOnlyPackages = [
     /react-markdown/,
     /@google-cloud\/firestore/,
@@ -9,6 +11,11 @@ const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 const nextConfig = {
     output: "standalone",
     webpack: (config, { isServer }) => {
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            _components: resolve(__dirname, "app/_components"),
+        }
+
         if (!isServer)
             serverOnlyPackages.forEach((serverPackage) => {
                 config.module.rules.push({
@@ -35,4 +42,4 @@ const nextConfig = {
     ],
 }
 
-export default nextConfig
+module.exports = nextConfig
