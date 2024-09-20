@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse, userAgent } from "next/server"
 import type { Browser } from "./app/_utils/sharedTypes"
 
+const restrictedRoutes = ["/component-data"]
+
 export const middleware = (request: NextRequest) => {
     const {
         nextUrl: { pathname },
@@ -15,6 +17,15 @@ export const middleware = (request: NextRequest) => {
     const response = NextResponse.next()
     response.headers.set("X-Browser", browserName)
     response.headers.set("X-Pagename", pageName)
+
+    const isRestrictedRoute = restrictedRoutes.some((route) =>
+        pathname.startsWith(route)
+    )
+    if (isRestrictedRoute) {
+        const redirectedUrl = request.nextUrl.clone()
+        redirectedUrl.pathname = "/"
+        return NextResponse.redirect(redirectedUrl, { status: 302 })
+    }
 
     const isApiRoute = pathname.startsWith("/api")
     if (isApiRoute) {

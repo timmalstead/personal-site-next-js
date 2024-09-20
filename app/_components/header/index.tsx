@@ -1,43 +1,45 @@
-import NextLink from "next/link"
 import ClientHeader from "./ClientHeader"
-import type { Browser, Route } from "../../_utils/sharedTypes"
+import { Link, Resolver as resolver } from "../"
+import type { Browser /*, Route */ } from "../../_utils/sharedTypes"
 import "./header.css"
 
-// should this be a fallback? maybe get this from firestore as a rule?
-export const routes: Route[] = [
-    { path: "/about", title: "about" },
-    { path: "/blog", title: "blog" },
-]
+// TODO: should the below info be available to the resolver as a backup?
+// const routes: Route[] = [
+//     { path: "/about", title: "about" },
+//     { path: "/blog", title: "blog" },
+// ]
 
 interface HeaderProps {
     browser: Browser
 }
 
-const Header = ({ browser }: HeaderProps) => (
-    <ClientHeader>
-        <div className="banner-container">
-            <div className="fold" />
-            <div className="banner">
-                <NextLink
-                    className={browser === "safari" ? "is-safari" : ""}
-                    title={"home"}
-                    href={"/"}
-                >
-                    timothy_malstead
-                </NextLink>
+const Header = async ({ browser }: HeaderProps) => {
+    const headerLinks = await resolver({
+        dataPath: "header",
+        dataType: "component",
+    })
+    return (
+        <ClientHeader>
+            <div className="banner-container">
+                <div className="fold" />
+                <div className="banner">
+                    <Link
+                        className={browser === "safari" ? "is-safari" : ""}
+                        title={"home"}
+                        href={"/"}
+                    >
+                        timothy_malstead
+                    </Link>
+                </div>
+                <div className="fold" />
             </div>
-            <div className="fold" />
-        </div>
-        <nav>
-            <ul>
-                {routes.map(({ path, title }) => (
-                    <li key={path}>
-                        <NextLink href={path}>{title}</NextLink>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    </ClientHeader>
-)
+            <nav>
+                <ul>
+                    {headerLinks?.map((link) => <li key={link.key}>{link}</li>)}
+                </ul>
+            </nav>
+        </ClientHeader>
+    )
+}
 
 export default Header

@@ -230,6 +230,27 @@ ${getPageInfo()}
             ],
         },
     },
+    "component-data": {
+        header: {
+            content: {
+                data: {
+                    components: [
+                        {
+                            name: "Link",
+                            text: `about`,
+                            href: "/about",
+                            inline: false,
+                        },
+                        {
+                            name: "Link",
+                            text: `blog`,
+                            href: "/blog",
+                        },
+                    ],
+                },
+            },
+        },
+    },
 }
 
 class Firestore {

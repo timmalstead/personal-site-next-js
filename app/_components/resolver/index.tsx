@@ -5,6 +5,8 @@ import {
     LastModified,
     type LastModifiedProps,
     ReadPercentage,
+    Link,
+    type LinkProps,
 } from "../"
 import { getContent } from "../../_utils/firestore"
 import { notFound as redirectToNotFound } from "next/navigation"
@@ -15,7 +17,9 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
-type ComponentNames = Lowercase<"Markdown" | "Image" | "LastModified" | "Array">
+type ComponentNames = Lowercase<
+    "Markdown" | "Image" | "LastModified" | "Array" | "Link"
+>
 
 type ComponentMap = {
     [key in ComponentNames]: (args: ComponentMapEntry) => ReactNode
@@ -27,7 +31,8 @@ type ComponentMapEntry = {
     text?: string
     components?: ComponentMapEntry[]
 } & ImageProps &
-    LastModifiedProps
+    LastModifiedProps &
+    LinkProps
 
 const renderComponentMapEntry = (
     componentMap: ComponentMap,
@@ -52,6 +57,13 @@ const componentMap: ComponentMap = {
         components?.map((props) =>
             renderComponentMapEntry(componentMap, props)
         ),
+    link: ({ href, text, ...rest }) =>
+        href &&
+        text && (
+            <Link href={href} {...(rest as Partial<LinkProps>)}>
+                {text}
+            </Link>
+        ),
 }
 
 const validErrorMessages = [
@@ -62,9 +74,11 @@ const validErrorMessages = [
 export const dynamic = "force-dynamic"
 const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
+        const dataPrefix = dataType === "component" ? "component-data/" : ""
+        const contentPath = `${dataPrefix}${dataPath}`
         const { components } = await getContent<{
             components: ComponentMapEntry[]
-        }>(dataPath as string)
+        }>(contentPath)
 
         return components.map(({ useReadPercentage, ...props }, i) => {
             const Wrapper = useReadPercentage ? ReadPercentage : Fragment
