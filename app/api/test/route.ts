@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { headers } from "next/headers"
-import { getContent } from "_utils"
+import { getContent } from "_data"
 
 export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {

@@ -1,3 +1,4 @@
+// had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
 const { resolve } = require("path")
 
 const serverOnlyPackages = [
@@ -5,6 +6,8 @@ const serverOnlyPackages = [
     /@google-cloud\/firestore/,
     /lorem-ipsum/,
 ]
+
+const aliasedDirectories = ["_components", "_data", "_utils"]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 
 /** @type {import('next').NextConfig} */
@@ -13,9 +16,10 @@ const nextConfig = {
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
             ...config.resolve.alias,
-            // had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
-            _components: resolve(__dirname, "app/_components"),
-            _utils: resolve(__dirname, "app/_utils"),
+            ...aliasedDirectories.reduce((acc, dir) => {
+                acc[dir] = resolve(__dirname, `app/${dir}`)
+                return acc
+            }, {}),
         }
 
         if (!isServer)
@@ -32,7 +36,7 @@ const nextConfig = {
                 ...config.resolve.alias,
                 "@google-cloud/firestore": resolve(
                     __dirname,
-                    "app/_utils/firestoreMock"
+                    "app/_data/firestoreMock"
                 ),
             }
         }

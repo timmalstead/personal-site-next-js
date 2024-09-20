@@ -8,7 +8,7 @@ import {
     Link,
     type LinkProps,
 } from "_components"
-import { getContent } from "_utils"
+import { getContent } from "_data"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
 

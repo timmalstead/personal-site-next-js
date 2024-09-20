@@ -1,7 +1,7 @@
 import { Firestore } from "@google-cloud/firestore"
 import { isEven } from "_utils"
 
-export const firestoreDatabase = new Firestore({
+const firestoreDatabase = new Firestore({
     projectId: process.env.PROJECT_ID,
     credentials: {
         client_email: process.env.SERVICE_ACCT_CLIENT_EMAIL,

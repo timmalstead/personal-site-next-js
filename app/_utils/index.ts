@@ -1,4 +1,3 @@
-export { getContent } from "./firestore"
 export { isEven, floatingPointToPercentage, setCookie } from "./helpers"
 export type {
     A11yKey,
