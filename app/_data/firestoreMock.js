@@ -111,9 +111,24 @@ ${getPageInfo()}
                 {
                     name: "Markdown",
                     text: `
-# About page mock info
-${getPageInfo()}
+# About Me
+
+![A picture of me, Timothy Malstead](/tim_malstead_profile_pic:w400-h400.jpg "A picture of me, Timothy Malstead")
+
+My name is Timothy Malstead. I am a software engineer and artist in Los Angeles, California with a strong belief that software, and the open web in particular, are among the most powerful tools we have for improving our world. My goal is to create software that is easy to use, easy to understand, and easy to maintain and I value simplicity, clarity and brevity in all things. I am very happy that you have taken the time to visit my site and I hope you find something here that you enjoy.
+
+HAVE_A_RESUME_HERE
+
+If I sound like your kind of guy, then you may enjoy some of the following pages:
+
+* [Data Use and Policies](/data)
+* [Why I Like the Web](/why-i-like-the-web)
+* [Manifesto](/manifesto)
 `,
+                },
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1727750775738,
                 },
             ],
         },

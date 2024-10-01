@@ -4,7 +4,7 @@ test("Dynamic page should load with data from firestore when data is present", a
     page,
 }) => {
     await page.goto("/about")
-    const titleNode = page.getByText("About page mock info")
+    const titleNode = page.getByRole("heading", { name: "About Me" })
     await expect(titleNode).toBeAttached()
 
     await page.close()
