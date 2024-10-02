@@ -14,8 +14,7 @@ const Footer = async () => {
                 <nav>
                     <ul>
                         {footerLinks?.map((link) => (
-                            // TODO: fix duplicate key issue
-                            <li key={link.toString()}>{link}</li>
+                            <li key={link.key}>{link}</li>
                         ))}
                     </ul>
                 </nav>
