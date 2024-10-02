@@ -1,5 +1,5 @@
 // had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
-const { resolve } = require("path")
+const { resolve } = require("node:path")
 
 const serverOnlyPackages = [
     /react-markdown/,
