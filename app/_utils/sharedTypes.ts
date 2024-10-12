@@ -19,3 +19,9 @@ export type Browser =
     | "firefox"
     | "edge"
     | "opera"
+
+export interface CreateArgs {
+    docPath: string
+    data: { [key: string]: any }
+    confirmReplace?: boolean
+}

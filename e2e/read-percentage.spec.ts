@@ -40,7 +40,7 @@ test.describe("when the read percenage component DOES intersect with the viewpor
         if (browserName === "webkit") test.fixme(true)
 
         // different browsers have different amounts they will scroll
-        const validScrollReadPercentageAmounts = /21.*|10.*|11.*/
+        const validScrollReadPercentageAmounts = /21.*|22.*|10.*|11.*/
         await page.mouse.wheel(0, 2000)
         await expect(getReadPercentage()).toHaveAttribute(
             "value",

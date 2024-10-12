@@ -74,7 +74,7 @@ const standardImageObject = {
     title: "a large svg, rendered via the Image component and optimized with width and height",
 }
 
-const data = {
+let data = {
     api: {
         test: {
             content: {
@@ -110,7 +110,7 @@ ${getPageInfo()}
             components: [
                 {
                     name: "Markdown",
-                    text: `
+                    text: `n
 # About Me
 
 ![A picture of me, Timothy Malstead](/tim_malstead_profile_pic:w400-h400.jpg "A picture of me, Timothy Malstead")
@@ -320,19 +320,46 @@ class Firestore {
 
     doc(docName) {
         const splitKeyArray = docName.split("/")
-        let tempData = data
-
-        for (const key of splitKeyArray) {
-            tempData = tempData[key]
-            if (tempData === undefined)
-                throw new Error("Cannot read properties of undefined")
-        }
-
+        const dataLength = splitKeyArray.length - 1
         return {
             get: async () => {
+                let tempData = data
+                for (const key of splitKeyArray) {
+                    tempData = tempData[key]
+                    if (tempData === undefined) break
+                }
                 return {
                     data: () => tempData,
                 }
+            },
+            // TODO: this will only delete up to the content key, so I'll see if I can improve it later
+            delete: async () => {
+                let deleteString = "delete data"
+                for (const key of splitKeyArray) {
+                    if (key === "content") break
+                    else deleteString += `["${key}"]`
+                }
+                // i know, i know, e-VAL is e-VIL, but it's a fine way to dynamically delete nested objects, and it's only for tests
+                const deleteScript = `
+                    "use strict"
+                    const data = ${JSON.stringify(data)}
+                    ${deleteString}
+                    data
+                `
+                data = eval?.(deleteScript)
+            },
+            set: async (newData) => {
+                let dataToAdd = {}
+                for (let i = dataLength; i >= 0; i--) {
+                    const key = splitKeyArray[i]
+                    if (i === dataLength) dataToAdd[key] = newData
+                    else {
+                        const tempData = {}
+                        tempData[key] = dataToAdd
+                        dataToAdd = tempData
+                    }
+                }
+                data = { ...data, ...dataToAdd }
             },
         }
     }

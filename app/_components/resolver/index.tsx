@@ -17,6 +17,8 @@ interface ResolverProps {
     dataType: "page" | "component"
 }
 
+type PossibleContent<T> = T | undefined
+
 type ComponentNames = Lowercase<
     "Markdown" | "Image" | "LastModified" | "Array" | "Link"
 >
@@ -66,7 +68,9 @@ const componentMap: ComponentMap = {
         ),
 }
 
+const noContentErrorMessage = "No content found"
 const validErrorMessages = [
+    noContentErrorMessage,
     "Cannot destructure property",
     "Cannot read properties of undefined",
 ]
@@ -77,11 +81,10 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
         const dataPrefix = dataType === "component" ? "component-data/" : ""
         const contentPath = `${dataPrefix}${dataPath}`
-        const { components } = await getContent<{
-            components: ComponentMapEntry[]
-        }>(contentPath)
-
-        return components.map(({ useReadPercentage, ...props }, i) => {
+        const content =
+            await getContent<PossibleContent<ComponentMapEntry>>(contentPath)
+        if (content === undefined) throw new Error(noContentErrorMessage)
+        return content.components?.map(({ useReadPercentage, ...props }, i) => {
             const Wrapper = useReadPercentage ? ReadPercentage : Fragment
             return (
                 <Wrapper key={`${props?.name}-${i}`}>
@@ -95,11 +98,10 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
 
         console.error(errorMessage)
 
-        if (
+        const shouldRedirectToNotFound =
             dataType === "page" &&
             validErrorMessages.some((msg) => errorMessage.includes(msg))
-        )
-            redirectToNotFound()
+        if (shouldRedirectToNotFound) redirectToNotFound()
     }
 }
 
