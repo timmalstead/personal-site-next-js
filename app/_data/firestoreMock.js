@@ -301,6 +301,16 @@ ${getPageInfo()}
             components: [],
         },
     },
+    "read-success": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: "# SUCCESS!",
+                },
+            ],
+        },
+    },
 }
 
 class Firestore {

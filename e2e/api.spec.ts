@@ -37,3 +37,58 @@ test.describe("middleware", () => {
         })
     })
 })
+
+test.describe("read route", () => {
+    const route = "/api/publish/v1/read"
+    test("should return error object when 'path' query param is not provided", async ({
+        request,
+    }) => {
+        const response = await request.get(route, credentials)
+
+        expect(response.ok()).toBe(true)
+
+        const json = await response.json()
+        expect(json).toEqual({
+            error: "No 'path' param provided",
+        })
+    })
+
+    test("should return error object when 'path' query param points data that does not exist", async ({
+        request,
+    }) => {
+        const response = await request.get(
+            `${route}/?path=fake-data`,
+            credentials
+        )
+
+        expect(response.ok()).toBe(true)
+
+        const json = await response.json()
+        expect(json).toEqual({
+            error: "No data found at fake-data",
+        })
+    })
+
+    test("should return correct data when 'path' query param points data that does exist", async ({
+        request,
+    }) => {
+        const response = await request.get(
+            `${route}/?path=read-success`,
+            credentials
+        )
+
+        expect(response.ok()).toBe(true)
+
+        const json = await response.json()
+        expect(json).toEqual({
+            content: {
+                components: [
+                    {
+                        name: "Markdown",
+                        text: "# SUCCESS!",
+                    },
+                ],
+            },
+        })
+    })
+})
