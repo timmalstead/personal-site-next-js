@@ -1,5 +1,12 @@
 import { test, expect } from "@playwright/test"
 
+const credentials = {
+    headers: {
+        accept: "application/json",
+        Authorization: "SUPER_SECRET_SECRET_SQUIRREL",
+    },
+}
+
 test.describe("middleware", () => {
     test("middleware should reject unauthorized use", async ({ request }) => {
         const response = await request.post("/api/test", {
@@ -15,12 +22,7 @@ test.describe("middleware", () => {
         request,
     }) => {
         // important to use GET method here
-        const response = await request.get("/api/test", {
-            headers: {
-                accept: "application/json",
-                Authorization: "SUPER_SECRET_SECRET_SQUIRREL",
-            },
-        })
+        const response = await request.get("/api/test", credentials)
 
         expect(response.ok()).toBe(true)
 
