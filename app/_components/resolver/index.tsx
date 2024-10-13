@@ -11,6 +11,7 @@ import {
 import { getContent } from "_data"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
+import type { ErrorObject } from "_utils"
 
 interface ResolverProps {
     dataPath: string | null
@@ -75,7 +76,8 @@ const validErrorMessages = [
     "Cannot read properties of undefined",
 ]
 
-// make dynamic behavior dependent on environment?
+// TODO: make dynamic behavior dependent on environment?
+// TODO: improve error handling
 export const dynamic = "force-dynamic"
 const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
@@ -83,15 +85,21 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
         const contentPath = `${dataPrefix}${dataPath}`
         const content =
             await getContent<PossibleContent<ComponentMapEntry>>(contentPath)
+
         if (content === undefined) throw new Error(noContentErrorMessage)
-        return content.components?.map(({ useReadPercentage, ...props }, i) => {
-            const Wrapper = useReadPercentage ? ReadPercentage : Fragment
-            return (
-                <Wrapper key={`${props?.name}-${i}`}>
-                    {renderComponentMapEntry(componentMap, props)}
-                </Wrapper>
-            )
-        })
+        if ((content as ErrorObject).error)
+            throw new Error((content as ErrorObject).error)
+
+        return (content as ComponentMapEntry).components?.map(
+            ({ useReadPercentage, ...props }, i) => {
+                const Wrapper = useReadPercentage ? ReadPercentage : Fragment
+                return (
+                    <Wrapper key={`${props?.name}-${i}`}>
+                        {renderComponentMapEntry(componentMap, props)}
+                    </Wrapper>
+                )
+            }
+        )
     } catch (error) {
         const convertedError = error as Error
         const errorMessage = convertedError.toString()

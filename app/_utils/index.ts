@@ -1,4 +1,9 @@
-export { isEven, floatingPointToPercentage, setCookie } from "./helpers"
+export {
+    isEven,
+    floatingPointToPercentage,
+    setCookie,
+    handleError,
+} from "./helpers"
 export type {
     A11yKey,
     Route,
@@ -7,5 +12,6 @@ export type {
     SettingsDismiss,
     Browser,
     CreateArgs,
+    ErrorObject,
 } from "./sharedTypes"
 export { useA11yValue } from "./useA11yValue"

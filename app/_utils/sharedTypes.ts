@@ -4,9 +4,19 @@ export interface A11yKey<T> {
     [key: string]: T
 }
 
+export interface ErrorObject {
+    error: string
+}
+
 export interface Route {
     path: string
     title: string
+}
+
+export interface CreateArgs {
+    docPath: string
+    data: { [key: string]: any }
+    confirmReplace?: boolean
 }
 
 export type ColorMode = "light" | "dark"
@@ -19,9 +29,3 @@ export type Browser =
     | "firefox"
     | "edge"
     | "opera"
-
-export interface CreateArgs {
-    docPath: string
-    data: { [key: string]: any }
-    confirmReplace?: boolean
-}

@@ -1,5 +1,5 @@
-import { Firestore, DocumentReference } from "@google-cloud/firestore"
-import { isEven, CreateArgs } from "_utils"
+import { Firestore, type DocumentReference } from "@google-cloud/firestore"
+import { isEven, handleError, type CreateArgs, type ErrorObject } from "_utils"
 
 const firestoreDatabase = new Firestore({
     projectId: process.env.PROJECT_ID,
@@ -13,7 +13,6 @@ const firestoreDatabase = new Firestore({
     },
 })
 
-// TODO: better error handling and typing for all
 const getDocRef = (docPath: string) => {
     const splitPath = docPath.split("/")
     const contentPath = isEven(splitPath.length) ? "/content/data" : "/content"
@@ -23,9 +22,15 @@ const getDocRef = (docPath: string) => {
 const getDocData = async (docRef: DocumentReference) =>
     await docRef.get().then((doc) => doc.data())
 
-export const getContent = async <T>(docPath: string): Promise<T> => {
-    const docRef = getDocRef(docPath)
-    return (await getDocData(docRef)) as T
+export const getContent = async <T>(
+    docPath: string
+): Promise<T | ErrorObject> => {
+    try {
+        const docRef = getDocRef(docPath)
+        return (await getDocData(docRef)) as T
+    } catch (error) {
+        return handleError(error)
+    }
 }
 
 export const setContent = async ({
@@ -33,24 +38,31 @@ export const setContent = async ({
     data,
     confirmReplace,
 }: CreateArgs) => {
-    const docRef = getDocRef(docPath)
-    const dataDoesExist = await getDocData(docRef)
-    if (dataDoesExist && !confirmReplace)
-        return {
-            error: `Data already exists at ${docPath}, send with boolean 'confirmReplace' argument to replace`,
+    try {
+        const docRef = getDocRef(docPath)
+        const dataDoesExist = await getDocData(docRef)
+        if (dataDoesExist && !confirmReplace)
+            throw new Error(
+                `Data already exists at ${docPath}, send with boolean 'confirmReplace' argument to replace`
+            )
+        else {
+            await docRef.set(data)
+            return { success: `Data created at ${docPath}` }
         }
-    else {
-        await docRef.set(data)
-        return { success: `Data created at ${docPath}` }
+    } catch (error) {
+        return handleError(error)
     }
 }
 
-// put in confirmation?
 export const deleteContent = async (docPath: string) => {
-    const docRef = getDocRef(docPath)
-    const dataDoesExist = await getDocData(docRef)
-    if (dataDoesExist) {
-        await docRef.delete()
-        return { success: `Data deleted at ${docPath}` }
-    } else return { error: `No data found at ${docPath}` }
+    try {
+        const docRef = getDocRef(docPath)
+        const dataDoesExist = await getDocData(docRef)
+        if (dataDoesExist) {
+            await docRef.delete()
+            return { success: `Data deleted at ${docPath}` }
+        } else throw new Error(`No data found at ${docPath}`)
+    } catch (error) {
+        return handleError(error)
+    }
 }
