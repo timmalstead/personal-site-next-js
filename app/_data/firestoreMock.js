@@ -311,6 +311,16 @@ ${getPageInfo()}
             ],
         },
     },
+    "delete-success": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: "# DELETE THIS DATA!",
+                },
+            ],
+        },
+    },
 }
 
 class Firestore {

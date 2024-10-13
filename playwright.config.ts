@@ -81,7 +81,7 @@ export default defineConfig({
     webServer: {
         command: "npm run clear:next && npm run dev",
         url: testUrl,
-        reuseExistingServer: !process.env.CI,
+        reuseExistingServer: false,
         env: {
             USE_TESTING_FIRESTORE: "true",
             MIDDLEWARE_AUTHORIZATION: "SUPER_SECRET_SECRET_SQUIRREL",

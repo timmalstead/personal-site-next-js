@@ -7,6 +7,11 @@ const credentials = {
     },
 }
 
+const [readRoute, deleteRoute] = [
+    "/api/publish/v1/read",
+    "/api/publish/v1/destroy",
+]
+
 test.describe("middleware", () => {
     test("middleware should reject unauthorized use", async ({ request }) => {
         const response = await request.post("/api/test", {
@@ -39,11 +44,10 @@ test.describe("middleware", () => {
 })
 
 test.describe("read route", () => {
-    const route = "/api/publish/v1/read"
     test("should return error object when 'path' query param is not provided", async ({
         request,
     }) => {
-        const response = await request.get(route, credentials)
+        const response = await request.get(readRoute, credentials)
 
         expect(response.ok()).toBe(true)
 
@@ -53,11 +57,11 @@ test.describe("read route", () => {
         })
     })
 
-    test("should return error object when 'path' query param points data that does not exist", async ({
+    test("should return error object when 'path' query param points to data that does not exist", async ({
         request,
     }) => {
         const response = await request.get(
-            `${route}/?path=fake-data`,
+            `${readRoute}/?path=fake-data`,
             credentials
         )
 
@@ -69,11 +73,11 @@ test.describe("read route", () => {
         })
     })
 
-    test("should return correct data when 'path' query param points data that does exist", async ({
+    test("should return correct data when 'path' query param points to data that does exist", async ({
         request,
     }) => {
         const response = await request.get(
-            `${route}/?path=read-success`,
+            `${readRoute}/?path=read-success`,
             credentials
         )
 
@@ -89,6 +93,90 @@ test.describe("read route", () => {
                     },
                 ],
             },
+        })
+    })
+})
+
+test.describe("delete route", () => {
+    test("should return error object when 'docPath' data property is not present in delete data", async ({
+        request,
+    }) => {
+        const response = await request.delete(deleteRoute, {
+            ...credentials,
+            data: { docPath: "" },
+        })
+
+        expect(response.ok()).toBe(true)
+
+        const json = await response.json()
+        expect(json).toEqual({
+            error: "No 'docPath' data provided",
+        })
+    })
+
+    test("should return error object when 'docPath' data property points to data that does not exist", async ({
+        request,
+    }) => {
+        const response = await request.delete(deleteRoute, {
+            ...credentials,
+            data: { docPath: "fake-data" },
+        })
+
+        expect(response.ok()).toBe(true)
+
+        const json = await response.json()
+        expect(json).toEqual({
+            error: "No data found at fake-data",
+        })
+    })
+
+    test("should successfully delete data when 'docPath' data property points to data that does exist", async ({
+        request,
+        isMobile,
+        channel,
+    }) => {
+        // Running only on the three default browsers. As far as I can tell, it will reuse the same server for browers with the same browserName property
+        // I need a new server on each and every browser or it will fail
+        test.skip(channel === "chrome" || channel === "msedge" || isMobile)
+
+        const docPath = "delete-success"
+        const deleteReadRoute = `${readRoute}/?path=${docPath}`
+
+        const confirmData = await request.get(deleteReadRoute, credentials)
+
+        expect(confirmData.ok()).toBe(true)
+        const confirmDataJson = await confirmData.json()
+
+        expect(confirmDataJson).toEqual({
+            content: {
+                components: [
+                    {
+                        name: "Markdown",
+                        text: "# DELETE THIS DATA!",
+                    },
+                ],
+            },
+        })
+
+        const deleteRequest = await request.delete(deleteRoute, {
+            ...credentials,
+            data: { docPath },
+        })
+
+        expect(deleteRequest.ok()).toBe(true)
+
+        const deleteRequestJson = await deleteRequest.json()
+        expect(deleteRequestJson).toEqual({
+            success: "Data deleted at delete-success",
+        })
+
+        const confirmDelete = await request.get(deleteReadRoute, credentials)
+
+        expect(confirmDelete.ok()).toBe(true)
+
+        const confirmDeleteJson = await confirmDelete.json()
+        expect(confirmDeleteJson).toEqual({
+            error: "No data found at delete-success",
         })
     })
 })

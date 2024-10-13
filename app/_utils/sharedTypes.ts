@@ -19,6 +19,11 @@ export interface CreateArgs {
     confirmReplace?: boolean
 }
 
+export interface DeleteResults {
+    success?: string
+    error?: string
+}
+
 export type ColorMode = "light" | "dark"
 export type ReducedMotion = "reduce" | "no-preference"
 export type SettingsDismiss = "closed" | "open"

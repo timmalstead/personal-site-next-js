@@ -1,5 +1,11 @@
 import { Firestore, type DocumentReference } from "@google-cloud/firestore"
-import { isEven, handleError, type CreateArgs, type ErrorObject } from "_utils"
+import {
+    isEven,
+    handleError,
+    type CreateArgs,
+    type ErrorObject,
+    type DeleteResults,
+} from "_utils"
 
 const firestoreDatabase = new Firestore({
     projectId: process.env.PROJECT_ID,
@@ -22,6 +28,7 @@ const getDocRef = (docPath: string) => {
 const getDocData = async (docRef: DocumentReference) =>
     await docRef.get().then((doc) => doc.data())
 
+// Purposefully not providing no content error message here
 export const getContent = async <T>(
     docPath: string
 ): Promise<T | ErrorObject> => {
@@ -54,14 +61,17 @@ export const setContent = async ({
     }
 }
 
-export const deleteContent = async (docPath: string) => {
+export const deleteContent = async (
+    docPath: string
+): Promise<DeleteResults> => {
     try {
         const docRef = getDocRef(docPath)
         const dataDoesExist = await getDocData(docRef)
-        if (dataDoesExist) {
+        if (!dataDoesExist) throw new Error(`No data found at ${docPath}`)
+        else {
             await docRef.delete()
             return { success: `Data deleted at ${docPath}` }
-        } else throw new Error(`No data found at ${docPath}`)
+        }
     } catch (error) {
         return handleError(error)
     }
