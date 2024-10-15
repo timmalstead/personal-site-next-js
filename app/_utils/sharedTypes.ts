@@ -19,7 +19,7 @@ export interface CreateArgs {
     confirmReplace?: boolean
 }
 
-export interface DeleteResults {
+export interface DestoryAndCreateResponse {
     success?: string
     error?: string
 }

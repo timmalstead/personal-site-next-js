@@ -13,6 +13,6 @@ export type {
     Browser,
     CreateArgs,
     ErrorObject,
-    DeleteResults,
+    DestoryAndCreateResponse,
 } from "./sharedTypes"
 export { useA11yValue } from "./useA11yValue"

@@ -301,6 +301,26 @@ ${getPageInfo()}
             components: [],
         },
     },
+    "create-failure": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: "# DATA ALREADY HERE!",
+                },
+            ],
+        },
+    },
+    "overwrite-success": {
+        content: {
+            components: [
+                {
+                    name: "Markdown",
+                    text: "# OVERWRITE THIS DATA!",
+                },
+            ],
+        },
+    },
     "read-success": {
         content: {
             components: [

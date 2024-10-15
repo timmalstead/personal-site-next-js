@@ -4,7 +4,7 @@ import {
     handleError,
     type CreateArgs,
     type ErrorObject,
-    type DeleteResults,
+    type DestoryAndCreateResponse,
 } from "_utils"
 
 const firestoreDatabase = new Firestore({
@@ -44,7 +44,7 @@ export const setContent = async ({
     docPath,
     data,
     confirmReplace,
-}: CreateArgs) => {
+}: CreateArgs): Promise<DestoryAndCreateResponse> => {
     try {
         const docRef = getDocRef(docPath)
         const dataDoesExist = await getDocData(docRef)
@@ -63,7 +63,7 @@ export const setContent = async ({
 
 export const deleteContent = async (
     docPath: string
-): Promise<DeleteResults> => {
+): Promise<DestoryAndCreateResponse> => {
     try {
         const docRef = getDocRef(docPath)
         const dataDoesExist = await getDocData(docRef)

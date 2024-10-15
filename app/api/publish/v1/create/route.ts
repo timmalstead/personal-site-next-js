@@ -7,10 +7,12 @@ export const POST = async (request: NextRequest) => {
         const postArgs: CreateArgs = await request.json()
         const { docPath, data } = postArgs
 
-        if (docPath && data) {
-            const result = await setContent(postArgs)
-            return NextResponse.json({ result })
-        } else throw new Error("Either no 'docPath' or 'data' data provided")
+        if (!docPath || !data)
+            throw new Error("Either no 'docPath' or 'data' data provided")
+
+        const result = await setContent(postArgs)
+        if (result.error) throw new Error(result.error)
+        else return NextResponse.json(result)
     } catch (error) {
         return NextResponse.json(handleError(error))
     }
