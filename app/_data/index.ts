@@ -1,1 +1,1 @@
-export { getContent, setContent, deleteContent } from "./firestore"
+export { getContent, setContent, deleteContent, getSeoData } from "./firestore"

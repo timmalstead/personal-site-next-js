@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { getContent } from "_data"
 import { handleError } from "_utils"
 
+// below is not strictly necessary, but it avoids an annoying prod build error
+export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {
     try {
         const docPath = request.nextUrl.searchParams.get("path")

@@ -14,9 +14,9 @@
         "e2e": "playwright test",
         "e2e:headed": "playwright test --ui",
         "clear:next": "test -d .next && rm -r .next || echo 'Next.Js build directory does not exist'",
-        "secrets:local": "op inject -i env.local.tpl -o .env.local",
-        "image:build:local": "docker build -t personal-site-next-js .",
-        "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env.local personal-site-next-js",
+        "secrets:local": "op inject -i env.tpl -o .env",
+        "image:build:local": "echo 'REMEMBER TO HARDCODE FIRESTORE private_key' && docker build -t personal-site-next-js .",
+        "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env personal-site-next-js",
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
     "dependencies": {

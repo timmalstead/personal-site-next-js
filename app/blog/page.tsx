@@ -1,9 +1,14 @@
-import type { Metadata } from "next"
+import { Resolver } from "_components"
+import { getSeoData } from "_data"
 
-export const metadata: Metadata = {
-    title: "Blog",
+export const generateMetadata = async () => {
+    return await getSeoData("blog")
 }
 
-const Blog = () => <main>this is the blog</main>
+const Blog = () => (
+    <main>
+        <Resolver dataPath="blog" dataType="page" />
+    </main>
+)
 
 export default Blog

@@ -87,6 +87,7 @@ let data = {
     },
     home: {
         content: {
+            metadata: {},
             components: [
                 {
                     name: "Markdown",
@@ -105,12 +106,28 @@ ${getPageInfo()}
             ],
         },
     },
-    about: {
+    blog: {
         content: {
+            metadata: {
+                title: "Blog",
+            },
             components: [
                 {
                     name: "Markdown",
-                    text: `n
+                    text: "# this is the blog",
+                },
+            ],
+        },
+    },
+    about: {
+        content: {
+            metadata: {
+                title: "About Me",
+            },
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
 # About Me
 
 ![A picture of me, Timothy Malstead](/tim_malstead_profile_pic:w400-h400.jpg "A picture of me, Timothy Malstead")

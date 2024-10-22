@@ -76,9 +76,7 @@ const validErrorMessages = [
     "Cannot read properties of undefined",
 ]
 
-// TODO: make dynamic behavior dependent on environment?
 // TODO: improve error handling
-export const dynamic = "force-dynamic"
 const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
         const dataPrefix = dataType === "component" ? "component-data/" : ""
