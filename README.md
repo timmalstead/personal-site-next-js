@@ -64,7 +64,7 @@ This project uses the [1Password CLI](https://developer.1password.com/docs/cli/g
 
 To template secrets locally, make sure that you are [signed into the proper service account](https://developer.1password.com/docs/service-accounts/use-with-1password-cli/#get-started) and run `npm run secrets:local`.
 
-This will save `.env.local` at the root level of this project and allow you to use needed secrets for local development.
+This will save `.env` at the root level of this project and allow you to use needed secrets for local development.
 
 ## Learn More about Next.js
 
