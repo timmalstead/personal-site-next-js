@@ -1,16 +1,14 @@
 const { readFileSync, writeFileSync } = require("node:fs")
 const { join } = require("node:path")
 
-const [envFilePath, firestoreFilePath, fileFormat] = [
+const [envFilePath, firestoreFilePath] = [
     join(__dirname, "..", ".env"),
     join(__dirname, "..", "app", "_data", "firestore.ts"),
-    "utf-8",
 ]
 
-const [splitEnvFile, splitFirestoreFile] = [
-    readFileSync(envFilePath, fileFormat),
-    readFileSync(firestoreFilePath, fileFormat),
-].map((file) => file.split("\n"))
+const [splitEnvFile, splitFirestoreFile] = [envFilePath, firestoreFilePath].map(
+    (path) => readFileSync(path, "utf-8").split("\n")
+)
 
 const findServiceAccountKey = (line) =>
     line.includes("SERVICE_ACCT_PRIVATE_KEY")
