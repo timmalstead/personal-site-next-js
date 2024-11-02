@@ -76,7 +76,6 @@ const validErrorMessages = [
     "Cannot read properties of undefined",
 ]
 
-// TODO: improve error handling
 const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
     try {
         const dataPrefix = dataType === "component" ? "component-data/" : ""

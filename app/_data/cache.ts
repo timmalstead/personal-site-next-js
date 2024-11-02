@@ -2,16 +2,14 @@ interface CacheItem {
     expiry: number
     data: any
 }
+let cacheStorage: { [cacheKey: string]: CacheItem } = {}
 
 // Fifteen minutes as that is, I believe, the lifespan of a cloud run instance if no new requests come in
-const FIFTEEN_MINUTES_IN_MS = 900000
-const CACHE_LIMIT = 100
-
-let cacheStorage: { [key: string]: CacheItem } = {}
+const [FIFTEEN_MINUTES_IN_MS, CACHE_ITEM_LIMIT] = [900000, 100]
 
 const checkAndPossiblyClearCache = (): void => {
-    const cacheKeys = Object.keys(cacheStorage)
-    if (cacheKeys.length >= CACHE_LIMIT) cacheStorage = {}
+    const { length: cacheItemsCount } = Object.keys(cacheStorage)
+    if (cacheItemsCount >= CACHE_ITEM_LIMIT) cacheStorage = {}
 }
 
 export const clearCacheKey = (cacheKey: string): void => {
@@ -29,8 +27,9 @@ export const getCache = (cacheKey: string): any => {
     }
     return null
 }
+
 export const setCache = (cacheKey: string, data: any): void => {
+    checkAndPossiblyClearCache()
     const expiry = Date.now() + FIFTEEN_MINUTES_IN_MS
     cacheStorage[cacheKey] = { expiry, data }
-    checkAndPossiblyClearCache()
 }

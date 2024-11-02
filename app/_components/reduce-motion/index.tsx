@@ -4,7 +4,6 @@ import "./reduce-motion.css"
 
 const reducedMotionId = "reduced-motion-input"
 
-// need to add styles, considering various screen sizes, and also e2e testing
 const ReduceMotion = ({
     reducedMotionProp,
 }: {
