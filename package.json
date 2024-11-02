@@ -10,7 +10,8 @@
         "lint": "next lint",
         "type:check": "tsc --noEmit",
         "version:check": "node ./scripts/confirmNodeVersion",
-        "test": "npm run version:check & npm run type:check & npm run lint && npm run e2e",
+        "test": "npm run version:check & npm run type:check & npm run lint & npm run jest && npm run e2e",
+        "jest": "jest",
         "e2e": "playwright test",
         "e2e:headed": "playwright test --ui",
         "clear:next": "test -d .next && rm -r .next || echo 'Next.Js build directory does not exist'",
@@ -30,14 +31,17 @@
     },
     "devDependencies": {
         "@playwright/test": "^1.42.1",
+        "@types/jest": "^29.5.14",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "eslint": "^8",
         "eslint-config-next": "14.1.0",
+        "jest": "^29.7.0",
         "lorem-ipsum": "^2.0.8",
         "null-loader": "^4.0.1",
         "prettier": "3.2.5",
+        "ts-jest": "^29.2.5",
         "typescript": "^5"
     },
     "engines": {

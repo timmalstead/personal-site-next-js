@@ -5,7 +5,7 @@ interface CacheItem {
 let cacheStorage: { [cacheKey: string]: CacheItem } = {}
 
 // Fifteen minutes as that is, I believe, the lifespan of a cloud run instance if no new requests come in
-const [FIFTEEN_MINUTES_IN_MS, CACHE_ITEM_LIMIT] = [900000, 100]
+export const [FIFTEEN_MINUTES_IN_MS, CACHE_ITEM_LIMIT] = [900000, 100]
 
 const checkAndPossiblyClearCache = (): void => {
     const { length: cacheItemsCount } = Object.keys(cacheStorage)
