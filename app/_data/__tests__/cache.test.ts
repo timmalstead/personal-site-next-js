@@ -12,7 +12,7 @@ const expectNull = () => expect(getCache(testCacheKey)).toBeNull()
 const expectData = () => expect(getCache(testCacheKey)).toEqual(testData)
 
 describe("cache", () => {
-    it("should return null when there is matching data in the cache", () => {
+    it("should return null when there is no matching data in the cache", () => {
         expectNull()
     })
 
