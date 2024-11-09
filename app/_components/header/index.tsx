@@ -3,12 +3,6 @@ import { Link, Resolver as resolver } from "_components"
 import type { Browser /*, Route */ } from "_utils"
 import "./header.css"
 
-// TODO: should the below info be available to the resolver as a backup?
-// const routes: Route[] = [
-//     { path: "/about", title: "about" },
-//     { path: "/blog", title: "blog" },
-// ]
-
 interface HeaderProps {
     browser: Browser
 }
