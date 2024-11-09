@@ -13,7 +13,7 @@ test.afterAll(async () => {
 
 const elementsToAssert = [
     { element: "footer", expectedCount: 4 },
-    { element: "header", expectedCount: 1 },
+    { element: "header", expectedCount: 2 },
 ]
 
 test.describe("footer and header links", () => {

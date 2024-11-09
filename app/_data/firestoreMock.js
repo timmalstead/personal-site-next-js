@@ -110,6 +110,7 @@ ${getPageInfo()}
         content: {
             metadata: {
                 title: "Blog",
+                description: "A blog title to test the metadata",
             },
             components: [
                 {
@@ -270,6 +271,12 @@ ${getPageInfo()}
             content: {
                 data: {
                     components: [
+                        {
+                            name: "Link",
+                            text: "blog",
+                            href: "/blog",
+                            inline: false,
+                        },
                         {
                             name: "Link",
                             text: "about",
