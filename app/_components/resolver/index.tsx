@@ -11,7 +11,6 @@ import {
 import { getContent } from "_data"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
-import type { ErrorObject } from "_utils"
 
 interface ResolverProps {
     dataPath: string | null
@@ -84,8 +83,7 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
             await getContent<PossibleContent<ComponentMapEntry>>(contentPath)
 
         if (content === undefined) throw new Error(noContentErrorMessage)
-        if ((content as ErrorObject).error)
-            throw new Error((content as ErrorObject).error)
+        if (content instanceof Error) throw content
 
         return (content as ComponentMapEntry).components?.map(
             ({ useReadPercentage, ...props }, i) => {

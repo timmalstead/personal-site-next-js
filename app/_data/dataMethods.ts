@@ -5,9 +5,8 @@ import { firestoreDatabase } from "./firestore"
 import { getCache, setCache, clearCacheKey } from "./cache"
 import {
     isEven,
-    handleError,
+    reportError,
     type CreateArgs,
-    type ErrorObject,
     type DestoryAndCreateResponse,
 } from "_utils"
 
@@ -26,7 +25,7 @@ const getDocData = async (docRef: DocumentReference) =>
 // From what I understand, reactCache should function that way, but that's not what I was seeing
 // Also, I am purposefully not providing a content error message here
 export const getContent = reactCache(
-    async <T>(docPath: string): Promise<T | ErrorObject> => {
+    async <T>(docPath: string): Promise<T | Error> => {
         try {
             const cachedData = getCache(docPath)
             if (cachedData) return cachedData as T
@@ -38,7 +37,7 @@ export const getContent = reactCache(
                 return fetchedData
             }
         } catch (error) {
-            return handleError(error)
+            return reportError(error)
         }
     }
 )
@@ -46,14 +45,14 @@ export const getContent = reactCache(
 export const getSeoData = async (docPath: string): Promise<Metadata> => {
     try {
         const seoData = await getContent<{ metadata: Metadata }>(docPath)
-        if ((seoData as ErrorObject).error) return {}
+        if (seoData instanceof Error) return {}
         else {
             const { metadata } = seoData as { metadata: Metadata }
             return metadata || {}
         }
     } catch (error) {
         // logging error, but not returning it
-        handleError(error)
+        reportError(error)
         return {}
     }
 }
@@ -75,7 +74,7 @@ export const setContent = async ({
             return { success: `Data created at ${docPath}` }
         }
     } catch (error) {
-        return handleError(error)
+        return reportError(error)
     }
 }
 
@@ -92,6 +91,6 @@ export const deleteContent = async (
             return { success: `Data deleted at ${docPath}` }
         }
     } catch (error) {
-        return handleError(error)
+        return reportError(error)
     }
 }

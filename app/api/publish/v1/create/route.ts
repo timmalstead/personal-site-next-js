@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { setContent } from "_data"
-import { handleError, type CreateArgs } from "_utils"
+import { sendError, type CreateArgs } from "_utils"
 
 export const POST = async (request: NextRequest) => {
     try {
@@ -11,9 +11,9 @@ export const POST = async (request: NextRequest) => {
             throw new Error("Either no 'docPath' or 'data' data provided")
 
         const result = await setContent(postArgs)
-        if (result.error) throw new Error(result.error)
+        if (result instanceof Error) throw result
         else return NextResponse.json(result)
     } catch (error) {
-        return NextResponse.json(handleError(error))
+        return sendError(error)
     }
 }

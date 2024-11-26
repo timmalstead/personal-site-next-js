@@ -2,7 +2,8 @@ export {
     isEven,
     floatingPointToPercentage,
     setCookie,
-    handleError,
+    reportError,
+    sendError,
 } from "./helpers"
 export type {
     A11yKey,
@@ -12,7 +13,6 @@ export type {
     SettingsDismiss,
     Browser,
     CreateArgs,
-    ErrorObject,
     DestoryAndCreateResponse,
 } from "./sharedTypes"
 export { useA11yValue } from "./useA11yValue"

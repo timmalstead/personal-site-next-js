@@ -1,4 +1,4 @@
-import type { ErrorObject } from "./sharedTypes"
+import { NextResponse } from "next/server"
 
 export const isEven = (num: number): boolean => num % 2 === 0
 
@@ -10,18 +10,22 @@ export const floatingPointToPercentage = (float: number) => {
 
 export const setCookie = (cookieName: string, cookieValue: string): void => {
     // some browsers (notably Safari) don't support requestIdleCallback 😑
-    const setDismissalCookie = () =>
+    const setCookieCallback = () =>
         (document.cookie = `${cookieName}=${cookieValue}`)
 
     if (window.requestIdleCallback)
-        window.requestIdleCallback(setDismissalCookie)
-    else setDismissalCookie()
+        window.requestIdleCallback(setCookieCallback)
+    else setCookieCallback()
 }
 
-export const handleError = (error: unknown): ErrorObject => {
+// TODO: figure out how to automate robots.txt generation
+// I may have some other external logging here at some point
+export const reportError = (error: unknown): Error => {
+    console.error(error)
+    return error as Error
+}
+
+export const sendError = (error: unknown) => {
     const typedError = error as Error
-    console.error(typedError)
-    return {
-        error: typedError.message,
-    }
+    return NextResponse.json({ error: typedError.message })
 }

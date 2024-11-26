@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { deleteContent } from "_data"
-import { handleError } from "_utils"
+import { sendError } from "_utils"
 
 export const DELETE = async (request: NextRequest) => {
     try {
@@ -9,10 +9,10 @@ export const DELETE = async (request: NextRequest) => {
         else {
             const result = await deleteContent(docPath)
 
-            if (result.error) throw new Error(result.error)
+            if (result instanceof Error) throw result
             else return NextResponse.json(result)
         }
     } catch (error) {
-        return NextResponse.json(handleError(error))
+        return sendError(error)
     }
 }

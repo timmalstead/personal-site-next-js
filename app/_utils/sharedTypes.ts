@@ -4,10 +4,6 @@ export interface A11yKey<T> {
     [key: string]: T
 }
 
-export interface ErrorObject {
-    error: string
-}
-
 export interface Route {
     path: string
     title: string
@@ -19,10 +15,7 @@ export interface CreateArgs {
     confirmReplace?: boolean
 }
 
-export interface DestoryAndCreateResponse {
-    success?: string
-    error?: string
-}
+export type DestoryAndCreateResponse = { success: string } | Error
 
 export type ColorMode = "light" | "dark"
 export type ReducedMotion = "reduce" | "no-preference"
