@@ -18,7 +18,6 @@ export const setCookie = (cookieName: string, cookieValue: string): void => {
     else setCookieCallback()
 }
 
-// TODO: figure out how to automate robots.txt generation
 // I may have some other external logging here at some point
 export const reportError = (error: unknown): Error => {
     console.error(error)
