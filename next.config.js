@@ -4,6 +4,7 @@ const { resolve } = require("node:path")
 const serverOnlyPackages = [
     /react-markdown/,
     /@google-cloud\/firestore/,
+    /@google-cloud\/storage/,
     /lorem-ipsum/,
 ]
 
