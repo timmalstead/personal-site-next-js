@@ -86,5 +86,3 @@ export const createSitemap = async (): Promise<void> => {
         console.error(err)
     }
 }
-
-// unit test: maybe mock the saveSitemap function to add it to a local variable and check it that way
