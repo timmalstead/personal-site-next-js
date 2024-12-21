@@ -86,6 +86,12 @@ describe("createSitemap", () => {
     it("should create the expected sitemap", () => {
         expect(savedSitemap).toEqual(expectedSitemap)
     })
+
+    it("should NOT include any info on the routes meant to be ignored", () => {
+        expect(savedSitemap).not.toContain("api")
+        expect(savedSitemap).not.toContain("component-data")
+    })
+
     it("should start with an XML declaration", () => {
         expect(savedSitemap.startsWith(xmlDeclaration)).toBe(true)
     })
