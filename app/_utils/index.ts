@@ -1,3 +1,4 @@
+// Don't mix up client side and server side utils, or webpack errors may occur
 export {
     isEven,
     floatingPointToPercentage,
