@@ -49,8 +49,8 @@ jobs:
                   registry: $REGISTRY
                   image: $IMAGE
             - run:
-                  name: Persist latest build sha
-                  command: op item edit application_shas next=$CIRCLE_SHA1
+                  name: Persist latest build sha for preview
+                  command: op item edit application_shas next-preview=$CIRCLE_SHA1
             - run:
                   name: Trigger infra build pipeline
                   command: |
