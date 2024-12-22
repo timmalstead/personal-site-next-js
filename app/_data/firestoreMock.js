@@ -119,6 +119,18 @@ ${getPageInfo()}
                 },
             ],
         },
+        travel: {
+            content: {
+                data: {
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: "# this is the post about travel",
+                        },
+                    ],
+                },
+            },
+        },
     },
     about: {
         content: {

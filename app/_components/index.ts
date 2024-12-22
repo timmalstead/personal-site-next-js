@@ -15,3 +15,7 @@ export type { LastModifiedProps } from "./last-modified"
 export { default as ReadPercentage } from "./read-percentage"
 export { default as Link } from "./link"
 export type { LinkProps } from "./link"
+export {
+    default as DynamicPageComponent,
+    generateDynamicMetadata,
+} from "./dynamic-page-component"
