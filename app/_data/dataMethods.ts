@@ -2,6 +2,7 @@ import type { DocumentReference } from "@google-cloud/firestore"
 import type { Metadata } from "next"
 import { cache as reactCache } from "react"
 import { firestoreDatabase } from "./firestore"
+import { createSitemap } from "./createSitemap"
 import { getCache, setCache, clearCacheKey } from "./cache"
 import {
     isEven,
@@ -71,6 +72,7 @@ export const setContent = async ({
             )
         else {
             await docRef.set(data)
+            await createSitemap()
             return { success: `Data created at ${docPath}` }
         }
     } catch (error) {
@@ -88,6 +90,7 @@ export const deleteContent = async (
         else {
             await docRef.delete()
             clearCacheKey(docPath)
+            await createSitemap()
             return { success: `Data deleted at ${docPath}` }
         }
     } catch (error) {
