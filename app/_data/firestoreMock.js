@@ -79,8 +79,8 @@ let data = {
         test: {
             content: {
                 data: {
-                    title: "very important data",
-                    important: true,
+                    response:
+                        "you are authorized to access the api for this test",
                 },
             },
         },

@@ -46,8 +46,7 @@ test.describe("middleware", () => {
             pageName: "api/test",
             request: {},
             firestoreData: {
-                title: "very important data",
-                important: true,
+                response: "you are authorized to access the api for this test",
             },
         })
     })
