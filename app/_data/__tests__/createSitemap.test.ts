@@ -22,14 +22,12 @@ jest.mock("../firestore", () => {
 
         // any isn't always a problem
         mockDocData: { [key: string]: any } = {
-            "blog/posts": [
-                { id: "travel" },
-                { id: "art" },
-                { id: "philosophy" },
-            ].map((id: { id: string }) => ({
-                ...id,
-                data: {},
-            })),
+            blog: [{ id: "travel" }, { id: "art" }, { id: "philosophy" }].map(
+                (id: { id: string }) => ({
+                    ...id,
+                    data: {},
+                })
+            ),
         }
 
         public async listCollections() {
@@ -39,12 +37,33 @@ jest.mock("../firestore", () => {
             }))
         }
 
-        // a little hacky, bit it suits my purposes
-        public doc(docId: string) {
-            this.mockActiveData = this.mockDocData[docId]
-            return this
+        // a bit hacky, but it suits my purposes
+        public collection(collectionId: string) {
+            return {
+                listDocuments: async () => {
+                    return this.mockDocData[collectionId].map(
+                        ({ id, data }: { id: string; data: any }) => {
+                            return {
+                                id,
+                                collection: () => {
+                                    return {
+                                        doc: () => {
+                                            return {
+                                                get: async () => ({
+                                                    data: () => data,
+                                                }),
+                                            }
+                                        },
+                                    }
+                                },
+                            }
+                        }
+                    )
+                },
+            }
         }
     }
+
     return {
         firestoreDatabase: new firestoreMock(),
     }

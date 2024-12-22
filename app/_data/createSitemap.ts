@@ -1,6 +1,10 @@
 import { firestoreDatabase } from "./firestore"
 import { cloudStorage } from "./cloudStorage"
-import type { DocumentData, CollectionReference } from "@google-cloud/firestore"
+import type {
+    DocumentData,
+    CollectionReference,
+    DocumentReference,
+} from "@google-cloud/firestore"
 
 interface AssembledData {
     id: string
@@ -11,15 +15,36 @@ interface AssembledData {
 
 type CollectionRef = CollectionReference<DocumentData, DocumentData>
 
+const flattenDocumentData = (doc: DocumentReference) =>
+    doc
+        .collection("content")
+        .doc("data")
+        .get()
+        .then((doc) => doc.data())
+
+const assembleDocumentData = async ({
+    documentRefs,
+    idModifier = "",
+}: {
+    documentRefs: DocumentReference<DocumentData, DocumentData>[]
+    idModifier?: string
+}) => {
+    const documentPromises = documentRefs.map(flattenDocumentData)
+    const resolvedDocumentPromises = await Promise.all(documentPromises)
+
+    return resolvedDocumentPromises.map((data, index) => {
+        const { id } = documentRefs[index]
+        return { id: `${idModifier}${id}`, data }
+    })
+}
+
 const flattenCollectionData = (collection: CollectionRef) =>
     collection.get().then((doc) => doc.docs.map((doc) => doc.data()))
 
 const assembleCollectionData = async ({
     collectionRefs,
-    idModifier = "",
 }: {
     collectionRefs: CollectionRef[]
-    idModifier?: string
 }) => {
     const collectionPromises = collectionRefs.map(flattenCollectionData)
     const resolvedCollectionPromises = await Promise.all(collectionPromises)
@@ -27,11 +52,12 @@ const assembleCollectionData = async ({
     return resolvedCollectionPromises.map((dataArr, index) => {
         const { id } = collectionRefs[index]
         const [data] = dataArr
-        return { id: `${idModifier}${id}`, data }
+        return { id, data }
     })
 }
 
 const routesToIgnore = new Set(["api", "component-data"])
+const keysToIgnore = new Set(["content"])
 const fetchAndAssembleDataForSitemap = async (): Promise<AssembledData[]> => {
     const topLevelCollections = (
         await firestoreDatabase.listCollections()
@@ -41,12 +67,12 @@ const fetchAndAssembleDataForSitemap = async (): Promise<AssembledData[]> => {
         collectionRefs: topLevelCollections,
     })
 
-    const blogPostCollections = await firestoreDatabase
-        .doc("blog/posts")
-        .listCollections()
+    const blogPostDocuments = (
+        await firestoreDatabase.collection("blog").listDocuments()
+    ).filter(({ id }) => !keysToIgnore.has(id))
 
-    const assembledBlogPosts = await assembleCollectionData({
-        collectionRefs: blogPostCollections,
+    const assembledBlogPosts = await assembleDocumentData({
+        documentRefs: blogPostDocuments,
         idModifier: "blog/",
     })
 
@@ -86,3 +112,5 @@ export const createSitemap = async (): Promise<void> => {
         console.error(err)
     }
 }
+
+createSitemap()
