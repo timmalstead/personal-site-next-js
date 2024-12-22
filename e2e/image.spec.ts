@@ -4,7 +4,7 @@ let page: Page
 
 test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    await page.goto("/image-examples")
+    await page.goto("/local-static-data-tests/image-examples")
 })
 
 test.afterAll(async () => {
