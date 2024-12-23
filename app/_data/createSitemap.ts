@@ -112,5 +112,3 @@ export const createSitemap = async (): Promise<void> => {
         console.error(err)
     }
 }
-
-createSitemap()
