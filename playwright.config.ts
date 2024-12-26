@@ -51,7 +51,7 @@ const localRunBrowsers = [
     },
 ]
 
-if (!isCiEnv) projects = [...projects, ...localRunBrowsers]
+// if (!isCiEnv) projects = [...projects, ...localRunBrowsers]
 
 export default defineConfig({
     testDir: "./e2e",

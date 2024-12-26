@@ -1,4 +1,9 @@
-p.last-modified > em {
-    padding: 0.05rem 0.5rem 0.05rem 0.25rem;
-    background-color: var(--contrast-color);
+p.last-modified {
+    padding-top: 1rem;
+    border-top: var(--text-separator-border);
+    border-image: var(--text-separator-border-image);
+    em {
+        padding: 0.05rem 0.5rem 0.05rem 0.25rem;
+        background-color: var(--contrast-color);
+    }
 }

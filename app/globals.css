@@ -8,6 +8,13 @@
     --header-height: 3rem;
     --heading-weight: 250;
     --non-blocking-no-duration: 0.01s;
+    --text-separator-border: 0.15rem solid;
+    --text-separator-border-image: linear-gradient(
+            90deg,
+            var(--contrast-color) 90%,
+            var(--background-color) 95%
+        )
+        1;
 
     &.light {
         --text-color: #4d4d4d;

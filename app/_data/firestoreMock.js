@@ -92,16 +92,22 @@ let data = {
                 {
                     name: "Markdown",
                     text: `
-# Home page mock info
+# Hello, I am Timothy Malstead
 
-[link to about page](/about)
+I'm a software engineer and artist living in Los Angeles, California. 
 
-${getPageInfo()}
+I believe that software, and the open web in particular, are among the most powerful tools we have for improving our world.
+
+My goal is to create software that is easy to use, easy to understand, and easy to maintain.
+
+I value simplicity, clarity and brevity in all things.
+
+Thank you for taking the time to visit, I hope you find something here that you enjoy.
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1725320604553,
+                    lastModifiedDate: 1735243319529,
                 },
             ],
         },

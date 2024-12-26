@@ -5,14 +5,9 @@ div.heading-component {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 0.15rem solid;
     margin-bottom: 2rem;
-    border-image: linear-gradient(
-            90deg,
-            var(--contrast-color) 90%,
-            var(--background-color) 95%
-        )
-        1;
+    border-bottom: var(--text-separator-border);
+    border-image: var(--text-separator-border-image);
 
     h1,
     h2,

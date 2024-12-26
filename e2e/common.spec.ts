@@ -383,7 +383,7 @@ test("displays zoom pinch percentage accurately", async ({
 test("should properly render the date when the content was last modified", async ({
     page,
 }) => {
-    const dateString = "Mon Sep 02 2024"
+    const dateString = "Thu Dec 26 2024"
     await page.goto("/")
     const lastModifiedComponent = page.getByText(
         `This content was last modified on ${dateString}`
