@@ -90,11 +90,18 @@ let data = {
             metadata: {},
             components: [
                 {
+                    name: "Image",
+                    src: "/tim_malstead_profile_pic:w400-h400.jpg",
+                    alt: "A picture of me, Timothy Malstead",
+                    title: "A picture of me, Timothy Malstead",
+                    priority: true,
+                },
+                {
                     name: "Markdown",
                     text: `
 # Hello, I am Timothy Malstead
 
-I'm a software engineer and artist living in Los Angeles, California. 
+I am a software engineer and artist living in Los Angeles, California. 
 
 I believe that software, and the open web in particular, are among the most powerful tools we have for improving our world.
 
