@@ -87,7 +87,24 @@ let data = {
     },
     home: {
         content: {
-            metadata: {},
+            metadata: {
+                openGraph: {
+                    description:
+                        "The website of Timothy Malstead, a software engineer and artist from the United States.",
+                    locale: "en_US",
+                    title: "Timothy Malstead",
+                    typeo: "website",
+                    url: "https://www.timothymalstead.com",
+                    images: [
+                        {
+                            alt: "A picture of me, Timothy Malstead",
+                            height: 400,
+                            width: 400,
+                            url: "https://www.timothymalstead.com/assets/home/tim_malstead_profile_pic.webp",
+                        },
+                    ],
+                },
+            },
             components: [
                 {
                     name: "Image",
