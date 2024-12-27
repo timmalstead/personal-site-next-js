@@ -91,9 +91,12 @@ let data = {
             components: [
                 {
                     name: "Image",
-                    src: "/tim_malstead_profile_pic:w400-h400.jpg",
+                    src: "/tim_malstead_profile_pic.webp",
                     alt: "A picture of me, Timothy Malstead",
                     title: "A picture of me, Timothy Malstead",
+                    width: 400,
+                    height: 400,
+                    fill: false,
                     priority: true,
                 },
                 {
