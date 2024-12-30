@@ -19,3 +19,5 @@ export {
     default as DynamicPageComponent,
     generateDynamicMetadata,
 } from "./dynamic-page-component"
+export { default as ObjectComponent } from "./object"
+export type { ObjectComponentProps } from "./object"

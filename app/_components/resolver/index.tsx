@@ -7,6 +7,8 @@ import {
     ReadPercentage,
     Link,
     type LinkProps,
+    ObjectComponent,
+    type ObjectComponentProps,
 } from "_components"
 import { getContent } from "_data"
 import { notFound as redirectToNotFound } from "next/navigation"
@@ -20,7 +22,7 @@ interface ResolverProps {
 type PossibleContent<T> = T | undefined
 
 type ComponentNames = Lowercase<
-    "Markdown" | "Image" | "LastModified" | "Array" | "Link"
+    "Markdown" | "Image" | "LastModified" | "Array" | "Link" | "Object"
 >
 
 type ComponentMap = {
@@ -34,7 +36,8 @@ type ComponentMapEntry = {
     components?: ComponentMapEntry[]
 } & ImageProps &
     LastModifiedProps &
-    LinkProps
+    LinkProps &
+    ObjectComponentProps
 
 const renderComponentMapEntry = (
     componentMap: ComponentMap,
@@ -66,6 +69,8 @@ const componentMap: ComponentMap = {
                 {text}
             </Link>
         ),
+    object: ({ data, type, ...rest }) =>
+        data && type && <ObjectComponent data={data} type={type} {...rest} />,
 }
 
 const noContentErrorMessage = "No content found"

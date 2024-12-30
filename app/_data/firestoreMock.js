@@ -93,8 +93,8 @@ let data = {
                         "The website of Timothy Malstead, a software engineer and artist from the United States.",
                     locale: "en_US",
                     title: "Timothy Malstead",
-                    typeo: "website",
-                    url: "https://www.timothymalstead.com",
+                    type: "website",
+                    url: "https://www.timothymalstead.com/about",
                     images: [
                         {
                             alt: "A picture of me, Timothy Malstead",
@@ -169,19 +169,54 @@ Thank you for taking the time to visit, I hope you find something here that you 
         content: {
             metadata: {
                 title: "About Me",
+                description: "All about Timothy Malstead",
+                openGraph: {
+                    description: "All about Timothy Malstead",
+                    locale: "en_US",
+                    title: "About Me",
+                    type: "website",
+                    url: "https://www.timothymalstead.com/about",
+                    images: [
+                        {
+                            alt: "A picture of me, Timothy Malstead",
+                            height: 400,
+                            width: 400,
+                            url: "https://www.timothymalstead.com/assets/about/tim_malstead_profile_pic.webp",
+                        },
+                    ],
+                },
             },
             components: [
                 {
                     name: "Markdown",
+                    text: "# About Me",
+                },
+                {
+                    name: "Image",
+                    src: "/tim_malstead_profile_pic.webp",
+                    alt: "A picture of me, Timothy Malstead",
+                    title: "A picture of me, Timothy Malstead",
+                    width: 400,
+                    height: 400,
+                    fill: false,
+                    priority: true,
+                },
+                {
+                    name: "Markdown",
                     text: `
-# About Me
-
-![A picture of me, Timothy Malstead](/tim_malstead_profile_pic:w400-h400.jpg "A picture of me, Timothy Malstead")
-
-My name is Timothy Malstead. I am a software engineer and artist in Los Angeles, California with a strong belief that software, and the open web in particular, are among the most powerful tools we have for improving our world. My goal is to create software that is easy to use, easy to understand, and easy to maintain and I value simplicity, clarity and brevity in all things. I am very happy that you have taken the time to visit my site and I hope you find something here that you enjoy.
-
-HAVE_A_RESUME_HERE
-
+Resume:
+`,
+                },
+                {
+                    name: "Object",
+                    data: "https://drive.google.com/file/d/15sP41AH8-kKbI1N3OdC7EcRuwbxuuT--/preview",
+                    type: "application/pdf",
+                    width: "100%",
+                    height: "1025",
+                },
+                {
+                    name: "Markdown",
+                    text: `
 If I sound like your kind of guy, then you may enjoy some of the following pages:
 
 * [Data Use and Policies](/data)
@@ -191,7 +226,7 @@ If I sound like your kind of guy, then you may enjoy some of the following pages
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1727750775738,
+                    lastModifiedDate: 1735356932501,
                 },
             ],
         },
