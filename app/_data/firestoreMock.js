@@ -194,7 +194,7 @@ Thank you for taking the time to visit, I hope you find something here that you 
                     name: "Markdown",
                     text: `If I sound like your kind of guy, then you may enjoy some of the following pages:
 * [Data Use and Policies](/data)
-* [Why I Like the Web](/why-i-like-the-web)
+* [Why I Like the Web](/web)
 * [Manifesto](/manifesto)
 `,
                 },
@@ -370,7 +370,7 @@ ${staticDataForReadPercentage.repeat(5)}
                         {
                             name: "Link",
                             text: "why i like the web",
-                            href: "/why-i-like-the-web",
+                            href: "/web",
                             inline: false,
                         },
                         {
