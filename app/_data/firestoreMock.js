@@ -94,7 +94,7 @@ let data = {
                     locale: "en_US",
                     title: "Timothy Malstead",
                     type: "website",
-                    url: "https://www.timothymalstead.com/about",
+                    url: "https://www.timothymalstead.com",
                     images: [
                         {
                             alt: "A picture of me, Timothy Malstead",
@@ -148,7 +148,7 @@ Thank you for taking the time to visit, I hope you find something here that you 
             components: [
                 {
                     name: "Markdown",
-                    text: "# this is the blog",
+                    text: "# Under Construction",
                 },
             ],
         },
@@ -176,49 +176,23 @@ Thank you for taking the time to visit, I hope you find something here that you 
                     title: "About Me",
                     type: "website",
                     url: "https://www.timothymalstead.com/about",
-                    images: [
-                        {
-                            alt: "A picture of me, Timothy Malstead",
-                            height: 400,
-                            width: 400,
-                            url: "https://www.timothymalstead.com/assets/about/tim_malstead_profile_pic.webp",
-                        },
-                    ],
                 },
             },
             components: [
                 {
                     name: "Markdown",
-                    text: "# About Me",
-                },
-                {
-                    name: "Image",
-                    src: "/tim_malstead_profile_pic.webp",
-                    alt: "A picture of me, Timothy Malstead",
-                    title: "A picture of me, Timothy Malstead",
-                    width: 400,
-                    height: 400,
-                    fill: false,
-                    priority: true,
-                },
-                {
-                    name: "Markdown",
-                    text: `
-Resume:
-`,
+                    text: "# About Me\nAfter pivoting away from a career in the arts, I found programming to be a natural fit for my creative and analytical skills.\n\nResume:",
                 },
                 {
                     name: "Object",
                     data: "https://drive.google.com/file/d/15sP41AH8-kKbI1N3OdC7EcRuwbxuuT--/preview",
                     type: "application/pdf",
                     width: "100%",
-                    height: "1025",
+                    height: "600",
                 },
                 {
                     name: "Markdown",
-                    text: `
-If I sound like your kind of guy, then you may enjoy some of the following pages:
-
+                    text: `If I sound like your kind of guy, then you may enjoy some of the following pages:
 * [Data Use and Policies](/data)
 * [Why I Like the Web](/why-i-like-the-web)
 * [Manifesto](/manifesto)
@@ -226,7 +200,7 @@ If I sound like your kind of guy, then you may enjoy some of the following pages
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1735356932501,
+                    lastModifiedDate: 1735595222872,
                 },
             ],
         },
@@ -375,6 +349,12 @@ ${staticDataForReadPercentage.repeat(5)}
             content: {
                 data: {
                     components: [
+                        {
+                            name: "Link",
+                            text: "blog",
+                            href: "/blog",
+                            inline: false,
+                        },
                         {
                             name: "Link",
                             text: "about me",
