@@ -1,16 +1,6 @@
-import { Resolver } from "_components"
-import { getSeoData } from "_data"
-import type { Metadata } from "next"
+import { generateDynamicMetadata, DynamicPageComponent } from "_components"
 
-export const generateMetadata = async (): Promise<Metadata> => {
-    // will return valid metadata as described in above Metadata interface
-    return await getSeoData("home")
-}
+export const generateMetadata = async () => await generateDynamicMetadata()
+const DynamicPage = () => <DynamicPageComponent />
 
-const Home = () => (
-    <main>
-        <Resolver dataPath="home" dataType="page" />
-    </main>
-)
-
-export default Home
+export default DynamicPage
