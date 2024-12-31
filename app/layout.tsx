@@ -11,6 +11,7 @@ import {
     ReduceMotion,
     LayoutZoom,
     PinchZoom,
+    TagManager,
 } from "_components"
 import "./globals.css"
 
@@ -83,6 +84,7 @@ const RootLayout = ({
                     <ColorSwitcher colorModeProp={colorMode} />
                 </UserSettings>
                 <Footer />
+                <TagManager />
             </body>
         </html>
     )

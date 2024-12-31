@@ -21,3 +21,4 @@ export {
 } from "./dynamic-page-component"
 export { default as ObjectComponent } from "./object"
 export type { ObjectComponentProps } from "./object"
+export { default as TagManager } from "./tag-manager"
