@@ -143,26 +143,27 @@ Thank you for taking the time to visit, I hope you find something here that you 
         content: {
             metadata: {
                 title: "Blog",
-                description: "A blog title to test the metadata",
+                description:
+                    "The blog of Timothy Malstead, a software engineer and artist from the United States.",
+                openGraph: {
+                    description:
+                        "The blog of Timothy Malstead, a software engineer and artist from the United States.",
+                    locale: "en_US",
+                    title: "Blog",
+                    type: "website",
+                    url: "https://www.timothymalstead.com/blog",
+                },
             },
             components: [
                 {
                     name: "Markdown",
                     text: "# Under Construction",
                 },
-            ],
-        },
-        travel: {
-            content: {
-                data: {
-                    components: [
-                        {
-                            name: "Markdown",
-                            text: "# this is the post about travel",
-                        },
-                    ],
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1734833971416,
                 },
-            },
+            ],
         },
     },
     about: {
