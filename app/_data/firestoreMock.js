@@ -406,7 +406,7 @@ ${staticDataForReadPercentage.repeat(5)}
                         },
                         {
                             name: "Link",
-                            text: "data use",
+                            text: "data",
                             href: "/data",
                             inline: false,
                         },
