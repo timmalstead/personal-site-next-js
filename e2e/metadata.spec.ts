@@ -19,7 +19,7 @@ test.describe("Metadata", () => {
         const metaDescription = page.locator('meta[name="description"]')
         await expect(metaDescription).toHaveAttribute(
             "content",
-            "A blog title to test the metadata"
+            "The blog of Timothy Malstead, a software engineer and artist from the United States."
         )
     })
 })

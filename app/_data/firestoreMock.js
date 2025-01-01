@@ -198,6 +198,10 @@ First of all, thank you for taking the time to visit my site. Read on to learn m
                 },
                 {
                     name: "Object",
+                    permissionRequired: true,
+                    permissionMessage: "click to view my resume (PDF)",
+                    permissionAlt:
+                        "Note that this is a PDF document and is large in size compared to the other elements on the page",
                     data: "https://drive.google.com/file/d/15sP41AH8-kKbI1N3OdC7EcRuwbxuuT--/preview",
                     type: "application/pdf",
                     width: "100%",

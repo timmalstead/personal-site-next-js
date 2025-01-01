@@ -1,3 +1,7 @@
-object.embedded-data {
+div.object-wrapper {
     margin-bottom: 2rem;
+    button {
+        border: var(--text-separator-border) var(--contrast-color);
+        padding: 0.25rem 0.5rem;
+    }
 }
