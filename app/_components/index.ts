@@ -22,3 +22,4 @@ export {
 export { default as ObjectComponent } from "./object"
 export type { ObjectComponentProps } from "./object"
 export { default as TagManager } from "./tag-manager"
+export { default as CurrentVersion } from "./current-version"

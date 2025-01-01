@@ -12,6 +12,7 @@ import {
     LayoutZoom,
     PinchZoom,
     TagManager,
+    CurrentVersion,
 } from "_components"
 import "./globals.css"
 
@@ -82,6 +83,7 @@ const RootLayout = ({
                     {isChrome && <LayoutZoom />}
                     <ReduceMotion reducedMotionProp={reducedMotion} />
                     <ColorSwitcher colorModeProp={colorMode} />
+                    <CurrentVersion />
                 </UserSettings>
                 <Footer />
                 <TagManager />

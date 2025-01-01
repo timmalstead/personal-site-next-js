@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "USE_TESTING_FIRESTORE=true PORT=8080 next dev",
+        "dev": "USE_TESTING_FIRESTORE=true ACTIVE_ENV=local PORT=8080 CURRENT_VERSION=$(git rev-parse --short HEAD) next dev",
         "build": "next build",
         "postbuild": "cp -r .next/static .next/standalone/.next",
         "start": "PORT=8080 node .next/standalone/server.js",
@@ -19,7 +19,7 @@
         "preimage:build:local": "node ./scripts/prepareCredsForLocalContainer.js",
         "image:build:local": "docker build -t personal-site-next-js .",
         "postimage:build:local": "git checkout ./app/_data/credentials.ts",
-        "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env personal-site-next-js",
+        "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env --env ACTIVE_ENV=preview --env CURRENT_VERSION=$(git rev-parse --short HEAD) personal-site-next-js",
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
     "dependencies": {

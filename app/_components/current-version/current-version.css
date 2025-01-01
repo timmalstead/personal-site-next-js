@@ -1,0 +1,4 @@
+li.current-version > span {
+    cursor: text;
+    user-select: text;
+}
