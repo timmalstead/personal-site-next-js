@@ -181,7 +181,19 @@ Thank you for taking the time to visit, I hope you find something here that you 
             components: [
                 {
                     name: "Markdown",
-                    text: "# About Me\nAfter pivoting away from a career in the arts, I found programming to be a natural fit for my creative and analytical skills.\n\nResume:",
+                    text: `
+# About Me
+
+Hello, my name is Timothy Malstead.
+
+I am a software engineer living in Los Angeles, California.
+
+First of all, thank you for taking the time to visit my site. Read on to learn more about me and my work.
+
+## Professional Background
+
+## Resume
+`,
                 },
                 {
                     name: "Object",
@@ -192,15 +204,61 @@ Thank you for taking the time to visit, I hope you find something here that you 
                 },
                 {
                     name: "Markdown",
-                    text: `If I sound like your kind of guy, then you may enjoy some of the following pages:
-* [Data Use and Policies](/data)
-* [Why I Like the Web](/web)
-* [Manifesto](/manifesto)
+                    text: `
+
+## Values
+
+## Why I Like the Web
+                    
+## Art
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1735595222872,
+                    lastModifiedDate: 1735684044731,
+                },
+            ],
+        },
+    },
+    data: {
+        content: {
+            metadata: {
+                title: "Data Use and Policies",
+                description:
+                    "An outline of the data use and policies for timothymalstead.com",
+                openGraph: {
+                    description:
+                        "An outline of the data use and policies for timothymalstead.com",
+                    locale: "en_US",
+                    title: "Data Use and Policies",
+                    type: "website",
+                    url: "https://www.timothymalstead.com/data",
+                },
+            },
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
+# Data Use and Policies
+
+It is the policy of myself and this site to respect your privacy and data.
+
+In this spirit, I only collect basic information about your visit to this site, such as the pages you visit and the time you spend on each page.
+
+I do not share this information with any third parties, and I do not use it for any purpose other than to improve the content and performance of this site.
+
+To gather this information, I *solely* use the default implementation of Google Analytics.
+
+__This implementation does not collect any personally identifiable information.__
+
+For more information about the specific information collected by the default implementation of Google Analytics, please see this [Google Support Article](https://support.google.com/analytics/answer/11593727?hl=en).
+
+If there are any changes in my data collection or use policies, I will update this page to reflect those changes.
+`,
+                },
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1735684044731,
                 },
             ],
         },
@@ -341,6 +399,12 @@ ${staticDataForReadPercentage.repeat(5)}
                             href: "/about",
                             inline: false,
                         },
+                        {
+                            name: "Link",
+                            text: "data use",
+                            href: "/data",
+                            inline: false,
+                        },
                     ],
                 },
             },
@@ -365,18 +429,6 @@ ${staticDataForReadPercentage.repeat(5)}
                             name: "Link",
                             text: "data use and policies",
                             href: "/data",
-                            inline: false,
-                        },
-                        {
-                            name: "Link",
-                            text: "why i like the web",
-                            href: "/web",
-                            inline: false,
-                        },
-                        {
-                            name: "Link",
-                            text: "manifesto",
-                            href: "/manifesto",
                             inline: false,
                         },
                     ],
