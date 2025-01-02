@@ -185,13 +185,17 @@ Thank you for taking the time to visit, I hope you find something here that you 
                     text: `
 # About Me
 
-Hello, my name is Timothy Malstead.
-
-I am a software engineer living in Los Angeles, California.
+Hello, my name is Timothy Malstead; I am a software engineer living in Los Angeles, California.
 
 First of all, thank you for taking the time to visit my site. Read on to learn more about me and my work.
 
 ## Professional Background
+
+Originally trained in clothing and fabric design, I enjoyed a career in the textile industry for several years. For most of that time, I focused on printed womenswear; holding various roles in printing, coloring and technical design. Looking back, I can see that my time spent developing creative visual projects constrained by hard technical limitations helped me cultivate a logical and algorithmic way of thinking that has continued to serve me well in the software field.
+
+This time in my life also helped me create strong aesthetic principles which have translated well into my work in customer facing applications. I enjoy creating simple and austere layouts, using clean colors and fonts that allow the content to be front and center.
+
+## Tools
 
 ## Resume
 `,
@@ -220,7 +224,7 @@ First of all, thank you for taking the time to visit my site. Read on to learn m
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1735684044731,
+                    lastModifiedDate: 1735775385995,
                 },
             ],
         },
