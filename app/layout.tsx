@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
-import { cookies, headers } from "next/headers"
+import { getServerValue } from "_utils/server"
 import type { ColorMode, ReducedMotion, Browser, SettingsDismiss } from "_utils"
 import { Noto_Sans } from "next/font/google"
 import {
@@ -34,24 +34,10 @@ const RootLayout = ({
 }: Readonly<{
     children: ReactNode
 }>) => {
-    const getServerValue = <T extends unknown>({
-        cookieName,
-        headerName,
-        defaultName,
-    }: {
-        cookieName?: string
-        headerName?: string
-        defaultName: T
-    }): T => {
-        const cookie = !!cookieName && cookies().get(cookieName)?.value
-        const header = !!headerName && headers().get(headerName)
-        return (cookie || header || defaultName) as T
-    }
-
     const colorMode = getServerValue<ColorMode>({
         cookieName: "colorMode",
         headerName: "Sec-CH-Prefers-Color-Scheme",
-        defaultName: "light",
+        defaultName: "dark",
     })
 
     const reducedMotion = getServerValue<ReducedMotion>({

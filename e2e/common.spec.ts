@@ -42,15 +42,15 @@ test.describe("Color themes", () => {
     }) => {
         await page.goto("/")
 
-        await bgShouldBe(page, lightColor)
+        await bgShouldBe(page, darkColor)
 
         const colorSwitcher = await findColorSwitcher(page)
         await colorSwitcher.click()
 
-        await bgShouldBe(page, darkColor)
+        await bgShouldBe(page, lightColor)
 
         await colorSwitcher.click()
-        await bgShouldBe(page, lightColor)
+        await bgShouldBe(page, darkColor)
         await page.close()
     })
 
@@ -58,13 +58,15 @@ test.describe("Color themes", () => {
         page,
     }) => {
         await page.goto("/")
-        await bgShouldBe(page, lightColor)
 
         await page.emulateMedia({ colorScheme: "dark" })
         await bgShouldBe(page, darkColor)
 
         await page.emulateMedia({ colorScheme: "light" })
         await bgShouldBe(page, lightColor)
+
+        await page.emulateMedia({ colorScheme: "dark" })
+        await bgShouldBe(page, darkColor)
 
         await page.close()
     })
@@ -84,7 +86,7 @@ test.describe("Color themes", () => {
         test(testName, async ({ page }) => {
             await page.goto("/")
 
-            if (expectedColor === darkColor)
+            if (expectedColor === lightColor)
                 await findColorSwitcher(page).then((colorSwitcher) =>
                     colorSwitcher.click()
                 )
@@ -130,12 +132,12 @@ test.describe("Color themes", () => {
             expectedColor: darkColor,
         }, */
         {
-            testName: "Has light background by default",
+            testName: "Has dark background by default",
             cookieName: "",
             cookieValue: "",
             headerName: "",
             headerValue: "",
-            expectedColor: lightColor,
+            expectedColor: darkColor,
         },
     ]
     for (const {
