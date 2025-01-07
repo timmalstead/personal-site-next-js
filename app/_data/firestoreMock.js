@@ -193,7 +193,11 @@ First of all, thank you for taking the time to visit my site. Read on to learn m
 
 Originally trained in clothing and fabric design, I enjoyed a career in the textile industry for several years. For most of that time, I focused on printed womenswear; holding various roles in printing, coloring and technical design. Looking back, I can see that my time spent developing creative visual projects constrained by hard technical limitations helped me cultivate a logical and algorithmic way of thinking that has continued to serve me well in the software field.
 
-This time in my life also helped me create strong aesthetic principles which have translated well into my work in customer facing applications. I enjoy creating simple and austere layouts, using clean colors and fonts that allow the content to be front and center.
+This time in my life also helped me create strong aesthetic principles which have translated well into my work in customer facing applications. I enjoy simple and austere layouts, with clean colors and fonts that allow the content to be front and center.
+
+After several satisfying years, I began to wonder what my next steps in life might be. The fabric world was fine and had treated me well, but the scope of work that I was doing had become rather rote. What had previously been a career full of creative and technical challenges had gradually become an overly repetitive slog.
+
+A friend of mine who works in software suggested I might have a talent for it as well. I decided to take his advice and, after some self directed learning, I attended the [General Assembly](https://generalassemb.ly/) immersive program on the software engineering track. It was here that I learned the fundamentals of software engineering and computer science, with a particular focus on the web and web applications.
 
 ## Tools
 
@@ -218,13 +222,19 @@ This time in my life also helped me create strong aesthetic principles which hav
 ## Values
 
 ## Why I Like the Web
-                    
+
 ## Art
+
+While no longer my primary profession, I continue to enjoy creating visual art. This most often takes the form of drawing and painting. I look to my art as a way to indulge my completely selfish and un-collaborative impulses; basically everything I seek *not* to do in software.
+
+In the past few years I have been exploring a style somewhere between figurative and cartoonish, usually with high chroma color schemes influenced by my time in fabric design.
+
+At present, I do not have any of my work featured on this site. My initial focus is the basic informational pages and the blog. After that is complete, I intend to create an art section.
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1735775385995,
+                    lastModifiedDate: 1736216533544,
                 },
             ],
         },
