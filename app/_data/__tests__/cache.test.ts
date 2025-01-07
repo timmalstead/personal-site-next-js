@@ -3,7 +3,7 @@ import {
     clearCacheKey,
     getCache,
     setCache,
-} from "../cache"
+} from "../memoryCache"
 
 const [testCacheKey, testData] = ["/test", { test: "data" }]
 
