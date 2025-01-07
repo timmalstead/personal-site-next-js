@@ -1,4 +1,1 @@
-export {
-    DynamicPageComponent as default,
-    generateDynamicMetadata as generateMetadata,
-} from "_components"
+export { DynamicPageComponent as default, generateMetadata } from "_components"

@@ -17,7 +17,7 @@ export { default as Link } from "./link"
 export type { LinkProps } from "./link"
 export {
     default as DynamicPageComponent,
-    generateDynamicMetadata,
+    generateMetadata,
 } from "./dynamic-page-component"
 export { default as ObjectComponent } from "./object"
 export type { ObjectComponentProps } from "./object"
