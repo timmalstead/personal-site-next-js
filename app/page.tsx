@@ -1,6 +1,4 @@
-import { generateDynamicMetadata, DynamicPageComponent } from "_components"
-
-export const generateMetadata = async () => await generateDynamicMetadata()
-const DynamicPage = () => <DynamicPageComponent />
-
-export default DynamicPage
+export {
+    DynamicPageComponent as default,
+    generateDynamicMetadata as generateMetadata,
+} from "_components"
