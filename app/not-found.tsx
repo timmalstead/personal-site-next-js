@@ -1,21 +1,9 @@
-const errorStyle = `
-main.not-found {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    h1 {
-        font-weight: var(--heading-weight);
-        border-bottom: 0.075rem solid;
-        text-align: center;
-    }
-}
-`
+import { Heading } from "_components"
 
-const NotFound = () => (
-    <main className="not-found">
-        <style>{errorStyle}</style>
-        <h1>404 - Page Not Found</h1>
+const NotFound = () =>
+    // prettier-ignore
+    <main style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Heading level="h1">404 - Page Not Found</Heading>
     </main>
-)
 
 export default NotFound
