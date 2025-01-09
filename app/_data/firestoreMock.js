@@ -199,6 +199,8 @@ After several satisfying years, I began to wonder what my next steps in life mig
 
 A friend of mine who works in software suggested I might have a talent for it as well. I decided to take his advice and, after some self directed learning, I attended the [General Assembly](https://generalassemb.ly/) immersive program on the software engineering track. It was here that I learned the fundamentals of software engineering and computer science, with a particular focus on the web and web applications.
 
+After graduating from GA, I spent some time working with the volunteer organization [Hack for LA](https://www.hackforla.org/). Here I was able to roll up my sleeves and get practical experience on production code bases, all while working on projects that improved the lives of real people. These projects included the community housing workflow tool [Home Unite Us](https://www.hackforla.org/projects/home-unite-us) and the Los Angeles area food bank location tool [Food Oasis](https://foodoasis.la/).
+
 ## Tools
 
 ## Resume
@@ -234,7 +236,7 @@ At present, I do not have any of my work featured on this site. My initial focus
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736216533544,
+                    lastModifiedDate: 1736393190925,
                 },
             ],
         },
