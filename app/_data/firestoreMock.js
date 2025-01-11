@@ -197,11 +197,15 @@ This time in my life also helped me create strong aesthetic principles which hav
 
 After several satisfying years, I began to wonder what my next steps in life might be. The fabric world was fine and had treated me well, but the scope of work that I was doing had become rather rote. What had previously been a career full of creative and technical challenges had gradually become an overly repetitive slog.
 
-A friend of mine who works in software suggested I might have a talent for it as well. I decided to take his advice and, after some self directed learning, I attended the [General Assembly](https://generalassemb.ly/) immersive program on the software engineering track. It was here that I learned the fundamentals of software engineering and computer science, with a particular focus on the web and web applications.
+A friend of mine who works in software suggested I might have a talent for it as well. I decided to take his advice and, after some self directed learning, I attended the [General Assembly](https://generalassemb.ly/) immersive program on the full-stack software engineering track. It was here that I learned the fundamentals of software engineering and computer science, with a particular focus on the web and web applications.
 
 After graduating from GA, I spent some time working with the volunteer organization [Hack for LA](https://www.hackforla.org/). Here I was able to roll up my sleeves and get practical experience on production code bases, all while working on projects that improved the lives of real people. These projects included the community housing workflow tool [Home Unite Us](https://www.hackforla.org/projects/home-unite-us) and the Los Angeles area food bank location tool [Food Oasis](https://foodoasis.la/).
 
+Soon afterwards I was offered a community fellowship with Code for America. I was on a small team 
+
 ## Tools
+
+Do I need the tools to actually be here?
 
 ## Resume
 `,
@@ -223,7 +227,11 @@ After graduating from GA, I spent some time working with the volunteer organizat
 
 ## Values
 
+Values about belief in communal knowledge
+
 ## Why I Like the Web
+
+I like the web because you control things instead of being on a platform
 
 ## Art
 
