@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "USE_TESTING_FIRESTORE=true ACTIVE_ENV=local PORT=8080 CURRENT_VERSION=$(git rev-parse --short HEAD) next dev",
+        "dev": "NODE_OPTIONS='-r ./scripts/punycodeFix' USE_TESTING_FIRESTORE=true ACTIVE_ENV=local PORT=8080 CURRENT_VERSION=$(git rev-parse --short HEAD) next dev",
         "build": "next build",
         "postbuild": "cp -r .next/static .next/standalone/.next",
-        "start": "PORT=8080 node .next/standalone/server.js",
+        "start": "NODE_OPTIONS='-r ./scripts/punycodeFix' PORT=8080 node .next/standalone/server.js",
         "lint": "next lint",
         "type:check": "tsc --noEmit",
         "version:check": "node ./scripts/confirmNodeVersion",
@@ -25,6 +25,7 @@
     "dependencies": {
         "@google-cloud/firestore": "^7.9.0",
         "@google-cloud/storage": "^7.14.0",
+        "module-alias": "2.2.3",
         "next": "^14.2.4",
         "react": "^18",
         "react-dom": "^18",
