@@ -6,6 +6,7 @@ const serverOnlyPackages = [
     /@google-cloud\/firestore/,
     /@google-cloud\/storage/,
     /lorem-ipsum/,
+    /module-alias/,
 ]
 
 const aliasedDirectories = ["_components", "_data", "_utils"]
