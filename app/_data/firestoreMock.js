@@ -185,9 +185,7 @@ Thank you for taking the time to visit, I hope you find something here that you 
                     text: `
 # About Me
 
-Hello, my name is Timothy Malstead; I am a software engineer living in Los Angeles, California.
-
-First of all, thank you for taking the time to visit my site. Read on to learn more about me and my work.
+Hello, my name is Timothy Malstead; I am a software engineer and artist living in Los Angeles, California. Thank you for taking the time to visit my site. Read on to learn more about me and my work.
 
 ## Professional Background
 
@@ -195,17 +193,19 @@ Originally trained in clothing and fabric design, I enjoyed a career in the text
 
 This time in my life also helped me create strong aesthetic principles which have translated well into my work in customer facing applications. I enjoy simple and austere layouts, with clean colors and fonts that allow the content to be front and center.
 
-After several satisfying years, I began to wonder what my next steps in life might be. The fabric world was fine and had treated me well, but the scope of work that I was doing had become rather rote. What had previously been a career full of creative and technical challenges had gradually become an overly repetitive slog.
+After several satisfying years, I began to wonder what my next steps in life might be. The fabric world was fine and had treated me well, but the work that I was doing had become rote. What had previously been a career full of creative and technical challenges had gradually become an overly repetitive slog.
 
 A friend of mine who works in software suggested I might have a talent for it as well. I decided to take his advice and, after some self directed learning, I attended the [General Assembly](https://generalassemb.ly/) immersive program on the full-stack software engineering track. It was here that I learned the fundamentals of software engineering and computer science, with a particular focus on the web and web applications.
 
-After graduating from GA, I spent some time working with the volunteer organization [Hack for LA](https://www.hackforla.org/). Here I was able to roll up my sleeves and get practical experience on production code bases, all while working on projects that improved the lives of real people. These projects included the community housing workflow tool [Home Unite Us](https://www.hackforla.org/projects/home-unite-us) and the Los Angeles area food bank location tool [Food Oasis](https://foodoasis.la/).
+Soon after my graduation from General Assembly, the world was struck by the global Covid 19 pandemic. Like so many others, I found myself in lockdown, fearful and anxious for the future, and for the state of my burgeoning software career.
 
-Soon afterwards I was offered a community fellowship with Code for America. I was on a small team 
+During this time, I was fortunate to find freelance dev work with clients like the robotics startup [Standard Bots](https://standardbots.com/), and also volunteered with the civic tech organization [Hack for LA](https://www.hackforla.org/). With these projects, I was able to roll up my sleeves and get practical experience on production code bases. In the case of Hack for LA, I was also able to work on projects that improved the lives of real people, such as the community housing workflow tool [Home Unite Us](https://www.hackforla.org/projects/home-unite-us) and the Los Angeles area food bank location tool [Food Oasis](https://foodoasis.la/).
 
-## Tools
+Through my work with Hack for LA, I was invited to apply for a fellowship with [Code for America](https://codeforamerica.org/). I did so, and in October of 2020 I was accepted into the [Code for America Community Fellowship](https://codeforamerica.org/news/announcing-the-2020-code-for-america-community-fellowship/), on a [small team](https://codeforamerica.org/news/meet-the-community-fellows-team-santa-barbara-county/) partnered with the [Santa Barbara County Public Defenders Office](https://www.countyofsb.org/187/Public-Defender).
 
-Do I need the tools to actually be here?
+Over the next 14 months, we worked to create [Thrive SBC](https://www.thrivesbc.com/), a resource app specifically designed to help and empower the justice impacted population of Santa Barbara county. We worked to gather and share information on food aid, medical and legal services, employment, substance abuse recovery and much more.
+
+I am particularly proud of the [Fresh Start](https://www.thrivesbc.com/freshstart) section of Thrive SBC, of which I was the primary architect and engineer. This tool greatly simplifies applying for criminal record expungement. We were able to take what had previously been a little known and onerous procedure and offer it as a simplified one form process that sends a fully qualified and recognized legal application for expungement straight to the public defenders office. As someone who has seen justice impacted family and friends attempts to gain employment and other services stymied by the continued impact of their criminal records, being able to create a tool like Fresh Start ranks among the proudest moments of my software career.
 
 ## Resume
 `,
@@ -225,13 +225,7 @@ Do I need the tools to actually be here?
                     name: "Markdown",
                     text: `
 
-## Values
-
-Values about belief in communal knowledge
-
-## Why I Like the Web
-
-I like the web because you control things instead of being on a platform
+## How I View Software Engineering
 
 ## Art
 
@@ -244,7 +238,7 @@ At present, I do not have any of my work featured on this site. My initial focus
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736393190925,
+                    lastModifiedDate: 1736642034591,
                 },
             ],
         },
