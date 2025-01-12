@@ -45,4 +45,5 @@ ENV PORT 8080
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# disabling deprecation waring for punycode AKA DEP0040
+CMD HOSTNAME="0.0.0.0" NODE_OPTIONS='--disable-warning=DEP0040' node server.js
