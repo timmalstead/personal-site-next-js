@@ -559,6 +559,12 @@ ${staticDataForReadPercentage.repeat(5)}
                             href: "/data",
                             inline: false,
                         },
+                        {
+                            name: "Link",
+                            text: "timmalstead@gmail.com",
+                            href: "mailto:timmalstead@gmail.com",
+                            inline: false,
+                        },
                     ],
                 },
             },
