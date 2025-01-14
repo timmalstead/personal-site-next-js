@@ -185,7 +185,9 @@ Thank you for taking the time to visit, I hope you find something here that you 
                     text: `
 # About Me
 
-Hello, my name is Timothy Malstead; I am a software engineer and artist living in Los Angeles, California. Thank you for taking the time to visit my site. Read on to learn more about me and my work.
+Hello, my name is Timothy Malstead. I am a software engineer and artist living in Los Angeles, California.
+
+Thank you for taking the time to visit my site. Read on to learn more about me and my work.
 
 ## Professional Background
 
@@ -207,6 +209,16 @@ Over the next 14 months, we worked to create [Thrive SBC](https://www.thrivesbc.
 
 I am particularly proud of the [Fresh Start](https://www.thrivesbc.com/freshstart) section of Thrive SBC, of which I was the primary architect and engineer. This tool greatly simplifies applying for criminal record expungement. We were able to take what had previously been a little known and onerous procedure and offer it as a simplified one form process that sends a fully qualified and recognized legal application for expungement straight to the public defenders office. As someone who has seen justice impacted family and friends attempts to gain employment and other services stymied by the continued impact of their criminal records, being able to create a tool like Fresh Start ranks among the proudest moments of my software career.
 
+At the beginning of 2022, I accepted a position with [ThoughtWorks](https://www.thoughtworks.com/) and I have been there ever since. ThoughtWorks is a leading global technology consultancy that integrates strategy, design and software engineering to enable our clients to thrive.
+
+Since my start with ThoughtWorks, I have been working with the Gap family of brands, including [Gap](https://www.gap.com/), [Old Navy](https://oldnavy.gap.com/) and [Athleta](https://athleta.gap.com/). My focus has been on customer facing components that are used across all areas of the site. Here my design experience has served me well, creating visually appealing web components with the flexibility to be deployed and controlled in a headless manner.
+
+Less than a year after starting in this position, I was asked to become one of the technical leads on the project. While certainly a large adjustment, taking a leadership role has been immensely satisfying. In addition to my programming and other code related duties, I now take part in architecture decisions, planning, creating customer stories, managing sprints and mentoring junior colleagues.
+
+The past several months at the Gap have seen a great deal of transition, as we move from a "traditional" single page application (React) organized in a distributed micro front end system to a server side first architecture (Next.js). The performance and optimization gains that can be realized in such a system are extremely exciting, and rewriting our components to take advantage of these features has been a very rewarding experience.
+
+These days, I continue to be excited about the present and future state of software, and the web in particular. I plan on continuing to learn as much as I can, and working on interesting software projects, for many years to come.
+
 ## Resume
 `,
                 },
@@ -225,20 +237,32 @@ I am particularly proud of the [Fresh Start](https://www.thrivesbc.com/freshstar
                     name: "Markdown",
                     text: `
 
-## How I View Software Engineering
+## My View On Software Engineering
 
-## Art
+I approach software first and foremost as a collaborative effort. Even when working solo on a personal project, I remain mindful of the legions of talented architects, engineers, designers and others that have worked on tools, hardware, systems, languages and frameworks that allow me to do my work.No one person can understand all there is to know about software, and thus no one person should regard their knowledge as wholly authoritative.
+
+When working with a team, this means cultivating an environment where engineers feel encouraged to ask questions and admit when they do not know something. It also means being quick to admit when I do not know something.
+
+Secondly, I regard software as a constant state of learning *and* teaching. The tools we use change constantly, and it is important to change with them. For me, this means being humble before complexity and giving myself time and patience to absorb new ideas and new modes of working. It also means extending that time and patience to other members on my team, particularly the junior members. I take great joy in passing on my knowledge to other engineers, and in learning from them as well.
+
+Lastly, I approach software in a spirit of stewardship. Whether on a team, a codebase, a feature or even a single commit, I remember that none of these things begin or end with me. By seeking to communicate my ideas as clearly as possible, be it through speech, documentation or code, I seek to improve a project with value that will persist, whether or not I continue to be involved.
+
+## Art and Writing
 
 While no longer my primary profession, I continue to enjoy creating visual art. This most often takes the form of drawing and painting. I look to my art as a way to indulge my completely selfish and un-collaborative impulses; basically everything I seek *not* to do in software.
 
 In the past few years I have been exploring a style somewhere between figurative and cartoonish, usually with high chroma color schemes influenced by my time in fabric design.
 
-At present, I do not have any of my work featured on this site. My initial focus is the basic informational pages and the blog. After that is complete, I intend to create an art section.
+At present, I do not have any of my visual work featured on this site. My initial focus is the basic informational pages and the blog. After that is complete, I intend to create an art section.
+
+Regarding my blog, I shall do my best to communicate ideas I find interesting, in a clear and concise manner. I am not entirely sure what the subject matter will be, but I think that I am going to have fun finding out.
+
+With art, blogging, and social media, I will not be keeping to a regular cadence of creation. I will post when I feel that I have something worthwhile to communicate, which may be infrequently. In the past, I have sought to impose a quota on my creation. It did not work. It led to resentment of my creative work, which is the exact opposite of what I want from my creative outlets.
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736642034591,
+                    lastModifiedDate: 1736819724596,
                 },
             ],
         },
