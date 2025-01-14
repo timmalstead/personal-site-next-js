@@ -12,7 +12,7 @@ test.afterAll(async () => {
 })
 
 const elementsToAssert = [
-    { element: "footer", expectedCount: 3 },
+    { element: "footer", expectedCount: 4 },
     { element: "header", expectedCount: 3 },
 ]
 

@@ -350,6 +350,368 @@ Next time: [Head in the clouds](/blog/over-engineer-your-site-part-3)
                 },
             },
         },
+        "over-engineer-your-site-part-3": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "How to Over-Engineer Your Personal Site: Part Three",
+                        description:
+                            "Third entry in a series about how I redid my personal website, focusing on Google Cloud",
+                        openGraph: {
+                            description:
+                                "Third entry in a series about how I redid my personal website, focusing on Google Cloud",
+                            locale: "en_US",
+                            title: "How to Over-Engineer Your Personal Site: Part Three",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/over-engineer-your-site-part-3",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# How to Over-Engineer Your Personal Site
+## Part Three: Head in the Clouds
+
+For this post I will focus on setting up my project in GCP, Pulumi, 1Password, GitHub and CircleCI; creating roles and permissions for my project with Pulumi IaC, and deploying a storage bucket that will be publicly accessible.
+
+## Create Your Project
+To start with, we will create a project in GCP. If you do not have one, create a Google account and use it to sign in to [GCP welcome page](https://console.cloud.google.com/welcome). You should see a dropdown in the upper left of the page, click on it and select the "New Project" button in the upper right corner of the modal that will pop up.
+
+![Create a new GCP project](/projects.png)
+
+Fill out your info for your new project. The convention for GCP is that you select your \`Project name\`, and that your \`Project ID\` is your \`Project name\` plus a dash and a generated number. Note that while you CAN change your \`Project name\` after its creation, your \`Project ID\` cannot be changed later; so make sure you *really* like it before finalizing your project details.
+
+Since my project is a personal site hosted on GCP, I will go ahead and call it \`personal-site-gcp\`. Google will take a few moments to create your project and should present you with an option to go to your project dashboard after that. Your dashboard should look something like this.
+
+![My new project](/dashboard.png)
+
+## gcloud
+Our goal is to interact with our project via CLI and IaC as much as possible, so go ahead and install the GCP CLI tool, [gcloud](https://cloud.google.com/sdk/docs/install). I am working with macOS for this tutorial, but any supported OS should work with these steps.
+
+Once your installation has finished, login to your Google account by entering \`gcloud auth login\`. This will trigger an authentication flow via your web browser. After you have signed in, you should see a confirmation in your terminal as well.
+
+Now that we are signed in, we will make sure our \`gcloud\` is pointed at the correct project. Run \`gcloud config set project <YOUR_GCP_PROJECT_ID>\` substituting the \`Project ID\` you received when you created your project.
+
+Lastly, Pulumi will need [Application Default Credentials](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login) to interact with your GCP account and project. These will be stored on your local machine. Run the command \`gcloud auth application-default login\` and you should be directed to another authentication flow via your web browser.
+
+## Set up Pulumi
+
+Install the Pulumi CLI tool using [these instructions](https://www.pulumi.com/docs/clouds/gcp/get-started/begin/). Since I am on a Mac and have [Homebrew](https://brew.sh/) installed, for me it will be as simple as entering \`brew install pulumi/tap/pulumi\`.
+
+Once the installation has finished, enter \`pulumi login\` and you will be able to create a Pulumi cloud account. Pulumi cloud will serve as the source of truth for information about the collection of resources (called a [stack by Pulumi](https://www.pulumi.com/docs/concepts/stack/)) we will be creating on GCP with our project.
+
+Before you leave Pulumi cloud, click on the account info tab in the upper right hand corner of the site and navigate down to the tab marked \`Personal access tokens\`. On the page this takes you to, click on the purple \`Create token\` button. This token will be used to access Pulumi cloud via CircleCI, which we will set up later. I called mine \`circle_ci_token\` because I am creative like that. This token will only be shown to you once, so make sure you store it in a safe place.
+
+## Create your service account via Pulumi
+
+On your local machine, create a directory to house your first Pulumi project. In this directory we will be setting up a [service account](https://cloud.google.com/iam/docs/service-account-overview) and its [iam roles and permissions](https://cloud.google.com/iam/docs/roles-overview). Navigate to the created directory and run \`pulumi new gcp-typescript\`. This is a command to create exactly what we want in this case, a new Pulumi stack for GCP written in TypeScript. Follow the prompts on the CLI, making sure to enter your GCP \`Project ID\` for the last prompt.
+
+Funnily enough, Pulumi creates a \`.gitignore\` file but does not actually create a git instance. Go ahead and enter \`git init\` to start git versioning control.
+
+In our root file \`index.ts\` you will find some boilerplate code. Replace it with this:
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+
+const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
+	accountId: "pulumi-circle-ci-service",
+	displayName: "pulumiCircleCiService",
+})
+
+const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
+	serviceAccountId: pulumiCircleCiService.name,
+})
+
+export default {pulumiCircleCiService, pulumiCircleCiServiceAccountKey}
+
+\`\`\`
+
+This is the first code that we have written, so I will take a step back and talk about what we are doing here.
+
+We are creating a new Service Account to be used by CircleCI to access Pulumi to make changes to GCP. A service account is a special type of account for third party services to access and provision resources for a GCP account. After creating that account we are creating a key associated with that account, which takes the form of credentials we will use on the CircleCi service. It is important to note that these are __bearer credentials__, meaning that whomever possesses them is presumed to be validly accessing these resources. As such, it is vitally important to keep them secure. I will get to that in a bit.
+
+For now, run \`pulumi up\`, which is the command to update a Pulumi stack. If you are logged in properly, this will create three resources, the stack on Pulumi cloud, the service account and the key itself. You will notice in the CLI output that the private key is marked as secret. If you were creating this via the GCP GUI, you would be given a JSON file of the credentials, but only once. In our implementation we can get these credentials anytime we desire, but it will take a bit more work to access. I like you, so I will do it for you below.
+
+## Super secret service account
+
+First, append the following line to your \`.gitignore\` file: \`*[sS]ecrets.*\`. We are going to be saving plain text credentials locally, so we do __not__ want them being tracked in version control. This is a simple glob pattern to tell git that any file that ends with the words "secrets", starting with a capital OR lowercase s, should not be tracked. Pretty reasonable right?
+
+Next, add the following block to your \`package.json\` file
+
+\`\`\`json
+"scripts": {
+	"parseCreds": "pulumi stack output --show-secrets | xargs -0 node parseCreds.js runWithCli=true serviceAccountKey=pulumiCircleCiServiceAccountKey"
+}
+\`\`\`
+This will allow us to export the [Pulumi CLI stack output command](https://www.pulumi.com/docs/cli/commands/pulumi_stack_output/) in plaintext and work with it via a node file we will create.
+
+Finally, paste the following code into a file created in your root folder called \`parseCreds.js\`
+
+\`\`\`javascript
+const {writeFileSync} = require("fs")
+
+const dataWithSecrets = process.argv.pop()
+const {serviceAccountKey, runWithCli} = process.argv.slice(2).reduce((acc, arg) => {
+	const [key, value] =  arg.split("=")
+	acc[key] =  value
+	return  acc
+},{})  
+
+/**
+* @function parseAndSaveCreds
+* @param {string} serviceAccountKey - the key to target in the dataWithSecrets object
+* @param {JSON} dataWithSecrets - the data containing the secrets
+* @description parses the dataWithSecrets JSON object with base64 encoded privateKey and saves the key to a file
+* @returns {void}
+* @example parseAndSaveCreds("serviceAccountKey", "{"serviceAccountKey": {"privateKey": "base64EncodedKey"}}") => {privateKey saved to file as JSON}
+**/
+const parseAndSaveCreds = (serviceAccountKey, dataWithSecrets) => {
+	try {
+		if(!serviceAccountKey || !dataWithSecrets) throw new Error("Missing arguments")
+		const selectPreambleCharacters = /[^{]+/ 
+
+		const cleanedText = dataWithSecrets.replace(selectPreambleCharacters, "")
+		const {privateKey} = JSON.parse(cleanedText)[serviceAccountKey]
+		const decodedData = Buffer.from(privateKey, "base64").toString("ascii")
+
+		writeFileSync(./service-account-secrets.json, decodedData) 
+
+		console.info("Successfully parsed credentials")
+		process.exit(0)
+	} catch (error) {
+		console.error("Parsing failed with following error: ", error)
+		process.exit(1)
+	}
+}
+
+runWithCli === "true" && parseAndSaveCreds(serviceAccountKey, dataWithSecrets)  
+
+module.exports = {parseAndSaveCreds}
+
+\`\`\`
+There is a lot going on here, so I will break it down.
+
+First of all, if everything goes right, our goal will be to write a JSON file, so we unpack the \`writeFileSync\` function from the standard node \`fs\` library.
+
+Next, since we are passing the stack info into the node process via [xargs](https://en.wikipedia.org/wiki/Xargs) we can count on it being the *last* entry in the \`process.argv\` array. I actually am not sure why xargs does this, but I do know that it is a reliable behavior, so we will pop it off the array and cache it in a variable. If anyone is familiar with why and how xargs does this, I would love to learn about it.
+
+Next we will slice all the command line arguments *after* the first two, as in node the first two arguments are always the location of the node installation on a system and the name of the file. I know what these arguments are going to be named, so I am going to reduce them to two named variables, both to be used later.
+
+Before we get into the parsing function itself, I want to talk about the triggering mechanism I chose. For now I have not thought of an implementation beyond using it with command line arguments. However, if I do need to use it in a program in the future, I want all the functionality to be available in a discreet and exported function. Additionally, I chose to make it a standard node js file, instead of TypeScript, as this may need to operate in an environment where TypeScript has not yet been installed. This was also my motivation for only using commands and packages found in the node standard library. This file *should* be able to operate in any environment where there is a valid node installation.
+
+Now for the actual \`parseAndSaveCreds\` function. As shown in the documentation comment, it takes two arguments: \`serviceAccountKey\`,  which is a string and \`dataWithSecrets\`, which is the stack data exported from Pulumi in JSON form, as well as some leading preamble text that we will remove.
+
+It is set up in a \`try/catch\` pattern, and any error thrown will be printed to the console and cause the program to exit with a failing exit code.
+
+To start with, we check to make sure that both parameters are present and accounted for, and throw a "missing parameters" error if they are not.
+
+Next we define a RegEx to target all characters before the first curly brace and use it to erase the preamble text.
+
+After the preamble is deleted, we are left with JSON which we can parse and use to extract the \`privateKey\` variable.
+
+It is here where we run into a problem. Even though we exported it with the secrets exposed, Pulumi returns the \`privateKey\` with \`base64\` encoding. I do not know why they do this, but I can roll with it.
+
+To do this we will create a buffer with a \`base64\` encoding and turn it back to a string using \`ascii\`encoding. We will then write this synchronously to a file, write to the console that the parsing was successful and exit with a successful (0) exit code.
+
+Run \`npm run parseCreds\` and you should end up with a new file called \`service-account-secrets.json\` that should NOT be tracked by version control. The file should include the fields \`type\`, \`project_id\`, \`private_key_id\`, \`private_key\` and other information regarding your GCP project and resources associated with the service account.
+
+Before we leave our service account for the time being, we will give it some permissions so it can actually do some things once we start using it on CircleCI. Now, I am cheating a bit for the sake of simplicity. Iam roles are a BIG topic and beyond the scope of what I am trying to do here. I will be giving this service account a basic Editor role, which means it will be able to do things beyond the strict scope of what it needs to do. Not dogmatically Principal of Least Privilege, I know, but it will work for me.
+
+To do this, go to your [GCP Iam dashboard](https://console.cloud.google.com/iam-admin/iam). You should see the account you created the project with listed as \`Owner\`. Click on \`GRANT ACCESS\` and begin typing the email associated with the service account that you created. That account should pop up after a few keystrokes, select it and then select \`Editor\` from the list of basic roles in the \`Role\` selector. Click \`Save\` when you are done. Currently basic roles cannot be granted via Pulumi. I am hoping that this feature is added soon, as one of the big points of this implementation is to do things through IaC and not through the web console.
+
+## 1Password for secrets
+
+For storing our secrets we will be using 1Password. 1Password is a fantastic product both for personal password management and for storing secrets for programmatic use. They are a paid service, but the personal tier is about $3 USD a month and has a two week free trial. I am a big fan.
+
+[Create an account](https://start.1password.com/sign-up) if you do not have one and also install the [1password cli app](https://developer.1password.com/docs/cli/get-started/). I would also encourage you to use their desktop and mobile offerings. I am not paid by them I swear, just a big fan.
+
+Similar to GCP, we will be using a [service account with 1Password](https://developer.1password.com/docs/service-accounts/get-started/#create-a-service-account). This will give us __bearer credentials__ to use to connect from a service, in our case CircleCI, to our 1Password vault, and then access any secrets found within. This means that we do not need to keep multiple secrets in CircleCI. This also greatly simplifies secret management, as with the exception of the 1Password credential itself, secrets will only be stored in one location.
+
+After you have created you service account and stored the access token in a safe place. Take a minute to explore the 1Password cli. Experiment with reading and writing passwords to your vaults. With this tool, we will be able to write references to secrets directly into our pipeline, and have them become meaningful values at runtime. Add the service account credentials you parsed from Pulumi as well as the access token for Pulumi cloud to your 1Password service account vault, they will be important in the next step.
+
+## CircleCi
+
+For this tutorial, I am assuming that you have have a GitHub account and are familiar with the operations of the service. Make sure that you have [ssh access enabled](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) for GitHub.
+
+After that, go ahead and sign up for a [CircleCI account](https://circleci.com/signup/) using your GitHub account as your identity provider. After a few clicks you should have the two linked, easy peasy. Find the link to your organization settings next to the image of a gear in the upper left hand corner and click on it. We are going to [create a context](https://circleci.com/docs/contexts/#create-and-use-a-context) for the shared use of secrets (or secret singular) across our personal site pipelines. Next, [create an environment variable](https://circleci.com/docs/contexts/#environment-variable-usage) in the context called \`OP_SERVICE_ACCOUNT_TOKEN\` and set its value to the token you received from 1Password earlier.
+
+Now that we have GitHub and CircleCi set up and working together, we need to write a small set of instructions for CircleCI to follow whenever we push to our repo. Create a directory at the root of your IaC repo called \`.circleci\` and create a file called \`config.yml\` inside it. To that file, copy the following.
+
+\`\`\`yaml
+version: 2.1
+orbs:
+  onepassword: onepassword/secrets@1.0.0
+  pulumi: pulumi/pulumi@2.1.0
+jobs:
+  build_infra:
+    docker:
+      - image: node:20
+    resource_class: small
+    steps:
+      - checkout
+      - run: 
+          name: Install dependencies
+          command: npm ci --only=production
+      - onepassword/install-cli:
+          version: 2.18.0
+      - onepassword/export:
+          var-name: GOOGLE_CREDENTIALS
+          secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
+      - pulumi/login:
+          access-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
+      - pulumi/update:
+          stack: prod
+workflows:
+  build:
+    jobs:
+      - build_infra:
+          context:
+            - personal_site
+
+\`\`\`
+This is where it all comes together! We should go over what this file is doing.
+
+Firstly, we tell CircleCI which version to run. Next, we are going to reference what orbs to use. Orbs are a term that CircleCI uses to refer to collections of complex commands aliased into simpler automatic commands. For example in our file the shell code for the command \`onepassword/export\` is something like:
+
+\`\`\`bash
+#!/bin/bash -eo pipefail
+#!/bin/bash
+
+# User-Agent info for 1Password CLI
+export OP_INTEGRATION_NAME="1Password CircleCI Secrets Orb"
+export OP_INTEGRATION_ID="CIR"
+export OP_INTEGRATION_BUILDNUMBER="1000001"
+
+random_heredoc_identifier=$(env LC_ALL=C tr -dc a-zA-Z0-9 < /dev/urandom | fold -w 64 | head -n 1) || true
+{
+    #shellcheck disable=SC2016
+    printf export %s=$(cat << "\${PARAM_VAR_NAME}" 
+    printf %s\n "\${random_heredoc_identifier}"
+    op read "\${PARAM_SECRET_REFERENCE}"
+    printf %s\n)\n "\${random_heredoc_identifier}"
+} >> "$BASH_ENV"
+\`\`\`
+As you can see, orbs allow us to greatly simplify our configs and make them much more declarative, focusing on what we need to do and leaving the implementation as much as possible behind the scenes. In many cases they are created and maintained in reference to specific services. This is the case with the orbs we will be using. They are the official orbs of 1Password and Pulumi.
+
+After our orbs, we will describe our job(s). This is a fairly simple config and will only have one job: \`build_infra\`. For this job we must first define the \`docker\` image we would like to use. I will be using the standard node.js 20 image. Next, I have filled the optional \`resource_class\` property to \`small\`. Ultimately, what we need will not take a lot of computing power so I do not want to requisition a great deal of resources we will not actually be using.
+
+The next part of the config describes the steps that will be taken, in order. First, we have the command checkout. This simply checks out our code from GitHub and allows us to use it. After that, we will install our deps using \`npm ci\`. Next we will install our cli tools for 1Password, just as you did on your local machine. It is important to install version \`2.18.0\` or later, as that is the version that introduced the service account feature we are utilizing. Since we set up the \`OP_SERVICE_ACCOUNT_TOKEN\` env var in our context, the 1Password CLI automatically knows to access our service account when any later 1Password CLI commands are entered.
+
+After that, we will use the 1Password orb command \`onepassword/export\` to read our GCP service account credentials, in JSON form, from our 1Password service account and place them in an env var. Once again, we are taking advantage of a default env var setup. Once we start to work with our GCP account, it will know to use the credentials in \`GOOGLE_CREDENTIALS\`. If you could not tell by now, I am a big fan of patterns using default names for env vars. 
+
+Next we will login to Pulumi using our access token, again read from 1Password. And finally we will actually update our code using the \`pulumi/update\` command, which is a thin wrapper around the \`pulumi up\` command we used earlier.
+
+The final part of our config file is info about the workflows. This is not relevant to us as we only have one job to run, but it does allow us to supply info about the context to use, thereby allowing us access to 1Password.
+
+Once you have created a repo in GitHub for your code and pushed it up, you should see it listed in the in your \`Projects\` tab in CircleCi. Go ahead and click the blue \`Set Up Project\` button and you are off to the races. It should automatically detect your config file and should run as soon as you finish setting it up.
+
+The first run is just to make sure everything is working correctly. Pulumi should recognize that no new resources have been requested since the last time the stack was run, and as a result will not seek to create any new resources in GCP. This is one of the great things about Pulumi. It diffs each run and only updates new or changed resources. This saves you time and compute power.
+
+Congratulations, you have set up your infrastructure pipeline!
+
+## Tying it all together
+
+Let us take one more step back and think about our desired flow for infrastructure management. We want it to be code. We want it to be version controlled. We want it to run changes when the repo attached to it is changed. This is what we have set up. When the IaC file(s) in our repo are changed and pushed, GitHub checks the code out to CircleCI, which uses the Pulumi cloud service to interact with GCP and make any needed changes in GCP resources. It does this referencing secrets from 1Password.
+
+As I said at the outset, this is quite a bit more complex than it needs to be. But imagine the utility for a system like this on a team. Infrastructure can be managed like any other code operation. For example, the creation of a new operating environment can take the form of a pull request. Once the team aligns on the specifics on what is needed, it can be merged to main and quickly spun up. If it is no longer needed, simply make the code change removing the resources and it will be eliminated, easy as you please.
+
+I like this system. I want to work with code and I want to be able to understand the resources I am using as code as well.
+
+## Adding a bucket
+
+Before we go, we will add an actual resource to our project.
+
+Create a new folder at the root of your project called \`infra\`. We are dealing with multiple kinds of resources now, so we are gonna organize a bit differently. Pulumi always looks for an \`index.ts\` at the root of the directory, as expects this as the entry point. However, we can setup and import any modules we would wish to this, just like any other TypeScript code. In \`infra\`, create a file called \`service.ts\` and paste the following modified code of the service account and key code that we have created thus far.
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+
+export const initService = () => {
+    const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
+        accountId: "pulumi-circle-ci-service",
+        displayName: "pulumiCircleCiService",
+    })
+    
+    const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
+        serviceAccountId: pulumiCircleCiService.name,
+    })
+    
+    return {pulumiCircleCiService, pulumiCircleCiServiceAccountKey}
+}
+
+\`\`\`
+All we are doing here is putting the information about our service account in its own file and exporting a function to init these resources.
+
+Next, create a file called \`storage.ts\` inside \`infra\` and paste the following code:
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+
+export const initStorage = () => {
+    const publicBucket = new gcp.storage.Bucket("public-site-storage", {
+        location: "US", 
+        uniformBucketLevelAccess: false
+    })
+    
+    const bucket = publicBucket.name
+    
+    const iamPublic = new gcp.storage.BucketIAMBinding("binding", {
+        bucket,
+        role: "roles/storage.objectViewer",
+        members: ["allUsers"],
+    })
+    
+    const dateObject = {datePulumiLastModified: Date.now()}
+    
+    const datePulumiLastModified = new gcp.storage.BucketObject("datePulumiLastModified", {
+        bucket,
+        name: "datePulumiLastModified.json",
+        content: JSON.stringify(dateObject),
+    })
+
+    return {publicBucket, iamPublic, datePulumiLastModified}
+}
+\`\`\`
+
+I will go over what this code is doing before we finish, but I will finish with our changed structure first.
+
+Change your root level \`index.ts\` to:
+
+\`\`\`typescript
+import {initServiceAccount, initStorage} from "./infra"
+
+const service = initService()
+const storage = initStorage()
+
+export default {service, storage}
+
+\`\`\`
+I created an additional index file in \`infra\` to export my files in one line, but feel free to import them directly if you prefer.
+
+Now, to the code of \`storage.ts\`! We are creating a storage bucket on GCP and making it visible to the public internet. Lastly we are adding JSON file that has the unix date of when the Pulumi stack was last modified.
+
+Continuing the pattern used with our service account, we will wrap this in a function that will return the Pulumi stack info. 
+
+First we will create the bucket resource itself. I am in the US, so I will create it here. We will also *not* be giving it \`uniformBucketLevelAccess\`, as we wish all objects in this bucket to be accessible from the public internet. This, to my knowledge, can currently only be done in by turning off \`uniformBucketLevelAccess\` and adding a binding of object viewer to all users.
+
+After creating a variable called \`bucket\` that will be the name of the bucket we just created, we will created the \`iam\` binding that will allow all users to view objects in this bucket. We will create this binding with the \`role\` property set to \`roles/storage.objectViewer\` and the \`members\` property set to \`["allUsers"]\`.
+
+Lastly, we will create an object to show when the stack was last updated. Unlike the other Pulumi code that we have written thus far, this will be an operation on a resource that we have created, and not the creation of a resource itself. So, even if we have not changed any resources on our stack (and remember, Pulumi at its heart is an engine to describe desired state) this will *always* insert a new object called \`datePulumiLastModified.json\` with an epoch timestamp of the time it was last run.
+
+We have done quite a lot in this tutorial, and now we have a working pipeline to easily create our GCP resources and a simple bucket for public resources. Next, we will create a public facing web service.
+
+Next time: [Danger is spelled: DNS!](/blog/over-engineer-your-site-part-4)
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1736820717920,
+                        },
+                    ],
+                },
+            },
+        },
     },
     about: {
         content: {
