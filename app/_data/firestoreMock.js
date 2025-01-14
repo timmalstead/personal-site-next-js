@@ -157,13 +157,94 @@ Thank you for taking the time to visit, I hope you find something here that you 
             components: [
                 {
                     name: "Markdown",
-                    text: "# Under Construction",
+                    text: "# Blog Posts",
+                },
+                {
+                    name: "Markdown",
+                    text: `
+- [How to Over-Engineer Your Personal Site, Part One: The Why Of It](/blog/over-engineer-your-site-part-1)
+`,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1734833971416,
+                    lastModifiedDate: 1736822462075,
                 },
             ],
+        },
+        "over-engineer-your-site-part-1": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "How to Over-Engineer Your Personal Site: Part One",
+                        description:
+                            "First entry in a series about how I redid my personal website",
+                        openGraph: {
+                            description:
+                                "First entry in a series about how I redid my personal website",
+                            locale: "en_US",
+                            title: "How to Over-Engineer Your Personal Site: Part One",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/over-engineer-your-site-part-1",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `              
+# How to Over-Engineer Your Personal Site
+## Part One: The Why Of It
+A personal website.
+
+I think that it has value in the tech space. A well designed personal site is a testament to your skills as an engineer. I have never been hired for a job *only* on the strength of my personal site, but I know from conversations with recruiters that it has played a part in hiring decisions.
+
+A personal site can demonstrate your visual sense, how you organize your thoughts, and what you feel is most important to convey to the world. Add in a link to the code and prospective employers have a direct line to how you architect a project, how you reason through code, what tools/frameworks/languages you use (well and otherwise) and how you build up your projects via commits.
+
+I have not worked on my personal site in quite some time, and I wish to redo it from the ground up.
+
+## History
+My [current personal site](https://www.timmalstead.com/) started to come to life in the early days of 2020. I am a career switcher and had just finished a software engineering boot camp at the end of 2019. I was gearing up to begin my first job search in my new field when the pandemic hit.
+
+I found myself with quite a bit of time on my hands in those early lockdown days. In between applying for jobs and interviewing, I worked on a portfolio site. It showcased my school, volunteer and personal projects up to that point.
+
+Looking at that site now I can say that it is... okay. Not bad, not amazing. Very much the product of someone playing with new toys. I was less than six months out from writing my very first line of code and I believe that site reflects the novelty I still found in pretty much every aspect of the act of app creation.
+
+There is a spinning logo for no reason, way more motion than is needed, the ability to choose your own color scheme. All kind of fun, and all very reflective of who I was and how I looked at code at the time: as a new toy.
+
+I *loved* that time in my life. It was amazing and I would not trade it for the world. Learning how to express myself through code, how to organize my thoughts and what applications should and should not be was downright revelatory, and I still like a nice subtle animation. But now I wish to present a different image to the world. That of an experienced engineer who considers the why of things before jumping straight into the how and who keeps the should firmly in mind over the could.
+
+## Execution
+This project will be much more complex than it needs to be, by design. I wish to take what I have learned about building applications in the last few years, and massively over-engineer what could be done in a few static HTML files.
+
+This will include:
+
+- Deployment on a modern cloud infrastructure (GCP)
+- A personal top level domain
+- Infrastructure as code
+- Modern CI/CD practices
+- Containerization as a rule
+- Testing as a default
+- and probably more as things go along, multiple envs etc.
+
+I have more experience with some of these things than others, but I could stand to get better with all of them. Thus will this exercise serve as a review in certain places and a fresh challenge in others. I have enough faith in myself and my skills to undertake this challenge. I also have enough of an ego that, if anyone is actually reading this, I have succeeded in at least some of my goals.
+
+## Practices
+
+As it turns out, software is difficult to make and even harder to make well.
+
+It is very easy for me to become discouraged about a new project or get down on myself when things are not going well. Such a judgmental self-view is not very conducive to exploring new concepts and projects.
+
+So with this project I shall make it a point to take a more exploratory and less critical approach. I want to make good software and I want to make software that works, but a critical element of that is including and examining the things I struggle with just as much as I do the things I succeed at.
+
+Next time: [Tools](/blog/over-engineer-your-site-part-2)
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1736820717920,
+                        },
+                    ],
+                },
+            },
         },
     },
     about: {
