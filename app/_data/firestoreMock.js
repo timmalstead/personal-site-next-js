@@ -162,13 +162,10 @@ Thank you for taking the time to visit, I hope you find something here that you 
                 {
                     name: "Markdown",
                     text: `
-- [How to Over-Engineer Your Personal Site, Part One: The Why Of It](/blog/over-engineer-your-site-part-1)
-`,
-                },
-                {
-                    name: "Markdown",
-                    text: `
-- [How to Over-Engineer Your Personal Site, Part Two: Tools](/blog/over-engineer-your-site-part-2)
+### How to Over-Engineer Your Personal Site
+- [Part One: The Why Of It](/blog/over-engineer-your-site-part-1)
+- [Part Two: Tools](/blog/over-engineer-your-site-part-2)
+- [Part Three: Head in the Clouds](/blog/over-engineer-your-site-part-3)
 `,
                 },
                 {
