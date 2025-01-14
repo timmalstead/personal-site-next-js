@@ -166,6 +166,12 @@ Thank you for taking the time to visit, I hope you find something here that you 
 `,
                 },
                 {
+                    name: "Markdown",
+                    text: `
+- [How to Over-Engineer Your Personal Site, Part Two: Tools](/blog/over-engineer-your-site-part-2)
+`,
+                },
+                {
                     name: "LastModified",
                     lastModifiedDate: 1736822462075,
                 },
@@ -236,6 +242,104 @@ It is very easy for me to become discouraged about a new project or get down on 
 So with this project I shall make it a point to take a more exploratory and less critical approach. I want to make good software and I want to make software that works, but a critical element of that is including and examining the things I struggle with just as much as I do the things I succeed at.
 
 Next time: [Tools](/blog/over-engineer-your-site-part-2)
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1736820717920,
+                        },
+                    ],
+                },
+            },
+        },
+        "over-engineer-your-site-part-2": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "How to Over-Engineer Your Personal Site: Part Two",
+                        description:
+                            "Second entry in a series about how I redid my personal website, focusing on tools",
+                        openGraph: {
+                            description:
+                                "Second entry in a series about how I redid my personal website, focusing on tools",
+                            locale: "en_US",
+                            title: "How to Over-Engineer Your Personal Site: Part Two",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/over-engineer-your-site-part-2",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `              
+# How to Over-Engineer Your Personal Site
+## Part Two: Tools
+The tools to be used in my website redesign will include:
+
+- Cloud provider: [Google Cloud Platform (GCP)](https://cloud.google.com/gcp)
+- Languages: [TypeScript](https://www.typescriptlang.org) and [JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript)
+- Version control: [Git](https://git-scm.com/) and [GitHub](https://github.com/)
+- Infrastructure as code (IAC): [Pulumi](https://www.pulumi.com/)
+- Web framework: [NextJS](https://nextjs.org/)
+- Continuous integration / continuous deployment (CI/CD): [CircleCI](https://circleci.com/)
+- Secrets management: [1Password](https://1password.com/)
+- Unit testing: [Jest](https://jestjs.io/)
+- Containerization: [Docker](https://www.docker.com/) and [Docker Desktop](https://docs.docker.com/desktop/)
+- TBD: Logging, Integration testing, Other security features
+
+## GCP
+
+I like Google products. They tend to be straightforward and reasonably easy to use. This extends to their cloud offerings as well. AWS is great, and very inexpensive, but its documentation is sometimes lacking. Same with Azure. GCP can cost a bit more but it is easier for me to wrap my head around as a whole.
+
+To start with I will be primarily using GCP and its managed service Cloud Run. This should allow me a good amount of configurability without me needing to get too deep into the low level weeds. I will also be using their DNS services, Cloud Storage, Cloud Functions and likely the managed NOSQL service Firestore for data persistence.
+
+## TypeScript and JavaScript
+
+This will be a website, and a web browser understands JavaScript, so that is a given. Also, some config  and NodeJS files will need to be done in plain vanilla JS. I like static typing, so I will try to keep plain JavaScript files to a minimum.
+
+Static typing makes life easier, because it makes software easier to understand. Projects can explode in complexity unexpectedly, and no one is going to remember the parameters of a function they wrote 6 months ago. TypeScript will help me avoid this problem.
+
+## Git and GitHub
+
+No big mysteries here. Git is the industry standard for version control and GitHub is an easy place to put your code and interfaces with just about everything. I *could* look into GitLab or BitBucket, but honestly I do not feel like getting too adventurous with that part of the project.
+
+## Pulumi
+
+Here is a part I *am* trying to get adventurous on. I would like to control and provision my GCP resources using code as much as possible instead of the console. Why? Because it is easy to forget things when done manually and hard to recreate if needed. I could go for the Haschicorp IAC tool [Terraform](https://www.terraform.io/) but... I do not have a great desire to learn a language that is ONLY used for IAC. With Pulumi I will be able to use TypeScript, which I already know and am comfortable with. Other supported languages include JavaScript, Go and Python. Seriously, its a cool tool. Go check it out.
+
+## NextJs
+
+NextJs is a full stack web framework built on top of [React](https://react.dev/) that allows for all the cool client side capabilities of a single page application (SPA) as well as server side rendering (SSR), static path generation, serverless Node functions and integration with server side React components. I like to think of NextJs as the best parts of an SPA mixed with the best parts of an MVC framework.
+
+In addition, I am going to see if a Micro Frontend (MFE) architecture for this project will make sense. If this is enacted, it will mean that different parts of the site will be hosted by different endpoints, and assembled on the client side for the user to consume as a single experience. I will attempt to do this using Webpack [Module Federation feature](https://webpack.js.org/concepts/module-federation/). Wish me luck.
+
+I have worked with both SSR and Mod Fed for a while now at my day job, and I am excited to see how far I can go with them on my own. This is one of the features that I will enjoy (over) engineering most.
+
+(Update: MFE definitely did *not* make sense for this project)
+
+## CircleCI
+
+CircleCi is an industry standard managed CI/CD platform. It will allow me to set up pipelines for my site, provisioned infrastructure, serverless functions and anything else I wish to connect it to. I have worked with it a bit but will definitely need to up my game for this project. My goal for its use is get to a level where I can "set it and forget it" as soon as possible. If I wanted to get deep in the configuration of CI/CD pipelines, I would set up a Jenkins instance. I do not want to that, so I will go with a managed service with a great UI and a reputation for interoperability.
+
+## 1Password
+
+1Password is a great collection of software tools. I use it as my personal password manager and at work. Until recently, the only thing missing from this suite was an easy way to integrate 1Password "vaults" with CI/CD pipelines and other automated services. However, with the recent addition of [Service Accounts](https://developer.1password.com/docs/service-accounts/) I feel like this is a chance worth taking.
+
+Again, using the more established tool would mean using  a product from Hashicorp; [Vault](https://www.vaultproject.io/). I have worked with Vault, and it is also good software. But I like the experience of working with 1Password more and service accounts seem like a fun tool to play with, so I am gonna go with that.
+
+## Jest
+
+Opinions differ on unit testing. I try not to go overboard with it, but I do like to know that my components and other small pieces of code work. I have a lot of experience with Jest, and I can integrate it easily with React and whatever other tools I end up using in Node.
+
+## Docker and Docker Desktop
+
+Continuing a pattern, Docker and Docker Desktop are both mature, extensively documented and well supported tools that will allow me to use containers to develop and deploy in the same containerized environments. Once more, I could get adventurous with my selection of tools, but I am choosing not to.
+
+## Conclusion
+
+I think that these tools will give me a solid foundation to build my project on. There is a healthy enough mix of tools that I am familiar with and ones that I am not to keep me interested and chugging along long enough to see this project to its end. I am excited to see what will happen!
+
+Next time: [Head in the clouds](/blog/over-engineer-your-site-part-3)
 `,
                         },
                         {
@@ -646,7 +750,7 @@ class Firestore {
                     data: () => tempData,
                 }
             },
-            // TODO: this will only delete up to the content key, so I'll see if I can improve it later
+            // TODO: this will only delete up to the content key, so I will see if I can improve it later
             delete: async () => {
                 let deleteString = "delete data"
                 for (const key of splitKeyArray) {
