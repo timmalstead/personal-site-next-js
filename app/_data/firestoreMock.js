@@ -167,6 +167,7 @@ Thank you for taking the time to visit, I hope you find something here that you 
 - [Part Two: Tools](/blog/over-engineer-your-site-part-2)
 - [Part Three: Head in the Clouds](/blog/over-engineer-your-site-part-3)
 - [Part Four: At Your (Web) Service](/blog/over-engineer-your-site-part-4)
+- [Part Five: An Appetizing App](/blog/over-engineer-your-site-part-5)
 `,
                 },
                 {
@@ -1284,7 +1285,227 @@ After you’ve made all of those changes, go ahead and commit and push up to Git
 
 Let’s review what we’ve done. We created a simple server to deliver a static piece of HTML, containerized it and placed that container on a public repository in the DockerHub registry. We then altered our existing infrastructure repo to publish that container to our subdomain. It takes a bit of doing, but I believe that this setup can make CI an easy affair and allow you to quickly iterate on your service as needed. And since it is the fully managed CloudRun service, you won’t have to worry about scaling or other day to day site infra concerns.
 
-Next time: [App up!](http://localhost:8080/blog/over-engineer-your-site-part-5)
+Next time: [App up!](/blog/over-engineer-your-site-part-5)
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1736987829980,
+                        },
+                    ],
+                },
+            },
+        },
+        "over-engineer-your-site-part-5": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "How to Over-Engineer Your Personal Site: Part Five",
+                        description:
+                            "Fifth entry in a series about how I redid my personal website, focusing on working with Next.js",
+                        openGraph: {
+                            description:
+                                "Fifth entry in a series about how I redid my personal website, focusing on working with Next.js",
+                            locale: "en_US",
+                            title: "How to Over-Engineer Your Personal Site: Part Five",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/over-engineer-your-site-part-5",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# How to Over-Engineer Your Personal Site
+## Part Five: An Appetizing App
+
+Now that we have our infra for Cloud Run set up, we will go ahead and start on the app for our homepage!
+`,
+                        },
+                        {
+                            name: "Markdown",
+                            useReadPercentage: false,
+                            text: `
+## Getting Familiar with Next.js
+
+We are going to be using [NextJS](https://nextjs.org/) for our web framework. Why? Because it’s a good all in one package for a full stack web application. I’m going to try to do as much as I can with it. You may recall in Part two of this series, I stated that might be using Module Federation in this effort. I have changed my mind about that. I may still do that if it presents itself as a good solution to a problem, but I don’t think I’ll be working toward that just to work toward that.
+
+If you’ve not worked with Next.js before, I recommend building their starter [dashboard app](https://nextjs.org/learn/dashboard-app/getting-started) before you do anything else. It’s not overly involved and will give you a good overview of the features available with the framework, and how it differentiates from only using React.
+
+I’m not going to go over each piece of code in this article, that would make this article far too long! Instead I’ll go over highlights and discuss why I’ve made some of the decisions I have. If you do wish to examine the code in depth, you can [find it here](https://github.com/timmalstead/personal-site-next-js).
+
+## Setting things up
+
+I’m a big fan of a managed setup, and Next has a very easy one. Simply type \`npx create-next-app@latest\` into your terminal and you are off to the races. I’m interested in using the latest tools that Next has to offer, so I will be using the app router setup.
+
+What I’m *not* as interested in is using Tailwind. Vanilla CSS is pretty good these days, and I have no great desire to abstract it behind utility classes.
+
+## Rolling my own CSS
+
+Many people like to use CSS frameworks for their projects. Whether it is a CSS in JS solution like Styled Components, a pre-processor like SASS/LESS or a utility class based system like the aforementioned Tailwind. I will not presume to tell other people what is best for their project, but I will present a few of my own arguments for why I feel using plain old CSS is a better option then it has been in a long time.
+
+* Less overhead / A clearer understanding of specificity
+* Namespacing with nested selectors
+* CSS modules
+
+Let’s go over these one by one.
+
+### Less overhead / A clearer understanding of styling
+
+Abstraction is a powerful tool in computing, and an important one. If we have abstractions that we can depend on, it can free up our time, resources and thinking for what we really wish to focus on. The framework we have chosen is an abstraction over the operations of the browser and server, and our interactions with the browser are an abstraction over various network functions/script executions etc. I’m not a systems person and I don’t know that much about low level operations. I depend on abstractions to be able to do my work, as does anyone who works with code.
+
+And I get it, CSS is a pain. It’s a finicky, declarative, system with a million little gotchas. We don’t want to deal with it, so we’ve build tools around it, such as CSS in JS and SASS. These are good tools, but they’re still trying to fit a square peg in a round hole.
+
+But here’s the rub: You may not like to hear it, but it’s *still* important for you to understand CSS and how the browser uses it. Frameworks make that hard to do. As with anything, the best way to learn about CSS is do it. That means you should write a lot of it. An entire design systems worth. Starting out global, figuring out what all parts of your program will need, breaking down repeating sets of rules into components and, most fundamentally, learning to take advantage of the cascade and specificity.
+
+### Namespacing with nested selectors
+
+This is a [fairly recent change to the CSS spec](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting/Using_CSS_nesting). Where before you had to have individual rules that would often become repetitive and hard to read, now a CSS ruleset can contain *other* CSS rulesets. This is a convention that has proven so popular in preprocessors and CSS in JS frameworks that it has been adapted into the official spec.
+
+Let’s look at an example.
+
+\`\`\`css
+li.color-switcher {
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: var(--text-color);
+        padding: 0 0.5rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        font-size: 1.5rem;
+
+        &::before,
+        &::after {
+            color: var(--background-color);
+            transition: all var(--transition-duration);
+        }
+
+        &::before {
+            content: "☾ ";
+            opacity: 0.25;
+        }
+
+        &::after {
+            content: "☀";
+            opacity: 1;
+        }
+
+        &:checked {
+            &::before {
+                opacity: 1;
+            }
+
+            &::after {
+                opacity: 0.25;
+            }
+        }
+    }
+}
+\`\`\`
+Here I have a component to switch between dark and light color schemes. It is a checkbox input where I have removed the default styles and made conditional styling changes using pseudo-elements and pseudo-classes.
+
+Let’s take a look at what this would look like *without* using nested CSS selectors.
+
+\`\`\`css
+li.color-switcher > input[type="checkbox"] {
+    appearance: none;
+    background-color: var(--text-color);
+    padding: 0 0.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+li.color-switcher > input[type="checkbox"]::before,
+li.color-switcher > input[type="checkbox"]::after {
+    color: var(--background-color);
+    transition: all var(--transition-duration);
+}
+
+li.color-switcher > input[type="checkbox"]::before {
+    content: "☾ ";
+    opacity: 0.25;
+}
+li.color-switcher > input[type="checkbox"]::after {
+    content: "☀";
+    opacity: 1;
+}
+
+li.color-switcher > input[type="checkbox"]:checked::before {
+    opacity: 1;
+}
+
+li.color-switcher > input[type="checkbox"]:checked::after {
+    opacity: 0.25;
+}
+\`\`\`
+Now we can dramatically reduce the amount of repetitive styling code we write with no need for an additional styling tool. I can’t speak for you, but I think that’s an excellent argument in favor of sticking with plain ol’ css.
+
+### CSS modules
+
+What are CSS modules? The [documentation](https://github.com/css-modules/css-modules) defines them as "a CSS file where all class names and animation names are scoped locally by default". In simple programmatic terms they are CSS rulesets delivered in plain JavaScript objects. This makes them ideal for conditional styles.
+
+For example, here is part of a CSS module I wrote for my header on this project
+
+\`\`\`css
+.show,
+.hide {
+	position: sticky;
+	transition: top  var(--transition-duration);
+}
+
+.show {
+	top: 0;
+}
+
+.hide {
+	top: calc(-2  *  var(--header-height));
+}
+\`\`\`
+When imported into a \`js\`, \`jsx\`, or \`tsx\` file, these will read as an object like this.
+\`\`\`js
+  {
+	  show: ’ClientHeader_show__XOZvP’,
+	  hide: ’ClientHeader_hide__Oqcat’,
+  }
+\`\`\`
+As you can see, the class name we defined in our module maps onto a unique class name that will not be repeated throughout the project. Thus we see one of the great benefits of CSS modules: *they don’t produce rule collisions*!
+
+## Design decisions
+
+I will be keeping this site austere and clean as much as possible. I want an emphasis on warm neutrals and text, with images interspersed where necessary.
+
+I will be using [middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) to set a \`X-Pagename\` to help with fetching data and static content. I will also use middleware to provide authorization for my publishing API routes.
+
+I’ll be using Google’s NoSQL database offering [Firestore](https://firebase.google.com/docs/firestore) to handle persistent data and create a simple component based CMS. I’ve always wanted to try rolling my own CMS, and I’m looking forward to the challenge.
+
+I’ll be using \`react-markdown\` to translate the markdown held on Firestore into the final SSR html. I will be using this as a server side only package, and it will not be used on the client, thus making the bundles sent a great deal smaller.
+
+## Testing
+
+I have an idea for this site that may not work out very well, but I’m gonna try it anyway: I’m gonna see if I can *only* do e2e testing, instead of using unit testing as well. I’ve written a lot of Jest tests and used JSDOM quite a bit as well, but even the best UI unit test is still testing on a simulation of a browser environment, and the idea of fully testing in the same environment that my code will execute in is very satisfying to me.
+
+I may need to change this, but to start, at least, I think it will be a fun challenge.
+
+## User settings
+
+I want to give the user some settings they they can control, so they can get the experience they want on my site. I’ve overdone this part before, giving multiple selectable color themes and page setups. For this I’m going to keep it much simpler, giving simple usability controls such as a dark and light color scheme and the ability to turn off motion for users who do not do well with it.
+
+I will endeavor to make things work as well as I can with the browser’s native zoom functions. I believe that if the browser already does something well, like a zooming function, there’s no need to try and reinvent that. Rather it is better to write code that will work well with that native behavior.
+
+These settings will be persistent via the use of small cookies. Using cookies allows me to apply these settings on the server and avoids a flash of mismatched styling upon hydration.
+ 
+## Blog
+
+If you’re reading this, that probably means I’ve got a blog set up. For the start it will be a pretty simple affair, mostly the markdown based components I detailed above. As I go further into the project, I may layer some more functionality into it. As always, I will try to do as much as I can with my own code and avoid third party packages unless they offer a great deal of benefit and are genuinely something I don’t feel I could do myself.
+
+Of course, I’m sure there any number of packages and services I could quickly use to get a blog up quickly and easily. But where’s the fun in that?
+
+## Final Thoughts
+
+Whew! It’s been a long journey but I think we’re just about ready to launch the first iteration of this over-engineered site. I’ll likely go into further detail about many of the features of my site, the problems I’ve run into and how I’ve solved them.
+
+I like the open web, and I like working with web technologies. For me, the web remains the most interesting and useful part of the internet. I hope you’ve enjoyed reading this series as much as I have enjoyed writing it. Keep making cool things, keep learning and keep having fun! 🖖
 `,
                         },
                         {
