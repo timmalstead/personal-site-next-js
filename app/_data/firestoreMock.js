@@ -370,8 +370,13 @@ Next time: [Head in the clouds](/blog/over-engineer-your-site-part-3)
 # How to Over-Engineer Your Personal Site
 ## Part Three: Head in the Clouds
 
-For this post I will focus on setting up my project in GCP, Pulumi, 1Password, GitHub and CircleCI; creating roles and permissions for my project with Pulumi IaC, and deploying a storage bucket that will be publicly accessible.
-
+Now that we better understand the scope of the project, and the tools that we will use: we can create the underlying infrastructure with which to run it.
+`,
+                        },
+                        {
+                            name: "Markdown",
+                            useReadPercentage: true,
+                            text: `
 ## Create Your Project
 To start with, we will create a project in GCP. If you do not have one, create a Google account and use it to sign in to [GCP welcome page](https://console.cloud.google.com/welcome). You should see a dropdown in the upper left of the page, click on it and select the "New Project" button in the upper right corner of the modal that will pop up.
 
@@ -703,7 +708,7 @@ Next time: [Danger is spelled: DNS!](/blog/over-engineer-your-site-part-4)
                         },
                         {
                             name: "LastModified",
-                            lastModifiedDate: 1736820717920,
+                            lastModifiedDate: 1736987829980,
                         },
                     ],
                 },
