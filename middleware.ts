@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse, userAgent } from "next/server"
-import type { Browser } from "_utils"
+import type { Browser } from "@utils"
 
 const restrictedRoutes = ["/component-data"]
 

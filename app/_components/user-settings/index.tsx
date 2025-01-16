@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect, type ReactNode } from "react"
-import { setCookie, type SettingsDismiss } from "_utils"
+import { setCookie, type SettingsDismiss } from "@utils"
 import "./user-settings.css"
 
 interface UserSettingsProps {

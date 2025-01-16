@@ -23,8 +23,8 @@
             "_components/*": ["app/_components/*"],
             "_data": ["app/_data"],
             "_data/*": ["app/_data/*"],
-            "_utils": ["app/_utils"],
-            "_utils/*": ["app/_utils/*"]
+            "@utils": ["app/@utils"],
+            "@utils/*": ["app/@utils/*"]
         }
     },
     "include": [

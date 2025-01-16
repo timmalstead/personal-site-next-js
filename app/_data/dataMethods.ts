@@ -9,7 +9,7 @@ import {
     reportError,
     type CreateArgs,
     type DestoryAndCreateResponse,
-} from "_utils"
+} from "@utils"
 
 const getDocRef = (docPath: string) => {
     const splitPath = docPath.split("/")

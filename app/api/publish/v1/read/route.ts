@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getContent } from "_data"
-import { sendError } from "_utils"
+import { sendError } from "@utils"
 
 // below is not strictly necessary, but it avoids an annoying prod build error
 export const dynamic = "force-dynamic"

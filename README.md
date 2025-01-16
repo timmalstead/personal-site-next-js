@@ -50,7 +50,7 @@ Deploys to prod are triggered manually.
 
 Persistent data for this project is created using [Google's Firestore](https://firebase.google.com/docs/firestore) database. This is used to inject JSON controlled components into the headless app.
 
-There is also a [Firestore mock](app/_utils/firestoreMock.js) used for local development.
+There is also a [Firestore mock](app/@utils/firestoreMock.js) used for local development.
 
 To make use of the local Firestore mock, start a dev process using the local env var `USE_TESTING_FIRESTORE=true`.
 

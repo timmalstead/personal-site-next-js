@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
-import { getServerValue } from "_utils/server"
-import type { ColorMode, ReducedMotion, Browser, SettingsDismiss } from "_utils"
+import { getServerValue } from "@utils/server"
+import type { ColorMode, ReducedMotion, Browser, SettingsDismiss } from "@utils"
 import { Noto_Sans } from "next/font/google"
 import {
     Header,

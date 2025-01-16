@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { setContent } from "_data"
-import { sendError, type CreateArgs } from "_utils"
+import { sendError, type CreateArgs } from "@utils"
 
 export const POST = async (request: NextRequest) => {
     try {
