@@ -166,11 +166,12 @@ Thank you for taking the time to visit, I hope you find something here that you 
 - [Part One: The Why Of It](/blog/over-engineer-your-site-part-1)
 - [Part Two: Tools](/blog/over-engineer-your-site-part-2)
 - [Part Three: Head in the Clouds](/blog/over-engineer-your-site-part-3)
+- [Part Four: At Your (Web) Service](/blog/over-engineer-your-site-part-4)
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736822462075,
+                    lastModifiedDate: 1736987829980,
                 },
             ],
         },
@@ -704,6 +705,586 @@ Lastly, we will create an object to show when the stack was last updated. Unlike
 We have done quite a lot in this tutorial, and now we have a working pipeline to easily create our GCP resources and a simple bucket for public resources. Next, we will create a public facing web service.
 
 Next time: [Danger is spelled: DNS!](/blog/over-engineer-your-site-part-4)
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1736987829980,
+                        },
+                    ],
+                },
+            },
+        },
+        "over-engineer-your-site-part-4": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "How to Over-Engineer Your Personal Site: Part Four",
+                        description:
+                            "Fourth entry in a series about how I redid my personal website, focusing on website connectivity",
+                        openGraph: {
+                            description:
+                                "Fourth entry in a series about how I redid my personal website, focusing on website connectivity",
+                            locale: "en_US",
+                            title: "How to Over-Engineer Your Personal Site: Part Four",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/over-engineer-your-site-part-4",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# How to Over-Engineer Your Personal Site
+## Part Four: At Your (Web) Service
+
+In this article, we will create a placeholder web site in a container, and adjust our existing infrastructure to deploy it as a web service available to the public.`,
+                        },
+                        {
+                            name: "Markdown",
+                            useReadPercentage: true,
+                            text: `
+## HTML Markup
+
+In a new repo, we will create a file called \`index.html\`.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>timothymalstead.com: coming soon</title>
+        <style>
+            body {
+                height: 100vh;
+                background-color: #343434;
+                color: #ddd;
+                font-family: monospace;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            main {
+                text-align: center;
+            }
+            h1 {
+                filter: drop-shadow(6px 6px #202020);
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>timothymalstead.com</h1>
+            <h3>coming soon</h3>
+        </main>
+    </body>
+</html>
+\`\`\`
+As you can see, this is a simple and static bit of html to inform the user that there will *soon* be a proper website to be found at timothymalstead.com. Not anything too complicated, just a few block elements, styles and some heading elements. Since its only purpose is to display a bit of text, I styled it in such a way as to be viewport agnostic. In other words, whether a user accesses this on a phone, tablet or desktop device, they will see a centered block of text.
+
+I decided to go with a monospace font, because I like monospace fonts. They are unfussy and easy to read. I do not want to go with optic black and white, so I decided to go with a neutral color scheme. For the background, a darker tone of grey, but not too close to optic black. I wanted text with a bit of contrast, but again wanted to avoid optic white. After a bit of experimentation I decided to go with about a 20% grey to contrast with the background. Nice and readable, and should be pretty easy on the eyes. Lastly, for the drop shadow I went with an almost optic black shade of deep grey. Just a little pop for interest, and it draws the eye in nicely.
+
+## Server
+
+Next, we will create a server to deliver our markup to a user. I will just call it \`server.js\`:
+
+\`\`\`javascript
+const {createServer} = require("node:http")
+const {readFileSync} = require("node:fs")
+const {join} = require("node:path")
+
+const multipleSpacesAndNewlines = /(\s{2}|\n)/g
+const filePath = join(__dirname, "index.html")
+const miniHtml = readFileSync(filePath, "utf8").replace(multipleSpacesAndNewlines, "")
+
+const port = 8080 // cloud run default port
+createServer((_, res) => {
+  res.statusCode = 200
+  res.setHeader("Content-Type", "text/html")
+  res.write(miniHtml)
+  res.end()
+}).listen(port)
+\`\`\`
+A simple server in 15 lines of code! I will break down what we have going on here.
+
+I wanted to be able to deploy this *without* the need to install npm modules. Thus, we will be basing this server on a few commands available in the node standard library, \`createServer\`, \`readFileSync\` and \`join\` from the \`http\`, \`fs\` (file system) and \`path\` modules respectively.
+
+After we import those, we will create a regex to help minify the final string we will send to a client. This regex will target space characters *IF* 2 or more appear AND it will target newline characters.
+
+Next, we will construct our file path. The \`join\` command exists to create file paths according to the conventions of the system it is run on. Unix and Linux systems denote directories with the forward slash character \`/\` while Windows uses the backslash character \`\\\`. I know that this will be running only on a Mac system, and later in a Linux container. So while this is not strictly necessary, it is still good practice. To assemble our file path, I am using the global \`__dirname\` variable standard in all node files, and \`index.html\` which we created in our previous step. I will be keeping this at the same level of the server. After the \`join\` command has resolved, the \`filePath\` variable will be a string with an absolute path to our markup file.
+
+Next we will read our markup into memory using \`readFileSync\`. As its name suggests, this function allows us to synchronously open a file on our system and use it in our program. It takes two arguments, the \`filePath\` that we constructed previously, and the files encoding. In our case the file encoding will be \`utf8\`. Since \`readFileSync\` resolves to a string, we can use any of the standard string methods available in JavaScript. I will be using the native \`String.replace\` method, along with the regex we made earlier, to grab unneeded space and newline characters and replace them with empty space. This will reduce the size of our payload by about a third. Even before this minifying, our payload will be less than a kilobyte, so it is mostly academic. But it is my project and it makes me happy to deliver two thirds of a kilobyte instead, so that is what I will do.
+
+So, now we have our markup read into memory and we are ready to make a server to actually, you know, serve it.
+
+CloudRun listens for traffic on the \`PORT\` env variable. If you do not explicitly set that, it will default to listening on port \`8080\` . I try to avoid magic numbers, so I will put \`8080\` in a variable and add a note that this is the default for CloudRun. When there is something arbitrary or forgettable like that in a project, I often leave myself a little note like that for the next time I touch it.
+
+ The \`createServer\` function accepts a callback function as an argument. This callback function will be run each time the server receives a request. The callback expects two arguments, one representing the client request and one representing the server response. I will be presenting the same response to anyone, so I will not need the request object. However, since it is a positional argument, I cannot simply omit it. I will use the underscore to make it known that I am intentionally not making use of it.
+
+Since I will not be reading any information from the client request, all of our actions will be concerning the server response, called \`res\` here. First, I will set the \`statusCode\` to \`200\`. After the request has returned to the client, this will inform the client that the request was successful. Next, I will set a header of \`Content-Type: text/html\` in the response. This just tells the client what to expect, in this case plain html. Next we will write the minified html that we have bound to the \`miniHtml\` variable to the response object. If this was a more complex setup this might not make sense, but since we are returning the exact same thing for all requests we can simply hold the string in memory on the server and reference that same string whenever a request comes in. Lastly, we will inform the \`res\` object that we will not be performing further operations by calling the \`end\` method.
+
+So to review, we will set a status code, set a header, write our html and end operations for that request. Pretty easy right?
+
+Lastly, we will call the \`listen\` method on the returned server, and instruct our server to listen on the \`port\` variable we made earlier.
+
+And there you have it, a simple web server to return our static html made with tools from the node standard library!
+
+## Dockerfile and Dockerhub
+
+Next we will containerize our server and markup with a short \`Dockerfile\`.
+
+\`\`\`docker
+# syntax=docker/dockerfile:1
+FROM node:20-alpine
+ENV NODE_ENV production
+WORKDIR /usr/src/app
+USER node
+COPY . .
+EXPOSE 8080
+CMD node server.js
+\`\`\`
+Nothing too crazy going on here, just setting up a workspace using the \`node:20-alpine\` image, copying over our (very few) files, exposing the CloudRun default port and starting the server.
+
+As a side note, I am a big fan of using [Alpine Linux](https://www.alpinelinux.org/) containers. They are small and often a perfect choice for production. There are cases where they are a bit under featured, and you may wish to go with a more robust option, but most of the time they suit my needs very well.
+
+For this placeholder I will be using the DockerHub registry to host my image. I may explore using the container registry on GCP in the future, but for this point in time this is the path of least resistance.
+
+Create an account on [DockerHub](https://hub.docker.com/) and enter your login and password in your 1Password service vault. You will need them for the publishing step, which we will of course run on CircleCi.
+
+## CircleCi
+
+We will create a fresh \`config.yml\` in a \`.circleci\` directory at the root of your repo. 
+
+\`\`\`yaml
+version: 2.1
+orbs:
+  onepassword: onepassword/secrets@1.0.0
+  docker: circleci/docker@2.4.0
+jobs:
+  build_placeholder:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - onepassword/install-cli:
+          version: 2.18.0
+      - onepassword/export:
+          var-name: DOCKER_LOGIN
+          secret-reference: op://personal-site-gcp/dockerHub/username
+      - onepassword/export:
+          var-name: DOCKER_PASSWORD
+          secret-reference: op://personal-site-gcp/dockerHub/password
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: timmalstead/personal-site-placeholder
+      - docker/push:
+          image: timmalstead/personal-site-placeholder
+      - run: 
+          name: Persist latest build sha
+          command: op item edit latest_placeholder sha=$CIRCLE_SHA1
+      - run:
+          name: Trigger infra build pipeline
+          command: |
+            curl --request POST \
+              --url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \
+              --header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
+workflows:
+  build:
+    jobs:
+      - build_placeholder:
+          context:
+            - personal_site
+\`\`\`
+
+Woo! Quite a bit going on here. But I will walk through it all with you.
+
+First we set our version. To be honest, I have not yet had to deal with versioning issues on CircleCi. \`2.1\` has been working well for me, and I hope it continues to do so without incident.
+
+Next we have our orbs. As you no doubt recall from previous posts, orbs are an abstraction that CircleCi uses to alias complicated shell commands and let you use them in a declarative manner. They are great! We will be working with the same 1Password orb as before. This will allow us to access and edit secrets in our service account vault. We will also be working with the official CircleCi Docker orb. This will allow us to easily build and publish our container to the DockerHub registry.
+
+Next we have our jobs section, but I am gonna skip to the end first and briefly describe our workflows section. I am doing this because our workflow is dead simple. We only have one job to run: \`build_placeholder\` and the only parameter we need to provide is to attach our job to the CircleCi context \`personal_site\`. This context contains the key for the env var \`OP_SERVICE_ACCOUNT_TOKEN\` which, combined with the 1Password orb, will allow us access to our service account vault.
+
+Okey doke, back to our job. This is where the magic really happens. First, we need to define what image to use in our \`docker\` field. I will be using the [base convenience image](https://circleci.com/developer/images/image/cimg/base) (\`cimg/base:current\`) maintained by CircleCi. This has lots of helpful tools, such as Git and Curl, that will make our lives that much easier. I always try to save compute power when I can, so I will set the \`resource_class\` property to \`small\`.
+
+Regarding our steps: as you can see, only 2 of our 10 steps are manual \`run\` shell commands. The rest are standard CircleCi commands, like \`checkout\`, or are commands being run from our orbs. This, to me, speaks volumes about the beautiful and declarative nature of CircleCi.  A well functioning and maintained orb allows me to abstract reams of tedious shell code and lets me to focus on the what of my pipeline, instead of the how.
+
+Now we can get into what each of our steps are doing.
+
+First of all, we need to install the 1Password CLI. Recall that we need to install at least version \`2.18.0\` to have access to our service account. When used, this CLI with see the \`OP_SERVICE_ACCOUNT_TOKEN\` env var provided by our context, and access the vault associated with that token. I cannot say it too much, *any* call that has the bearer credential for your service account is assumed to be valid, so please keep your 1Password key safe!
+
+Next we will export the DockerHub credentials you saved in our last step. We will export these as env vars titled \`DOCKER_LOGIN\` and \`DOCKER_PASSWORD\`. These are not randomly selected titles, but rather are variables that Docker orb will look for and associate with our DockerHub account when executing subsequent commands.
+
+Our next command is \`setup_remote_docker\`. According to the [CircleCi documentation](https://circleci.com/docs/building-docker-images/) on running Docker commands:
+
+> When \`setup_remote_docker\` executes, any Docker-related commands you use will be executed locally on the virtual machine used to spin up containers for your job.
+
+In simple terms, we need to run this before any other Docker commands.
+
+Next we will \`checkout\` our code from version control.
+
+Our first \`docker\` orb command, \`docker/check\`, is a sanity check to make sure everything is working as it should with our Docker setup. If there is a problem, this is where it *should* be caught.
+
+Next, we will build and push our Docker image to the DockerHub registry. Since we have already set our login credentials as env vars, the only argument we will need to provide is for the \`image\` property. This will be our desired identifier for our image in the registry.
+
+Next we have our first manual \`run\` command. Here we will be making use of the 1Password CLI to *edit* the item \`latest_placeholder\`, using the CircleCi env var \`CIRCLE_SHA1\`. Note that since this is an edit operation, the item and field must exist in your 1Password service account vault before this pipeline is run.
+
+Lastly, we will trigger another pipeline to run the successful completion of this one. One of the many cool things about CircleCi is that each pipeline is attached to a handy REST api, which we are triggering here with a simple POST request with \`curl\`. As you can see, authentication is handled via the header \`Circle-Token\`, to which we will feed our token from, you guessed it, 1Password! These tokens are associated at the account level and can be created [here](https://app.circleci.com/settings/user/tokens).
+
+## Refactoring Infra
+
+When last we left our infrastructure repo, we had created a folder called \`infra\` and had been using a functional pattern to manage our resources.
+
+Each group of resources had a file like so:
+\`\`\`typescript
+// imports
+
+export const initResourceGroupOne = () => {
+	const resourceOne = // pulumi code
+	const resourceTwo = // pulumi code
+
+    return {resourceOne, resourceTwo}
+}
+\`\`\`
+These were then exported from \`index.ts\` in the \`infra\` folder:
+\`\`\`typescript
+export {initResourceGroupOne} from "./resourceGroupOne"
+export {initResourceGroupTwo} from "./resourceGroupTwo"
+\`\`\`
+And finally to the base level \`index.ts\` file, which is the expected entry point for a TypeScript Pulumi program, like this:
+
+\`\`\`typescript
+import {initResourceGroupOne, initResourceGroupTwo} from "./infra"
+
+const resourceOne = initResourceGroupOne()
+const resourceTwo = initResourceGroupTwo()
+
+export default {resourceOne, resourceTwo}
+\`\`\`
+Now, this pattern works pretty well. I like this pattern and I could keep doing it and everything would be fine. However, I decided I liked another pattern better.
+
+So instead of a functional pattern as before, we will be using a simpler file level pattern like so:
+\`\`\`typescript
+// imports
+
+const resourceOne = // pulumi code
+const resourceTwo = // pulumi code
+
+export default {resourceOne, resourceTwo}
+\`\`\`
+exported from the \`infra/index.ts\` as:
+\`\`\`typescript
+export {default as resourceGroupOne} from "./resourceGroupOne"
+export {default as resourceGroupTwo} from "./resourceGroupTwo"
+\`\`\`
+and finally to the entry point \`index.ts\`:
+
+\`\`\`typescript
+import {resourceGroupOne, resourceGroupTwo} from "./infra"
+
+export default {resourceGroupOne, resourceGroupTwo}
+\`\`\`
+
+I prefer this to the previous pattern as it moves *all* of the implementation logic to the infra file itself and uses each \`index.ts\` file solely for importing and exporting. This means a little bit more boilerplate code, but I think it gains a nice clarity and I like knowing that the business logic for each service can be grouped exactly as I would like.
+
+I enjoy this kind of iterative approach to writing software. I had an idea, and it worked well, so I implemented it. Later, I had a better idea, so I implemented that and it worked even better. It is important to realize your tools, patterns and processes are not set in stone, but are in fact fluid and ever changing. As you progress on any software project, you will learn more about what the specific needs are for your project and also what your preferences for it are. I would encourage you to be open to the possibility of change and not let your thinking become ossified.
+
+## Setting up our Web Service
+
+Now that we have our web service set up and containerized, we need to change our existing infrastructure setup to deploy it. These changes will be done on the infra repo we created in our previous article.
+
+### Verify ownership and add domain records
+
+Before we can setup our web service on a custom domain, there are a few things we must do regarding the domain itself. As far as I know, this needs to be done manually, and cannot be done via IaC. If someone does know of an automated way to do this though, I would love to know about it! As of this writing, Google is actively in the process of selling of their domain registrar service. I am using SquareSpace for domains, but the general steps described should map onto any domain registration service.
+
+First, we will be working in Google Search Console (GSC). This is a service provided by Google to monitor things like SEO, Web Vitals, performance etc. We need to inform GSC that you are indeed the owner of the site you say you are. Go to the [GSC Ownership Verification page](https://search.google.com/search-console/ownership) and click on the Search Property dropdown in the upper left corner, and navigate to the Add Property option.
+
+![Google Search Console](https://storage.googleapis.com/public-site-storage-6611b8f/google_search_console.png)
+
+A popup will appear with two options: Domain and URL prefix. We are going to be adding the entire domain. Enter the domain that you have procured for your site to live on, minus any prefixes. So, for example, if you purchased myraddomain.com and planned to host your service on www.myraddomain.com you would enter simply myraddomain.com. Later on we will be pointing the www (or other) subdomain to the container hosting our service. GSC will attempt to verify the console. It should fail in its first attempt.
+
+![GSC Domains](https://storage.googleapis.com/public-site-storage-6611b8f/domains.png)
+
+A TXT record will be presented to you to add to the DNS records in your domain registrar. This is where things will be varied. Your registrar should have documentation detailing how to add this to your sites records. Be aware that the ONLY purpose of this record is to prove ownership to GSC.
+
+Once you have added that record, navigate back to the verification page and try to verify it again. In a couple of seconds, it should successfully do so and you will be set.
+
+Before you close the DNS records page on your registrar, we will go ahead and add a CNAME record for the subdomain you wish to host your container on. We seldom think of it, but www is in fact a *subdomain*. Thus we will be setting up a record to point the subdomain to our CloudRun service. The www prefix is a convention, but it is not necessary to have a valid url. Using our previous example, if I wished to host my service on www.myraddomain.com, I would enter a Host field value (the field detailing subdomains may be titled differently) of \`www\`, a Type value of \`CNAME\` and a Data field value of \`ghs.googlehosted.com\`. This of course, will not map to a service at this time, but will be mapped to in our IaC later.
+
+Just one more thing to do before we get to the code itself. Since we are using this with a service account running on CircleCi, we need to authorize that service account to make changes on this domain. In the [Users and Permissions page of GSC](https://search.google.com/search-console/users)  click on the Add User button and enter the email account associated with your service account. You will find this in the \`client_email\` field of the service account credentials you should have stored in 1Password, and also locally if you have run the local \`parseCreds\` script.
+
+And that is it! Now to our IaC.
+
+### Secrets
+
+To start with, I wanted a way to centralize my secrets that would work whether I was working locally or in a CircleCi environment. I settled on having a file called \`vars.ts\` at the base level. I set it up like so:
+
+\`\`\`typescript
+interface GoogleCredentialSecrets {
+    type: string
+    project_id: string
+    private_key_id: string
+    private_key: string
+    client_email: string
+    client_id: string
+    auth_uri: string
+    token_uri: string
+    auth_provider_x509_cert_url: string
+    client_x509_cert_url: string
+    universe_domain: string
+}
+
+const isCircleCI = process.env.CIRCLECI && process.env.CIRCLECI === "true"
+
+const googleSecrets: GoogleCredentialSecrets = process.env.GOOGLE_CREDENTIALS ? 
+    JSON.parse(process.env.GOOGLE_CREDENTIALS) : require("./service-account-secrets.json")
+
+// double check that the most recent placeholder sha matches with 1password when running pulumi locally
+const latestPlaceholderSha = isCircleCI && process.env.LATEST_PLACEHOLDER_SHA ? 
+    process.env.LATEST_PLACEHOLDER_SHA : require("./placeholder-secrets.json").sha
+
+export default {
+    domain: "timothymalstead.com",
+    latestPlaceholderSha,
+    location: "us-central1",
+    project: googleSecrets.project_id,
+    serviceAccountMember: \`serviceAccount:\${googleSecrets.client_email}\`,
+}
+\`\`\`
+Recall that \`placeholder-secrets.json\` is the file made from running the \`parseCreds\` script in our \`package.json\` file. Create a new file called \`service-account-secrets.json\` at the root level of the repo and paste in the following, where \`{{PLACEHOLDER_SHA}}\` is the sha of the placeholder repo you wish to run.
+
+\`\`\`json
+{
+    "sha" : "{{PLACEHOLDER_SHA}}"
+}
+\`\`\`
+ 
+Note that since both of these files end with \`secrets\` they will not be tracked by version control.
+
+### Infra folder
+
+Here I will detail the changes to files/new files created for this step of the process.
+
+Start with \`storage.ts\`
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+
+// I do not love that I do not have the option of camel case for the bucket name, but here we are
+const publicBucket = new gcp.storage.Bucket("public-site-storage", {
+    location: "US", 
+    uniformBucketLevelAccess: false
+})
+
+const {name: bucket} = publicBucket
+
+const publicBucketIamBinding = new gcp.storage.BucketIAMBinding("publicBucketIamBinding", {
+    bucket,
+    role: "roles/storage.objectViewer",
+    members: ["allUsers"],
+})
+    
+const datePulumiLastModified = new gcp.storage.BucketObject("datePulumiLastModified", {
+    bucket,
+    name: "datePulumiLastModified.json",
+    content: JSON.stringify({datePulumiLastModified: Date.now()}),
+})
+
+export default {
+    publicBucket, 
+    publicBucketIamBinding, 
+    datePulumiLastModified
+}
+\`\`\`
+Just cosmetic changes here, done according to the pattern established above in the section regarding refactoring.
+
+\`serviceAccount.ts\`, which was formerly \`service.ts\`
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+import vars from "../vars"
+
+const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
+    accountId: "pulumi-circle-ci-service",
+    displayName: "pulumiCircleCiService",
+})
+
+const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
+    serviceAccountId: pulumiCircleCiService.name,
+})
+
+const serviceAccountRoles =[
+    {pulumiName: "cloudRunRole", role: "roles/run.admin"},
+    {pulumiName: "serviceAccountUser", role: "roles/iam.serviceAccountUser"},
+]
+
+const pulumiCircleCiServiceAccountRoles = serviceAccountRoles.reduce((roleObj, {pulumiName, role}) => {
+    const roleToAdd = new gcp.projects.IAMMember(pulumiName, {
+        member: vars.serviceAccountMember,
+        project: vars.project, 
+        role
+    })
+    roleObj[pulumiName] = roleToAdd
+
+    return roleObj
+}, {} as Record<string, gcp.projects.IAMMember>)
+
+export default {
+    pulumiCircleCiService, 
+    pulumiCircleCiServiceAccountKey,
+    pulumiCircleCiServiceAccountRoles
+}
+\`\`\`
+
+Here the change is that we need to add a few new service account roles to be able to set up our CloudRun service. I added them in an array of objects to make it easy in case I need to add more in the future.
+
+The first of our two new files, \`apis.ts\`.
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+import vars from "../vars"
+
+const resourceManager = new gcp.projects.Service("resourceManager", {
+    disableDependentServices: false,
+    disableOnDestroy: false,
+    project: vars.project,
+    service: "cloudresourcemanager.googleapis.com",
+})
+
+export default {
+    resourceManager
+}
+\`\`\`
+This activates a Google Cloud api that needs to be active for you to activate a CloudRun service.
+
+After you have changed/made these three files, I would recommend that you do a \`pulumi up\` before making the CloudRun service file itself.
+
+Did you do that? Okay, let us move on to the real star of this article, \`cloudRun.ts\`
+
+\`\`\`typescript
+import * as gcp from "@pulumi/gcp"
+import vars from "../vars"
+
+const {location} = vars
+const metadata = {namespace: vars.project}
+
+const mainSiteService = new gcp.cloudrun.Service("mainPersonalSite", {
+    name: "main-personal-site",
+    location,
+    metadata,
+    template: {
+        spec: {
+            containers: [{
+                image: \`docker.io/timmalstead/personal-site-placeholder:\${vars.latestPlaceholderSha}\`,
+            }],
+        },
+    },
+    traffics: [{
+        latestRevision: true,
+        percent: 100,
+    }],
+})
+
+const noAuthIAMPolicy = gcp.organizations.getIAMPolicy({
+    bindings: [{
+        role: "roles/run.invoker",
+        members: ["allUsers"],
+    }],
+})
+
+const mainSiteNoAuthPolicy = new gcp.cloudrun.IamPolicy("mainSiteNoAuthPolicy", {
+    location: mainSiteService.location,
+    project: mainSiteService.project,
+    service: mainSiteService.name,
+    policyData: noAuthIAMPolicy.then(noauthIAMPolicy => noauthIAMPolicy.policyData),
+})
+
+const mainSiteDomainMapping = new gcp.cloudrun.DomainMapping("mainSiteDomainMapping", {
+    location,
+    metadata,
+    spec: {
+        routeName: mainSiteService.name,
+    },
+    name: \`www.\${vars.domain}\`,
+})
+
+export default {
+    mainSiteService, 
+    mainSiteNoAuthPolicy, 
+    mainSiteDomainMapping
+}
+\`\`\`
+
+First of all, we have a few variables that will be used in multiple places, so we’ll unpack those.
+
+For the service itself. For the container, we point it at the DockerHub address we published our container to and we append the \`latestPlaceholderSha\` variable we saved to our 1Password service account. If you’re wondering how that is getting from that account to our Vars, we will cover that in just a little bit.
+
+The next two resources we create will allow our service to be publicly accessible. As a default, a service created for CloudRun is private. First we fetch a policy that allows all users, meaning anyone on the internet, to assume the \`run.invoker\` role. This is done when a user points their browser at the subdomain we are mapping the container to. After we have fetched that organizational policy, we will apply it to our created web service.
+
+Lastly, we will map our service. This is the companion to the CNAME record we created at our domain registrar earlier. This will tell CloudRun which container to point to when the \`www\` subdomain is called. This is not currently available in all GCP regions, but it is available in \`us-Central1\`, which is why I am hosting this project in that region. Technically this is an experimental feature. However, it has been such for several years now so I am good with including it in production.
+
+### CircleCI
+
+There is only a small change needed for our Ci file. We will simply be exporting \`LATEST_PLACEHOLDER_SHA\` as an env var, allowing us to access it in our Pulmi setup.
+
+\`\`\`yaml
+version: 2.1
+orbs:
+  onepassword: onepassword/secrets@1.0.0
+  pulumi: pulumi/pulumi@2.1.0
+jobs:
+  setup:
+    docker:
+      - image: node:20
+    resource_class: small
+    steps:
+      - checkout
+      - run: 
+          name: Install dependencies
+          command: npm ci --only=production
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  build_infra:
+    docker:
+      - image: node:20
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - onepassword/install-cli:
+          version: 2.18.0
+      - onepassword/export:
+          var-name: GOOGLE_CREDENTIALS
+          secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
+      - onepassword/export:
+          var-name: LATEST_PLACEHOLDER_SHA
+          secret-reference: op://personal-site-gcp/latest_placeholder/sha
+      - pulumi/login:
+          access-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
+      - pulumi/update:
+          stack: timmalstead/personal-site-gcp-infra/prod
+workflows:
+  build:
+    jobs:
+      - setup
+      - build_infra:
+          requires:
+            - setup
+          context:
+            - personal_site
+\`\`\`
+
+After you’ve made all of those changes, go ahead and commit and push up to GitHub. After your pipeline runs, you should be able to see your new service at the \`www\` subdomain of the domain you registered! In my experience this should take less than an hour to be active.
+
+## Final Thoughts
+
+Let’s review what we’ve done. We created a simple server to deliver a static piece of HTML, containerized it and placed that container on a public repository in the DockerHub registry. We then altered our existing infrastructure repo to publish that container to our subdomain. It takes a bit of doing, but I believe that this setup can make CI an easy affair and allow you to quickly iterate on your service as needed. And since it is the fully managed CloudRun service, you won’t have to worry about scaling or other day to day site infra concerns.
+
+Next time: [App up!](http://localhost:8080/blog/over-engineer-your-site-part-5)
 `,
                         },
                         {
