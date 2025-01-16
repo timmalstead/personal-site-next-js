@@ -1001,11 +1001,11 @@ Before we can setup our web service on a custom domain, there are a few things w
 
 First, we will be working in Google Search Console (GSC). This is a service provided by Google to monitor things like SEO, Web Vitals, performance etc. We need to inform GSC that you are indeed the owner of the site you say you are. Go to the [GSC Ownership Verification page](https://search.google.com/search-console/ownership) and click on the Search Property dropdown in the upper left corner, and navigate to the Add Property option.
 
-![Google Search Console](https://storage.googleapis.com/public-site-storage-6611b8f/google_search_console.png)
+![Google Search Console](/google_search_console.png)
 
 A popup will appear with two options: Domain and URL prefix. We are going to be adding the entire domain. Enter the domain that you have procured for your site to live on, minus any prefixes. So, for example, if you purchased myraddomain.com and planned to host your service on www.myraddomain.com you would enter simply myraddomain.com. Later on we will be pointing the www (or other) subdomain to the container hosting our service. GSC will attempt to verify the console. It should fail in its first attempt.
 
-![GSC Domains](https://storage.googleapis.com/public-site-storage-6611b8f/domains.png)
+![GSC Domains](/domains.png)
 
 A TXT record will be presented to you to add to the DNS records in your domain registrar. This is where things will be varied. Your registrar should have documentation detailing how to add this to your sites records. Be aware that the ONLY purpose of this record is to prove ownership to GSC.
 
