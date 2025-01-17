@@ -9,7 +9,7 @@ const serverOnlyPackages = [
     /module-alias/,
 ]
 
-const aliasedDirectories = ["_components", "_data", "@utils"]
+const aliasedDirectories = ["_components", "@data", "@utils"]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 
 /** @type {import('next').NextConfig} */
@@ -38,7 +38,7 @@ const nextConfig = {
                 ...config.resolve.alias,
                 "@google-cloud/firestore": resolve(
                     __dirname,
-                    "app/_data/firestoreMock"
+                    "app/@data/firestoreMock"
                 ),
             }
         }

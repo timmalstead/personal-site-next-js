@@ -18,7 +18,7 @@
         "secrets:local": "op inject -i env.tpl -o .env",
         "preimage:build:local": "node ./scripts/prepareCredsForLocalContainer.js",
         "image:build:local": "docker build -t personal-site-next-js .",
-        "postimage:build:local": "git checkout ./app/_data/credentials.ts",
+        "postimage:build:local": "git checkout ./app/@data/credentials.ts",
         "image:run:local": "docker run --name=personal-site-next-js -p 8080:8080 --env-file .env --env ACTIVE_ENV=preview --env CURRENT_VERSION=$(git rev-parse --short HEAD) personal-site-next-js",
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },

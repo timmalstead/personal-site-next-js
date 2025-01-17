@@ -10,7 +10,7 @@ import {
     ObjectComponent,
     type ObjectComponentProps,
 } from "_components"
-import { getContent } from "_data"
+import { getContent } from "@data"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
 

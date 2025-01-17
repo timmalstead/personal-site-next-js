@@ -21,8 +21,8 @@
         "paths": {
             "_components": ["app/_components"],
             "_components/*": ["app/_components/*"],
-            "_data": ["app/_data"],
-            "_data/*": ["app/_data/*"],
+            "@data": ["app/@data"],
+            "@data/*": ["app/@data/*"],
             "@utils": ["app/@utils"],
             "@utils/*": ["app/@utils/*"]
         }

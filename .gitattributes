@@ -1,2 +1,2 @@
 # cheating! labeling firestoreMock as documentation so my giant mock data file doesn't get counted in my language stats
-app/_data/firestoreMock.js linguist-documentation=true
+app/@data/firestoreMock.js linguist-documentation=true
