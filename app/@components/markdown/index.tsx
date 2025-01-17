@@ -1,5 +1,5 @@
 import ReactMarkdown, { type Options } from "react-markdown"
-import { Heading, Image, Link } from "_components"
+import { Heading, Image, Link } from "@components"
 import { forwardRef } from "react"
 
 // making children required

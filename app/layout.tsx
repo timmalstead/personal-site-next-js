@@ -13,7 +13,7 @@ import {
     PinchZoom,
     TagManager,
     CurrentVersion,
-} from "_components"
+} from "@components"
 import "./globals.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })

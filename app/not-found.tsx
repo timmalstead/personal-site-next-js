@@ -1,4 +1,4 @@
-import { Heading } from "_components"
+import { Heading } from "@components"
 
 const NotFound = () =>
     // prettier-ignore

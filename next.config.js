@@ -9,7 +9,7 @@ const serverOnlyPackages = [
     /module-alias/,
 ]
 
-const aliasedDirectories = ["_components", "@data", "@utils"]
+const aliasedDirectories = ["@components", "@data", "@utils"]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 
 /** @type {import('next').NextConfig} */

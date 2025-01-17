@@ -1,4 +1,4 @@
-import { Resolver as resolver } from "_components"
+import { Resolver as resolver } from "@components"
 import "./footer.css"
 
 const copyRight = `© 2019 - ${new Date().getFullYear()} by Timothy Malstead - All Rights Reserved`
