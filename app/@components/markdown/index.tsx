@@ -10,7 +10,7 @@ interface MarkdownOptions extends Options {
 const componentsConfig: MarkdownOptions["components"] = {
     h1: ({ children }) => <Heading level="h1">{children}</Heading>,
     h2: ({ children }) => (
-        <Heading level="h2" copy>
+        <Heading level="h2" hash>
             {children}
         </Heading>
     ),

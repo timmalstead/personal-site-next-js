@@ -15,7 +15,7 @@ type HeadingHash = {
 interface HeadingProps {
     level: HeadingLevel
     children: ReactNode
-    copy?: boolean
+    hash?: boolean
 }
 
 const headings: HeadingHash = {
@@ -31,7 +31,7 @@ const [allCharsNotSpacesNumbersOrLowerCaseLetters, spaces] = [
     /[^a-z0-9\s]/g,
     /\s{1,}/g,
 ]
-const Heading = ({ level, children, copy }: HeadingProps) => {
+const Heading = ({ level, children, hash }: HeadingProps) => {
     const HeadingText = headings[level]
 
     const id =
@@ -43,17 +43,14 @@ const Heading = ({ level, children, copy }: HeadingProps) => {
                   .replace(spaces, "-")
             : ""
 
-    const shouldDisplayCopy = Boolean(copy && id)
+    const shouldDisplayHash = Boolean(hash && id)
     return (
         <div id={id} className="heading-component">
             <HeadingText>{children}</HeadingText>
-            {shouldDisplayCopy && (
-                <>
-                    <CopyButton id={id} />
-                    <Link title={id} href={`#${id}`}>
-                        #
-                    </Link>
-                </>
+            {shouldDisplayHash && (
+                <Link title={id} href={`#${id}`}>
+                    #
+                </Link>
             )}
         </div>
     )
