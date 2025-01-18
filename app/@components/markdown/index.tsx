@@ -1,5 +1,5 @@
 import ReactMarkdown, { type Options } from "react-markdown"
-import { Heading, Image, Link } from "@components"
+import { Heading, Image, Link, Code } from "@components"
 import { forwardRef } from "react"
 
 // making children required
@@ -30,6 +30,8 @@ const componentsConfig: MarkdownOptions["components"] = {
     ul: ({ children }) => (
         <ul style={{ padding: "0 4rem", marginBottom: "2rem" }}>{children}</ul>
     ),
+    // TODO: improve typing for this component, remember to bring in syntax highlighter props as well
+    code: ({ node, ...rest }) => <Code {...rest} />,
 }
 
 const Markdown = forwardRef<MarkdownOptions, MarkdownOptions>(
