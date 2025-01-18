@@ -1639,6 +1639,12 @@ With art, blogging, and social media, I will not be keeping to a regular cadence
                     text: `
 # Data Use and Policies
 
+## Code
+
+Feel free to examine the [GitHub repo](https://github.com/timmalstead/personal-site-next-js) for this site.
+
+## Data Policy
+
 It is the policy of myself and this site to respect your privacy and data.
 
 In this spirit, I only collect basic information about your visit to this site, such as the pages you visit and the time you spend on each page.
@@ -1652,11 +1658,55 @@ __This implementation does not collect any personally identifiable information._
 For more information about the specific information collected by the default implementation of Google Analytics, please see this [Google Support Article](https://support.google.com/analytics/answer/11593727?hl=en).
 
 If there are any changes in my data collection or use policies, I will update this page to reflect those changes.
+
+## Cookies and Headers
+
+I set a few custom headers and cookies to make the use of this site more smooth and enjoyable. Note that *none* of the information listed below is shared with third parties, nor persisted beyond run time and the system of the user.
+
+### Browser
+
+There are a few features on this site that rely on browser specific implementations. Thus I keep track of what browser is being used by using a response header called \`x-browser\`.
+
+### Pagename
+
+I set a response header called \`x-pagename\` to keep track of what page is currently being displayed. This is used as a source of truth for fetching data.
+
+### Color Theme
+
+A cookie called \`colorMode\` is set to persist your preferred color scheme for this site. This can be adjusted in the settings at the lower right of the page.
+
+Note that this can also be set by the [Sec-CH-Prefers-Color-Scheme header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-CH-Prefers-Color-Scheme) as a fallback if the cookie is not present. However, as of this writing, this header is not in wide use.
+
+The color scheme should also respond to changes in the color scheme of the device you are using.
+
+If none of these are present to set the scheme, it will default to \`dark\`. 
+
+The possible values of this cookie are \`dark\` and \`light\`.
+
+### Motion Reduction
+
+This page makes use of animations and transitions. If you do not wish to see this behavior, it can be adjusted in the user settings at the bottom right of the page.
+
+Your preference is set in a cookie called \`reducedMotion\`.
+
+Similar to the color scheme, this can also be set by the [Sec-CH-Prefers-Reduced-Motion](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-CH-Prefers-Reduced-Motion) header if the cookie is not present. However, as of this writing, this header is not in wide use.
+
+If neither of these are present to set your motion preference, it will default to \`no-preference\`. 
+
+The possible values of this cookie are \`no-preference\` and \`reduce\`.
+
+### User Settings
+
+I make use of a cookie called \`userSettings\` to persist if you have the user settings open or closed. This can be changed by clicking on the user settings tab in the lower right of the page.
+
+The default value of this cookie is \`closed\`.
+
+The possible values of this cookie are \`closed\` and \`open\`.
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1735684044731,
+                    lastModifiedDate: 1737163543032,
                 },
             ],
         },

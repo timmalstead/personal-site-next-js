@@ -76,7 +76,7 @@ const RootLayout = ({
 
     const userSettingsStatus = getServerValue<SettingsDismiss>({
         cookieName: "userSettings",
-        defaultName: "open",
+        defaultName: "closed",
     })
     // it's a bummer, but the layout zoom only seems to work in Chrome
     // which is funny considering that I copied it from MDN
