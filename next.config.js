@@ -2,11 +2,13 @@
 const { resolve } = require("node:path")
 
 const serverOnlyPackages = [
-    /react-markdown/,
     /@google-cloud\/firestore/,
     /@google-cloud\/storage/,
-    /lorem-ipsum/,
     /module-alias/,
+    /react-markdown/,
+    /react-syntax-highlighter/,
+    /sharp/,
+    /lorem-ipsum/,
 ]
 
 const aliasedDirectories = ["@components", "@data", "@utils"]
