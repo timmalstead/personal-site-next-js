@@ -40,5 +40,6 @@ export const middleware = (request: NextRequest) => {
 
 // inspired by the docs https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-    matcher: `/((?!_next/static|_next/image|apple-icon.png|favicon.ico|icon.png|robots.txt).*)`,
+    matcher:
+        "/((?!_next/static|_next/image|apple-icon.png|favicon.ico|icon.png|robots.txt).*)",
 }

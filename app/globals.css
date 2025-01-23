@@ -40,10 +40,12 @@
 
     &.reduce {
         --transition-duration: 0.01s;
+        scroll-behavior: auto;
     }
 
     &.no-preference {
         --transition-duration: 0.3s;
+        scroll-behavior: smooth;
     }
 }
 
@@ -73,7 +75,8 @@ main {
 }
 
 p,
-pre {
+pre,
+ul {
     margin-bottom: 2rem;
 }
 
@@ -89,9 +92,14 @@ a {
         text-decoration: dotted underline;
     }
 }
+
 button {
     all: unset;
     cursor: pointer;
+}
+
+ul {
+    padding: 0 4rem;
 }
 
 @media screen and (min-width: 1800px) {
@@ -109,6 +117,7 @@ button {
 @media (prefers-reduced-motion) {
     * {
         transition-duration: var(--non-blocking-no-duration) !important;
+        scroll-behavior: auto !important;
 
         &::before,
         &::after {

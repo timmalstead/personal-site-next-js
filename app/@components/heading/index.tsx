@@ -33,7 +33,7 @@ const Heading = ({ level, children, hash }: HeadingProps) => {
     const HeadingText = headings[level]
 
     const id =
-        typeof children === "string"
+        typeof children === "string" && hash
             ? children
                   .toLowerCase()
                   .trim()
@@ -41,11 +41,11 @@ const Heading = ({ level, children, hash }: HeadingProps) => {
                   .replace(spaces, "-")
             : ""
 
-    const shouldDisplayHash = Boolean(hash && id)
+    const idProp = id ? { id } : {}
     return (
-        <div id={id} className="heading-component">
+        <div {...idProp} className="heading-component">
             <HeadingText>{children}</HeadingText>
-            {shouldDisplayHash && (
+            {id && (
                 <Link title={id} href={`#${id}`}>
                     #
                 </Link>
