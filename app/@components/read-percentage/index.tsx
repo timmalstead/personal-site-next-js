@@ -1,6 +1,5 @@
 "use client"
 import { useRef, useEffect, useState, type ReactNode } from "react"
-import "./read-percentage.css"
 
 interface ReadPercentageProps {
     children: ReactNode

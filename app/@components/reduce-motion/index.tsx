@@ -1,6 +1,5 @@
 "use client"
 import { useA11yValue, type ReducedMotion } from "@utils"
-import "./reduce-motion.css"
 
 const reducedMotionId = "reduced-motion-input"
 

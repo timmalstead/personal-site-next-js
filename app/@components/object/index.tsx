@@ -1,6 +1,5 @@
 import { forwardRef, type ObjectHTMLAttributes } from "react"
 import Permission, { type PermissionProps } from "./Permission"
-import "./object.css"
 
 export type ObjectComponentProps = ObjectHTMLAttributes<HTMLObjectElement> &
     PermissionProps & {

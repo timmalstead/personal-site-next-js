@@ -1,6 +1,5 @@
 import NextImage, { type ImageProps as NextImageProps } from "next/image"
 import { headers } from "next/headers"
-import "./image.css"
 
 export type ImageProps = NextImageProps & {
     name?: string

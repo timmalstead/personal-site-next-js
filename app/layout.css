@@ -1,0 +1,11 @@
+@import "./globals.css";
+@import "@components/header/header.css";
+@import "@components/footer/footer.css";
+@import "@components/user-settings/user-settings.css";
+@import "@components/reduce-motion/reduce-motion.css";
+@import "@components/color-switcher/color-switcher.css";
+@import "@components/heading/heading.css";
+@import "@components/image/image.css";
+@import "@components/last-modified/last-modified.css";
+@import "@components/object/object.css";
+@import "@components/read-percentage/read-percentage.css";

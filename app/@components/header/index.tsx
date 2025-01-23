@@ -1,7 +1,6 @@
 import ClientHeader from "./ClientHeader"
 import { Link, Resolver as resolver } from "@components"
 import type { Browser /*, Route */ } from "@utils"
-import "./header.css"
 
 interface HeaderProps {
     browser: Browser

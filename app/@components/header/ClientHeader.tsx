@@ -2,7 +2,6 @@
 // scroll direction hook adapted from Robin Wieruch's blog: https://www.robinwieruch.de/react-hook-scroll-direction/
 
 import { ReactNode, useLayoutEffect, useState, useRef, useEffect } from "react"
-import styles from "./ClientHeader.module.css"
 
 type Direction = "up" | "down"
 type Position = "show" | "hide"
@@ -70,8 +69,10 @@ const ClientHeader = ({ children }: { children: ReactNode }) => {
 
     return (
         <>
-            <header className={styles[positionClass]}>{children}</header>
-            <hr ref={hrRef} className={styles.hr} aria-hidden={true} />
+            <header className={`client-header-${positionClass}`}>
+                {children}
+            </header>
+            <hr ref={hrRef} className={"client-header-hr"} aria-hidden={true} />
         </>
     )
 }

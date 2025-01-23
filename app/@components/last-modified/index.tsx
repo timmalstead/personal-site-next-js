@@ -1,5 +1,3 @@
-import "./last-modified.css"
-
 export type LastModifiedProps = {
     // epoch date the content was last modified
     lastModifiedDate: number

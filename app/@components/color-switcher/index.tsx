@@ -1,6 +1,5 @@
 "use client"
 import { useA11yValue, type ColorMode } from "@utils"
-import "./color-switcher.css"
 
 const colorToggleId = "color-switch-input"
 

@@ -14,7 +14,7 @@ import {
     TagManager,
     CurrentVersion,
 } from "@components"
-import "./globals.css"
+import "./layout.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
 

@@ -1,6 +1,4 @@
 import type { ReactNode, DetailedHTMLProps, HTMLAttributes } from "react"
-import "./heading.css"
-import CopyButton from "./CopyButton"
 import { Link } from "@components"
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
