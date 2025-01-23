@@ -22,25 +22,6 @@ export const metadata: Metadata = {
     title: { template: "%s | Timothy Malstead", default: "Timothy Malstead" },
     description:
         "The website of Timothy Malstead, a software engineer and artist from the United States.",
-    icons: [
-        {
-            rel: "icon",
-            sizes: "48x48",
-            url: "/favicon.ico",
-        },
-        {
-            rel: "apple-touch-icon",
-            sizes: "180x180",
-            url: "/apple-icon.png",
-            type: "image/png",
-        },
-        {
-            rel: "icon",
-            sizes: "180x180",
-            url: "/icon.png",
-            type: "image/png",
-        },
-    ],
 }
 
 export const viewport: Viewport = {
