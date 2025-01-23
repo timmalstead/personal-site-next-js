@@ -1,3 +1,4 @@
+// is this script giving me false positives?
 const { execSync } = require("node:child_process")
 const {
     engines: { node: expectedVersion },

@@ -9,17 +9,17 @@ header {
     height: var(--header-height);
     padding: 0 10vw;
 
-    .client-header-show,
-    .client-header-hide {
+    &.client-header-show,
+    &.client-header-hide {
         position: sticky;
         transition: top var(--transition-duration);
     }
 
-    .client-header-show {
+    &.client-header-show {
         top: 0;
     }
 
-    .client-header-hide {
+    &.client-header-hide {
         top: calc(-2 * var(--header-height));
     }
 

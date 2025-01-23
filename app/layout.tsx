@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     title: { template: "%s | Timothy Malstead", default: "Timothy Malstead" },
     description:
         "The website of Timothy Malstead, a software engineer and artist from the United States.",
+    alternates: {
+        canonical: "https://timothymalstead.com",
+    },
 }
 
 export const viewport: Viewport = {
@@ -69,6 +72,7 @@ const RootLayout = ({
                 <Header browser={browser} />
                 {children}
                 <UserSettings userSettingsStatusProp={userSettingsStatus}>
+                    {/* would it make sense for the zooms to just be for developing? */}
                     <PinchZoom />
                     {isChrome && <LayoutZoom />}
                     <ReduceMotion reducedMotionProp={reducedMotion} />

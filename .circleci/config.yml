@@ -5,6 +5,7 @@ orbs:
 jobs:
     testing:
         docker:
+            #   TODO: update to use the latest version of Playwright
             - image: mcr.microsoft.com/playwright:v1.42.1-jammy
         resource_class: medium
         steps:
