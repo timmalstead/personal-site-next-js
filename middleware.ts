@@ -8,6 +8,14 @@ export const middleware = (request: NextRequest) => {
         nextUrl: { pathname },
     } = request
 
+    const isApiRoute = pathname.startsWith("/api")
+    if (isApiRoute) {
+        const authHeaderVal = request.headers.get("Authorization")
+        const authEnvVal = process.env.MIDDLEWARE_AUTHORIZATION
+        if (authHeaderVal !== authEnvVal)
+            return NextResponse.json({ error: "Unauthorized", status: 401 })
+    }
+
     const { browser } = userAgent(request)
     const browserName = (
         (browser?.name as string) || ""
@@ -27,17 +35,10 @@ export const middleware = (request: NextRequest) => {
         return NextResponse.redirect(redirectedUrl, { status: 302 })
     }
 
-    const isApiRoute = pathname.startsWith("/api")
-    if (isApiRoute) {
-        const authHeaderVal = request.headers.get("Authorization")
-        const authEnvVal = process.env.MIDDLEWARE_AUTHORIZATION
-        if (authHeaderVal !== authEnvVal)
-            return NextResponse.json({ error: "Unauthorized", status: 401 })
-    }
-
     return response
 }
 
+// inspired by the docs https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-    matcher: "/(.*)",
+    matcher: `/((?!_next/static|_next/image|apple-icon.png|favicon.ico|icon.png|robots.txt).*)`,
 }
