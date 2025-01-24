@@ -97,10 +97,6 @@ button {
     cursor: pointer;
 }
 
-ul {
-    padding: 0 4rem;
-}
-
 @media screen and (min-width: 1800px) {
     body {
         font-size: min(1vw, 2rem);
