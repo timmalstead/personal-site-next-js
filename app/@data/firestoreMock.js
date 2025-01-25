@@ -1366,40 +1366,40 @@ Let’s look at an example.
 
 \`\`\`css
 li.color-switcher {
-    input[type="checkbox"] {
-        appearance: none;
-        background-color: var(--text-color);
-        padding: 0 0.5rem;
-        border-radius: 2rem;
-        cursor: pointer;
-        font-size: 1.5rem;
+\t\tinput[type="checkbox"] {
+\t\t\t\tappearance: none;
+\t\t\t\tbackground-color: var(--text-color);
+\t\t\t\tpadding: 0 0.5rem;
+\t\t\t\tborder-radius: 2rem;
+\t\t\t\tcursor: pointer;
+\t\t\t\tfont-size: 1.5rem;
 
-        &::before,
-        &::after {
-            color: var(--background-color);
-            transition: all var(--transition-duration);
-        }
+\t\t\t\t&::before,
+\t\t\t\t&::after {
+\t\t\t\t\t\tcolor: var(--background-color);
+\t\t\t\t\t\ttransition: all var(--transition-duration);
+\t\t\t\t}
 
-        &::before {
-            content: "☾ ";
-            opacity: 0.25;
-        }
+\t\t\t\t&::before {
+\t\t\t\t\t\tcontent: "☾ ";
+\t\t\t\t\t\topacity: 0.25;
+\t\t\t\t}
 
-        &::after {
-            content: "☀";
-            opacity: 1;
-        }
+\t\t\t\t&::after {
+\t\t\t\t\t\tcontent: "☀";
+\t\t\t\t\t\topacity: 1;
+\t\t\t\t}
 
-        &:checked {
-            &::before {
-                opacity: 1;
-            }
+\t\t\t\t&:checked {
+\t\t\t\t\t\t&::before {
+\t\t\t\t\t\t\t\topacity: 1;
+\t\t\t\t\t\t}
 
-            &::after {
-                opacity: 0.25;
-            }
-        }
-    }
+\t\t\t\t\t\t&::after {
+\t\t\t\t\t\t\t\topacity: 0.25;
+\t\t\t\t\t\t}
+\t\t\t\t}
+\t\t}
 }
 \`\`\`
 Here I have a component to switch between dark and light color schemes. It is a checkbox input where I have removed the default styles and made conditional styling changes using pseudo-elements and pseudo-classes.
@@ -1408,35 +1408,35 @@ Let’s take a look at what this would look like *without* using nested CSS sele
 
 \`\`\`css
 li.color-switcher > input[type="checkbox"] {
-    appearance: none;
-    background-color: var(--text-color);
-    padding: 0 0.5rem;
-    border-radius: 2rem;
-    cursor: pointer;
-    font-size: 1.5rem;
+\t\t\tappearance: none;
+\t\t\tbackground-color: var(--text-color);
+\t\t\tpadding: 0 0.5rem;
+\t\t\tborder-radius: 2rem;
+\t\t\tcursor: pointer;
+\t\t\tfont-size: 1.5rem;
 }
 
 li.color-switcher > input[type="checkbox"]::before,
 li.color-switcher > input[type="checkbox"]::after {
-    color: var(--background-color);
-    transition: all var(--transition-duration);
+\t\t\tcolor: var(--background-color);
+\t\t\ttransition: all var(--transition-duration);
 }
 
 li.color-switcher > input[type="checkbox"]::before {
-    content: "☾ ";
-    opacity: 0.25;
+\t\t\tcontent: "☾ ";
+\t\t\topacity: 0.25;
 }
 li.color-switcher > input[type="checkbox"]::after {
-    content: "☀";
-    opacity: 1;
+\t\t\tcontent: "☀";
+\t\t\topacity: 1;
 }
 
 li.color-switcher > input[type="checkbox"]:checked::before {
-    opacity: 1;
+\t\t\topacity: 1;
 }
 
 li.color-switcher > input[type="checkbox"]:checked::after {
-    opacity: 0.25;
+\t\t\topacity: 0.25;
 }
 \`\`\`
 Now we can dramatically reduce the amount of repetitive styling code we write with no need for an additional styling tool. I can’t speak for you, but I think that’s an excellent argument in favor of sticking with plain ol’ css.
@@ -1450,24 +1450,24 @@ For example, here is part of a CSS module I wrote for my header on this project
 \`\`\`css
 .show,
 .hide {
-	position: sticky;
-	transition: top  var(--transition-duration);
+\t\tposition: sticky;
+\t\ttransition: top  var(--transition-duration);
 }
 
 .show {
-	top: 0;
+\t\ttop: 0;
 }
 
 .hide {
-	top: calc(-2  *  var(--header-height));
+\t\ttop: calc(-2  *  var(--header-height));
 }
 \`\`\`
 When imported into a \`js\`, \`jsx\`, or \`tsx\` file, these will read as an object like this.
 \`\`\`js
-  {
-	  show: ’ClientHeader_show__XOZvP’,
-	  hide: ’ClientHeader_hide__Oqcat’,
-  }
+{
+\tshow: ’ClientHeader_show__XOZvP’,
+\thide: ’ClientHeader_hide__Oqcat’,
+}
 \`\`\`
 As you can see, the class name we defined in our module maps onto a unique class name that will not be repeated throughout the project. Thus we see one of the great benefits of CSS modules: *they don’t produce rule collisions*!
 
@@ -1510,7 +1510,7 @@ I like the open web, and I like working with web technologies. For me, the web r
                         },
                         {
                             name: "LastModified",
-                            lastModifiedDate: 1736987829980,
+                            lastModifiedDate: 1737840348930,
                         },
                     ],
                 },
