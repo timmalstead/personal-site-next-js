@@ -1,4 +1,3 @@
-// is this script giving me false positives?
 const { execSync } = require("node:child_process")
 const {
     engines: { node: expectedVersion },
@@ -9,17 +8,21 @@ try {
         encoding: "utf8",
     }).trim()
 
-    const nonNumbersRegex = /[^0-9]+/g
+    const nonNumbersAndPeriodRegex = /[^1-9.]+/g
     const [expectedVersionNum, currentMajorVersionNum] = [
         expectedVersion,
         currentVersion,
-    ].map((version) => +version.replace(nonNumbersRegex, ""))
+    ].map((version) => {
+        const versionWithPeriods = version.replace(nonNumbersAndPeriodRegex, "")
+        const [majorVersion] = versionWithPeriods.split(".")
+        return +majorVersion
+    })
 
     const isCurrentVersionHighEnough =
         currentMajorVersionNum >= expectedVersionNum
 
     if (isCurrentVersionHighEnough) {
-        console.log(
+        console.info(
             `Node.js version ${currentVersion} is compatible with the project.`
         )
         process.exit(0)
