@@ -419,12 +419,12 @@ In our root file \`index.ts\` you will find some boilerplate code. Replace it wi
 import * as gcp from "@pulumi/gcp"
 
 const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
-	accountId: "pulumi-circle-ci-service",
-	displayName: "pulumiCircleCiService",
+\taccountId: "pulumi-circle-ci-service",
+\tdisplayName: "pulumiCircleCiService",
 })
 
 const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
-	serviceAccountId: pulumiCircleCiService.name,
+\tserviceAccountId: pulumiCircleCiService.name,
 })
 
 export default {pulumiCircleCiService, pulumiCircleCiServiceAccountKey}
@@ -445,7 +445,7 @@ Next, add the following block to your \`package.json\` file
 
 \`\`\`json
 "scripts": {
-	"parseCreds": "pulumi stack output --show-secrets | xargs -0 node parseCreds.js runWithCli=true serviceAccountKey=pulumiCircleCiServiceAccountKey"
+\t"parseCreds": "pulumi stack output --show-secrets | xargs -0 node parseCreds.js runWithCli=true serviceAccountKey=pulumiCircleCiServiceAccountKey"
 }
 \`\`\`
 This will allow us to export the [Pulumi CLI stack output command](https://www.pulumi.com/docs/cli/commands/pulumi_stack_output/) in plaintext and work with it via a node file we will create.
@@ -453,14 +453,14 @@ This will allow us to export the [Pulumi CLI stack output command](https://www.p
 Finally, paste the following code into a file created in your root folder called \`parseCreds.js\`
 
 \`\`\`javascript
-const {writeFileSync} = require("fs")
+const {writeFileSync} = require("node:fs")
 
 const dataWithSecrets = process.argv.pop()
 const {serviceAccountKey, runWithCli} = process.argv.slice(2).reduce((acc, arg) => {
-	const [key, value] =  arg.split("=")
-	acc[key] =  value
-	return  acc
-},{})  
+\t\tconst [key, value] =  arg.split("=")
+\t\tacc[key] =  value
+\t\treturn  acc
+}, {})  
 
 /**
 * @function parseAndSaveCreds
@@ -471,22 +471,22 @@ const {serviceAccountKey, runWithCli} = process.argv.slice(2).reduce((acc, arg) 
 * @example parseAndSaveCreds("serviceAccountKey", "{"serviceAccountKey": {"privateKey": "base64EncodedKey"}}") => {privateKey saved to file as JSON}
 **/
 const parseAndSaveCreds = (serviceAccountKey, dataWithSecrets) => {
-	try {
-		if(!serviceAccountKey || !dataWithSecrets) throw new Error("Missing arguments")
-		const selectPreambleCharacters = /[^{]+/ 
+try {
+\t\tif(!serviceAccountKey || !dataWithSecrets) throw new Error("Missing arguments")
+\t\tconst selectPreambleCharacters = /[^{]+/ 
 
-		const cleanedText = dataWithSecrets.replace(selectPreambleCharacters, "")
-		const {privateKey} = JSON.parse(cleanedText)[serviceAccountKey]
-		const decodedData = Buffer.from(privateKey, "base64").toString("ascii")
+\t\tconst cleanedText = dataWithSecrets.replace(selectPreambleCharacters, "")
+\t\tconst {privateKey} = JSON.parse(cleanedText)[serviceAccountKey]
+\t\tconst decodedData = Buffer.from(privateKey, "base64").toString("ascii")
 
-		writeFileSync(./service-account-secrets.json, decodedData) 
+\t\twriteFileSync(./service-account-secrets.json, decodedData) 
 
-		console.info("Successfully parsed credentials")
-		process.exit(0)
-	} catch (error) {
-		console.error("Parsing failed with following error: ", error)
-		process.exit(1)
-	}
+\t\tconsole.info("Successfully parsed credentials")
+\t\tprocess.exit(0)
+} catch (error) {
+\t\t\tconsole.error("Parsing failed with following error: ", error)
+\t\t\tprocess.exit(1)
+\t\t}
 }
 
 runWithCli === "true" && parseAndSaveCreds(serviceAccountKey, dataWithSecrets)  
@@ -545,33 +545,33 @@ Now that we have GitHub and CircleCi set up and working together, we need to wri
 \`\`\`yaml
 version: 2.1
 orbs:
-  onepassword: onepassword/secrets@1.0.0
-  pulumi: pulumi/pulumi@2.1.0
+\t\tonepassword: onepassword/secrets@1.0.0
+\t\tpulumi: pulumi/pulumi@2.1.0
 jobs:
-  build_infra:
-    docker:
-      - image: node:20
-    resource_class: small
-    steps:
-      - checkout
-      - run: 
-          name: Install dependencies
-          command: npm ci --only=production
-      - onepassword/install-cli:
-          version: 2.18.0
-      - onepassword/export:
-          var-name: GOOGLE_CREDENTIALS
-          secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
-      - pulumi/login:
-          access-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
-      - pulumi/update:
-          stack: prod
+\t\tbuild_infra:
+\t\t\tdocker:
+\t\t\t\t- image: node:20
+\t\t\tresource_class: small
+\t\t\tsteps:
+\t\t\t\t- checkout
+\t\t\t\t- run: 
+\t\t\t\t\t\tname: Install dependencies
+\t\t\t\t\t\tcommand: npm ci --only=production
+\t\t\t\t- onepassword/install-cli:
+\t\t\t\t\t\tversion: 2.18.0
+\t\t\t\t- onepassword/export:
+\t\t\t\t\t\tvar-name: GOOGLE_CREDENTIALS
+\t\t\t\t\t\tsecret-reference: op://personal-site-gcp/pulumiCircleCiService/key
+\t\t\t\t- pulumi/login:
+\t\t\t\t\t\taccess-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
+\t\t\t\t- pulumi/update:
+\t\t\t\t\t\tstack: prod
 workflows:
-  build:
-    jobs:
-      - build_infra:
-          context:
-            - personal_site
+\t\tbuild:
+\t\t\tjobs:
+\t\t\t\t- build_infra:
+\t\t\t\t\t\tcontext:
+\t\t\t\t\t\t\t- personal_site
 
 \`\`\`
 This is where it all comes together! We should go over what this file is doing.
@@ -589,11 +589,11 @@ export OP_INTEGRATION_BUILDNUMBER="1000001"
 
 random_heredoc_identifier=$(env LC_ALL=C tr -dc a-zA-Z0-9 < /dev/urandom | fold -w 64 | head -n 1) || true
 {
-    #shellcheck disable=SC2016
-    printf export %s=$(cat << "\${PARAM_VAR_NAME}" 
-    printf %s\n "\${random_heredoc_identifier}"
-    op read "\${PARAM_SECRET_REFERENCE}"
-    printf %s\n)\n "\${random_heredoc_identifier}"
+\t#shellcheck disable=SC2016
+\tprintf export %s=$(cat << "\${PARAM_VAR_NAME}" 
+\tprintf %s\n "\${random_heredoc_identifier}"
+\top read "\${PARAM_SECRET_REFERENCE}"
+\tprintf %s\n)\n "\${random_heredoc_identifier}"
 } >> "$BASH_ENV"
 \`\`\`
 As you can see, orbs allow us to greatly simplify our configs and make them much more declarative, focusing on what we need to do and leaving the implementation as much as possible behind the scenes. In many cases they are created and maintained in reference to specific services. This is the case with the orbs we will be using. They are the official orbs of 1Password and Pulumi.
@@ -632,16 +632,16 @@ Create a new folder at the root of your project called \`infra\`. We are dealing
 import * as gcp from "@pulumi/gcp"
 
 export const initService = () => {
-    const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
-        accountId: "pulumi-circle-ci-service",
-        displayName: "pulumiCircleCiService",
-    })
+\tconst pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
+\t\t\taccountId: "pulumi-circle-ci-service",
+\t\t\tdisplayName: "pulumiCircleCiService",
+\t})
     
-    const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
-        serviceAccountId: pulumiCircleCiService.name,
-    })
+\tconst pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
+\t\t\tserviceAccountId: pulumiCircleCiService.name,
+\t})
     
-    return {pulumiCircleCiService, pulumiCircleCiServiceAccountKey}
+\treturn {pulumiCircleCiService, pulumiCircleCiServiceAccountKey}
 }
 
 \`\`\`
@@ -653,28 +653,28 @@ Next, create a file called \`storage.ts\` inside \`infra\` and paste the followi
 import * as gcp from "@pulumi/gcp"
 
 export const initStorage = () => {
-    const publicBucket = new gcp.storage.Bucket("public-site-storage", {
-        location: "US", 
-        uniformBucketLevelAccess: false
-    })
+\t\tconst publicBucket = new gcp.storage.Bucket("public-site-storage", {
+\t\t\t\tlocation: "US", 
+\t\t\t\tuniformBucketLevelAccess: false
+\t\t})
     
-    const bucket = publicBucket.name
+\t\tconst bucket = publicBucket.name
     
-    const iamPublic = new gcp.storage.BucketIAMBinding("binding", {
-        bucket,
-        role: "roles/storage.objectViewer",
-        members: ["allUsers"],
-    })
+\t\tconst iamPublic = new gcp.storage.BucketIAMBinding("binding", {
+\t\t\t\tbucket,
+\t\t\t\trole: "roles/storage.objectViewer",
+\t\t\t\tmembers: ["allUsers"],
+\t\t})
     
-    const dateObject = {datePulumiLastModified: Date.now()}
+\t\tconst dateObject = {datePulumiLastModified: Date.now()}
     
-    const datePulumiLastModified = new gcp.storage.BucketObject("datePulumiLastModified", {
-        bucket,
-        name: "datePulumiLastModified.json",
-        content: JSON.stringify(dateObject),
-    })
+\t\tconst datePulumiLastModified = new gcp.storage.BucketObject("datePulumiLastModified", {
+\t\t\t\tbucket,
+\t\t\t\tname: "datePulumiLastModified.json",
+\t\t\t\tcontent: JSON.stringify(dateObject),
+\t\t})
 
-    return {publicBucket, iamPublic, datePulumiLastModified}
+\t\treturn {publicBucket, iamPublic, datePulumiLastModified}
 }
 \`\`\`
 
@@ -710,7 +710,7 @@ Next time: [Danger is spelled: DNS!](/blog/over-engineer-your-site-part-4)
                         },
                         {
                             name: "LastModified",
-                            lastModifiedDate: 1736987829980,
+                            lastModifiedDate: 1737840348930,
                         },
                     ],
                 },
