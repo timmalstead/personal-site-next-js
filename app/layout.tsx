@@ -13,6 +13,7 @@ import {
     PinchZoom,
     TagManager,
     CurrentVersion,
+    DevTools,
 } from "@components"
 import "./layout.css"
 
@@ -72,12 +73,13 @@ const RootLayout = ({
                 <Header browser={browser} />
                 {children}
                 <UserSettings userSettingsStatusProp={userSettingsStatus}>
-                    {/* would it make sense for the zooms to just be for developing? */}
-                    <PinchZoom />
-                    {isChrome && <LayoutZoom />}
+                    <DevTools>
+                        <PinchZoom />
+                        {isChrome && <LayoutZoom />}
+                        <CurrentVersion />
+                    </DevTools>
                     <ReduceMotion reducedMotionProp={reducedMotion} />
                     <ColorSwitcher colorModeProp={colorMode} />
-                    <CurrentVersion />
                 </UserSettings>
                 <Footer />
                 <TagManager />

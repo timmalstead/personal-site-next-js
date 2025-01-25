@@ -6,7 +6,7 @@ const shouldLoadTagManager =
     process.env?.NODE_ENV === "production" && process.env?.ACTIVE_ENV === "prod"
 
 const TagManager = () =>
-    shouldLoadTagManager && (
+    shouldLoadTagManager ? (
         <>
             <Script
                 async
@@ -20,6 +20,8 @@ const TagManager = () =>
                 gtag('config', '${gTagID}');`}
             </Script>
         </>
+    ) : (
+        <></>
     )
 
 export default TagManager
