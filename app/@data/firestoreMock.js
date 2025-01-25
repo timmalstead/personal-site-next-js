@@ -752,34 +752,34 @@ In a new repo, we will create a file called \`index.html\`.
 \`\`\`html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>timothymalstead.com: coming soon</title>
-        <style>
-            body {
-                height: 100vh;
-                background-color: #343434;
-                color: #ddd;
-                font-family: monospace;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            main {
-                text-align: center;
-            }
-            h1 {
-                filter: drop-shadow(6px 6px #202020);
-            }
-        </style>
-    </head>
-    <body>
-        <main>
-            <h1>timothymalstead.com</h1>
-            <h3>coming soon</h3>
-        </main>
-    </body>
+\t<head>
+\t\t<meta charset="UTF-8">
+\t\t<meta name="viewport" content="width=device-width, initial-scale=1.0">
+\t\t<title>timothymalstead.com: coming soon</title>
+\t\t<style>
+\t\t\t\tbody {
+\t\t\t\t\theight: 100vh;
+\t\t\t\t\tbackground-color: #343434;
+\t\t\t\t\tcolor: #ddd;
+\t\t\t\t\tfont-family: monospace;
+\t\t\t\t\tdisplay: flex;
+\t\t\t\t\tjustify-content: center;
+\t\t\t\t\talign-items: center;
+\t\t\t\t}
+\t\t\t\tmain {
+\t\t\t\t\ttext-align: center;
+\t\t\t\t}
+\t\t\t\th1 {
+\t\t\t\t\tfilter: drop-shadow(6px 6px #202020);
+\t\t\t\t}
+\t\t</style>
+\t</head>
+\t<body>
+\t\t<main>
+\t\t\t\t<h1>timothymalstead.com</h1>
+\t\t\t\t<h3>coming soon</h3>
+\t\t</main>
+\t</body>
 </html>
 \`\`\`
 As you can see, this is a simple and static bit of html to inform the user that there will *soon* be a proper website to be found at timothymalstead.com. Not anything too complicated, just a few block elements, styles and some heading elements. Since its only purpose is to display a bit of text, I styled it in such a way as to be viewport agnostic. In other words, whether a user accesses this on a phone, tablet or desktop device, they will see a centered block of text.
@@ -795,16 +795,16 @@ const {createServer} = require("node:http")
 const {readFileSync} = require("node:fs")
 const {join} = require("node:path")
 
-const multipleSpacesAndNewlines = /(\s{2}|\n)/g
+const multipleSpacesAndNewlines = /(\s{2}|\/n)/g
 const filePath = join(__dirname, "index.html")
 const miniHtml = readFileSync(filePath, "utf8").replace(multipleSpacesAndNewlines, "")
 
 const port = 8080 // cloud run default port
 createServer((_, res) => {
-  res.statusCode = 200
-  res.setHeader("Content-Type", "text/html")
-  res.write(miniHtml)
-  res.end()
+\t\tres.statusCode = 200
+\t\tres.setHeader("Content-Type", "text/html")
+\t\tres.write(miniHtml)
+\t\tres.end()
 }).listen(port)
 \`\`\`
 A simple server in 15 lines of code! I will break down what we have going on here.
@@ -860,44 +860,42 @@ We will create a fresh \`config.yml\` in a \`.circleci\` directory at the root o
 \`\`\`yaml
 version: 2.1
 orbs:
-  onepassword: onepassword/secrets@1.0.0
-  docker: circleci/docker@2.4.0
+\t\tonepassword: onepassword/secrets@1.0.0
+\t\tdocker: circleci/docker@2.4.0
 jobs:
-  build_placeholder:
-    docker:
-      - image: cimg/base:current
-    resource_class: small
-    steps:
-      - onepassword/install-cli:
-          version: 2.18.0
-      - onepassword/export:
-          var-name: DOCKER_LOGIN
-          secret-reference: op://personal-site-gcp/dockerHub/username
-      - onepassword/export:
-          var-name: DOCKER_PASSWORD
-          secret-reference: op://personal-site-gcp/dockerHub/password
-      - setup_remote_docker
-      - checkout
-      - docker/check
-      - docker/build:
-          image: timmalstead/personal-site-placeholder
-      - docker/push:
-          image: timmalstead/personal-site-placeholder
-      - run: 
-          name: Persist latest build sha
-          command: op item edit latest_placeholder sha=$CIRCLE_SHA1
-      - run:
-          name: Trigger infra build pipeline
-          command: |
-            curl --request POST \
-              --url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \
-              --header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
+\t\tbuild_placeholder:
+\t\t\tdocker:
+\t\t\t\t- image: cimg/base:current
+\t\t\tresource_class: small
+\t\t\tsteps:
+\t\t\t\t- onepassword/install-cli:
+\t\t\t\t\t\tversion: 2.18.0
+\t\t\t\t- onepassword/export:
+\t\t\t\t\t\tvar-name: DOCKER_LOGIN
+\t\t\t\t\t\tsecret-reference: op://personal-site-gcp/dockerHub/username
+\t\t\t\t- onepassword/export:
+\t\t\t\t\t\tvar-name: DOCKER_PASSWORD
+\t\t\t\t\t\tsecret-reference: op://personal-site-gcp/dockerHub/password
+\t\t\t\t- setup_remote_docker
+\t\t\t\t- checkout
+\t\t\t\t- docker/check
+\t\t\t\t- docker/build:
+\t\t\t\t\t\timage: timmalstead/personal-site-placeholder
+\t\t\t\t- docker/push:
+\t\t\t\t\t\timage: timmalstead/personal-site-placeholder
+\t\t\t\t- run: 
+\t\t\t\t\t\tname: Persist latest build sha
+\t\t\t\t\t\tcommand: op item edit latest_placeholder sha=$CIRCLE_SHA1
+\t\t\t\t- run:
+\t\t\t\t\t\tname: Trigger infra build pipeline
+\t\t\t\t\t\tcommand: |
+\t\t\t\t\t\t\tcurl --request POST \\\n\t\t\t\t\t\t\t--url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \\\n\t\t\t\t\t\t\t--header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
 workflows:
-  build:
-    jobs:
-      - build_placeholder:
-          context:
-            - personal_site
+\t\tbuild:
+\t\t\tjobs:
+\t\t\t\t- build_placeholder:
+\t\t\t\t\t\tcontext:
+\t\t\t\t\t\t\t- personal_site
 \`\`\`
 
 Woo! Quite a bit going on here. But I will walk through it all with you.
@@ -943,10 +941,10 @@ Each group of resources had a file like so:
 // imports
 
 export const initResourceGroupOne = () => {
-	const resourceOne = // pulumi code
-	const resourceTwo = // pulumi code
+\t\tconst resourceOne = // pulumi code
+\t\tconst resourceTwo = // pulumi code
 
-    return {resourceOne, resourceTwo}
+\t\treturn {resourceOne, resourceTwo}
 }
 \`\`\`
 These were then exported from \`index.ts\` in the \`infra\` folder:
@@ -1024,41 +1022,41 @@ To start with, I wanted a way to centralize my secrets that would work whether I
 
 \`\`\`typescript
 interface GoogleCredentialSecrets {
-    type: string
-    project_id: string
-    private_key_id: string
-    private_key: string
-    client_email: string
-    client_id: string
-    auth_uri: string
-    token_uri: string
-    auth_provider_x509_cert_url: string
-    client_x509_cert_url: string
-    universe_domain: string
+\t\ttype: string
+\t\tproject_id: string
+\t\tprivate_key_id: string
+\t\tprivate_key: string
+\t\tclient_email: string
+\t\tclient_id: string
+\t\tauth_uri: string
+\t\ttoken_uri: string
+\t\tauth_provider_x509_cert_url: string
+\t\tclient_x509_cert_url: string
+\t\tuniverse_domain: string
 }
 
 const isCircleCI = process.env.CIRCLECI && process.env.CIRCLECI === "true"
 
 const googleSecrets: GoogleCredentialSecrets = process.env.GOOGLE_CREDENTIALS ? 
-    JSON.parse(process.env.GOOGLE_CREDENTIALS) : require("./service-account-secrets.json")
+\t\tJSON.parse(process.env.GOOGLE_CREDENTIALS) : require("./service-account-secrets.json")
 
 // double check that the most recent placeholder sha matches with 1password when running pulumi locally
 const latestPlaceholderSha = isCircleCI && process.env.LATEST_PLACEHOLDER_SHA ? 
-    process.env.LATEST_PLACEHOLDER_SHA : require("./placeholder-secrets.json").sha
+\t\tprocess.env.LATEST_PLACEHOLDER_SHA : require("./placeholder-secrets.json").sha
 
 export default {
-    domain: "timothymalstead.com",
-    latestPlaceholderSha,
-    location: "us-central1",
-    project: googleSecrets.project_id,
-    serviceAccountMember: \`serviceAccount:\${googleSecrets.client_email}\`,
+\t\tdomain: "timothymalstead.com",
+\t\tlatestPlaceholderSha,
+\t\tlocation: "us-central1",
+\t\tproject: googleSecrets.project_id,
+\t\tserviceAccountMember: \`serviceAccount:\${googleSecrets.client_email}\`,
 }
 \`\`\`
 Recall that \`placeholder-secrets.json\` is the file made from running the \`parseCreds\` script in our \`package.json\` file. Create a new file called \`service-account-secrets.json\` at the root level of the repo and paste in the following, where \`{{PLACEHOLDER_SHA}}\` is the sha of the placeholder repo you wish to run.
 
 \`\`\`json
 {
-    "sha" : "{{PLACEHOLDER_SHA}}"
+\t"sha" : "{{PLACEHOLDER_SHA}}"
 }
 \`\`\`
  
@@ -1075,28 +1073,28 @@ import * as gcp from "@pulumi/gcp"
 
 // I do not love that I do not have the option of camel case for the bucket name, but here we are
 const publicBucket = new gcp.storage.Bucket("public-site-storage", {
-    location: "US", 
-    uniformBucketLevelAccess: false
+\t\tlocation: "US", 
+\t\tuniformBucketLevelAccess: false
 })
 
 const {name: bucket} = publicBucket
 
 const publicBucketIamBinding = new gcp.storage.BucketIAMBinding("publicBucketIamBinding", {
-    bucket,
-    role: "roles/storage.objectViewer",
-    members: ["allUsers"],
+\t\tbucket,
+\t\trole: "roles/storage.objectViewer",
+\t\tmembers: ["allUsers"],
 })
     
 const datePulumiLastModified = new gcp.storage.BucketObject("datePulumiLastModified", {
-    bucket,
-    name: "datePulumiLastModified.json",
-    content: JSON.stringify({datePulumiLastModified: Date.now()}),
+\t\tbucket,
+\t\tname: "datePulumiLastModified.json",
+\t\tcontent: JSON.stringify({datePulumiLastModified: Date.now()}),
 })
 
 export default {
-    publicBucket, 
-    publicBucketIamBinding, 
-    datePulumiLastModified
+\t\tpublicBucket, 
+\t\tpublicBucketIamBinding, 
+\t\tdatePulumiLastModified
 }
 \`\`\`
 Just cosmetic changes here, done according to the pattern established above in the section regarding refactoring.
@@ -1108,34 +1106,34 @@ import * as gcp from "@pulumi/gcp"
 import vars from "../vars"
 
 const pulumiCircleCiService = new gcp.serviceaccount.Account("pulumiCircleCiService", {
-    accountId: "pulumi-circle-ci-service",
-    displayName: "pulumiCircleCiService",
+\t\taccountId: "pulumi-circle-ci-service",
+\t\tdisplayName: "pulumiCircleCiService",
 })
 
 const pulumiCircleCiServiceAccountKey = new gcp.serviceaccount.Key("pulumiCircleCiServiceAccountKey", {
-    serviceAccountId: pulumiCircleCiService.name,
+\t\tserviceAccountId: pulumiCircleCiService.name,
 })
 
 const serviceAccountRoles =[
-    {pulumiName: "cloudRunRole", role: "roles/run.admin"},
-    {pulumiName: "serviceAccountUser", role: "roles/iam.serviceAccountUser"},
+\t\t{pulumiName: "cloudRunRole", role: "roles/run.admin"},
+\t\t{pulumiName: "serviceAccountUser", role: "roles/iam.serviceAccountUser"},
 ]
 
 const pulumiCircleCiServiceAccountRoles = serviceAccountRoles.reduce((roleObj, {pulumiName, role}) => {
-    const roleToAdd = new gcp.projects.IAMMember(pulumiName, {
-        member: vars.serviceAccountMember,
-        project: vars.project, 
-        role
-    })
-    roleObj[pulumiName] = roleToAdd
+\t\tconst roleToAdd = new gcp.projects.IAMMember(pulumiName, {
+\t\t\tmember: vars.serviceAccountMember,
+\t\t\tproject: vars.project, 
+\t\t\trole
+\t\t})
+\t\troleObj[pulumiName] = roleToAdd
 
-    return roleObj
+\t\treturn roleObj
 }, {} as Record<string, gcp.projects.IAMMember>)
 
 export default {
-    pulumiCircleCiService, 
-    pulumiCircleCiServiceAccountKey,
-    pulumiCircleCiServiceAccountRoles
+\t\tpulumiCircleCiService, 
+\t\tpulumiCircleCiServiceAccountKey,
+\t\tpulumiCircleCiServiceAccountRoles
 }
 \`\`\`
 
@@ -1148,14 +1146,14 @@ import * as gcp from "@pulumi/gcp"
 import vars from "../vars"
 
 const resourceManager = new gcp.projects.Service("resourceManager", {
-    disableDependentServices: false,
-    disableOnDestroy: false,
-    project: vars.project,
-    service: "cloudresourcemanager.googleapis.com",
+\t\tdisableDependentServices: false,
+\t\tdisableOnDestroy: false,
+\t\tproject: vars.project,
+\t\tservice: "cloudresourcemanager.googleapis.com",
 })
 
 export default {
-    resourceManager
+\t\tresourceManager
 }
 \`\`\`
 This activates a Google Cloud api that needs to be active for you to activate a CloudRun service.
@@ -1172,49 +1170,49 @@ const {location} = vars
 const metadata = {namespace: vars.project}
 
 const mainSiteService = new gcp.cloudrun.Service("mainPersonalSite", {
-    name: "main-personal-site",
-    location,
-    metadata,
-    template: {
-        spec: {
-            containers: [{
-                image: \`docker.io/timmalstead/personal-site-placeholder:\${vars.latestPlaceholderSha}\`,
-            }],
-        },
-    },
-    traffics: [{
-        latestRevision: true,
-        percent: 100,
-    }],
+\t\tname: "main-personal-site",
+\t\tlocation,
+\t\tmetadata,
+\t\ttemplate: {
+\t\t\t\tspec: {
+\t\t\t\t\tcontainers: [{
+\t\t\t\t\t\timage: \`docker.io/timmalstead/personal-site-placeholder:\${vars.latestPlaceholderSha}\`,
+\t\t\t\t\t}],
+\t\t\t\t},
+\t\t},
+\t\ttraffics: [{
+\t\t\t\tlatestRevision: true,
+\t\t\t\tpercent: 100,
+\t\t}],
 })
 
 const noAuthIAMPolicy = gcp.organizations.getIAMPolicy({
-    bindings: [{
-        role: "roles/run.invoker",
-        members: ["allUsers"],
-    }],
+\t\tbindings: [{
+\t\t\t\trole: "roles/run.invoker",
+\t\t\t\tmembers: ["allUsers"],
+\t\t}],
 })
 
 const mainSiteNoAuthPolicy = new gcp.cloudrun.IamPolicy("mainSiteNoAuthPolicy", {
-    location: mainSiteService.location,
-    project: mainSiteService.project,
-    service: mainSiteService.name,
-    policyData: noAuthIAMPolicy.then(noauthIAMPolicy => noauthIAMPolicy.policyData),
+\t\tlocation: mainSiteService.location,
+\t\tproject: mainSiteService.project,
+\t\tservice: mainSiteService.name,
+\t\tpolicyData: noAuthIAMPolicy.then(noauthIAMPolicy => noauthIAMPolicy\t\tpolicyData),
 })
 
 const mainSiteDomainMapping = new gcp.cloudrun.DomainMapping("mainSiteDomainMapping", {
-    location,
-    metadata,
-    spec: {
-        routeName: mainSiteService.name,
-    },
-    name: \`www.\${vars.domain}\`,
+\t\tlocation,
+\t\tmetadata,
+\t\tspec: {
+\t\t\t\trouteName: mainSiteService.name,
+\t\t},
+\t\tname: \`www.\${vars.domain}\`,
 })
 
 export default {
-    mainSiteService, 
-    mainSiteNoAuthPolicy, 
-    mainSiteDomainMapping
+\t\tmainSiteService, 
+\t\tmainSiteNoAuthPolicy, 
+\t\tmainSiteDomainMapping
 }
 \`\`\`
 
@@ -1233,50 +1231,50 @@ There is only a small change needed for our Ci file. We will simply be exporting
 \`\`\`yaml
 version: 2.1
 orbs:
-  onepassword: onepassword/secrets@1.0.0
-  pulumi: pulumi/pulumi@2.1.0
+\t\tonepassword: onepassword/secrets@1.0.0
+\t\tpulumi: pulumi/pulumi@2.1.0
 jobs:
-  setup:
-    docker:
-      - image: node:20
-    resource_class: small
-    steps:
-      - checkout
-      - run: 
-          name: Install dependencies
-          command: npm ci --only=production
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
-  build_infra:
-    docker:
-      - image: node:20
-    resource_class: small
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - onepassword/install-cli:
-          version: 2.18.0
-      - onepassword/export:
-          var-name: GOOGLE_CREDENTIALS
-          secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
-      - onepassword/export:
-          var-name: LATEST_PLACEHOLDER_SHA
-          secret-reference: op://personal-site-gcp/latest_placeholder/sha
-      - pulumi/login:
-          access-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
-      - pulumi/update:
-          stack: timmalstead/personal-site-gcp-infra/prod
+\t\tsetup:
+\t\t\tdocker:
+\t\t\t\t- image: node:20
+\t\t\tresource_class: small
+\t\t\tsteps:
+\t\t\t\t- checkout
+\t\t\t\t- run: 
+\t\t\t\t\t\tname: Install dependencies
+\t\t\t\t\t\tcommand: npm ci --only=production
+\t\t\t\t- persist_to_workspace:
+\t\t\t\t\t\troot: ~/project
+\t\t\t\t\t\tpaths:
+\t\t\t\t\t\t\t- .
+\t\tbuild_infra:
+\t\t\tdocker:
+\t\t\t\t- image: node:20
+\t\t\tresource_class: small
+\t\t\tsteps:
+\t\t\t\t- attach_workspace:
+\t\t\t\t\t\tat: ~/project
+\t\t\t\t- onepassword/install-cli:
+\t\t\t\t\t\tversion: 2.18.0
+\t\t\t\t- onepassword/export:
+\t\t\t\t\t\tvar-name: GOOGLE_CREDENTIALS
+\t\t\t\t\t\tsecret-reference: op://personal-site-gcp/pulumiCircleCiService/key
+\t\t\t\t- onepassword/export:
+\t\t\t\t\t\tvar-name: LATEST_PLACEHOLDER_SHA
+\t\t\t\t\t\tsecret-reference: op://personal-site-gcp/latest_placeholder/sha
+\t\t\t\t- pulumi/login:
+\t\t\t\t\t\taccess-token: $(op read op://personal-site-gcp/pulumi/circle_ci_token)
+\t\t\t\t- pulumi/update:
+\t\t\t\t\t\tstack: timmalstead/personal-site-gcp-infra/prod
 workflows:
-  build:
-    jobs:
-      - setup
-      - build_infra:
-          requires:
-            - setup
-          context:
-            - personal_site
+\t\tbuild:
+\t\t\tjobs:
+\t\t\t\t- setup
+\t\t\t\t- build_infra:
+\t\t\t\t\t\trequires:
+\t\t\t\t\t\t\t- setup
+\t\t\t\t\t\tcontext:
+\t\t\t\t\t\t\t- personal_site
 \`\`\`
 
 After you’ve made all of those changes, go ahead and commit and push up to GitHub. After your pipeline runs, you should be able to see your new service at the \`www\` subdomain of the domain you registered! In my experience this should take less than an hour to be active.
@@ -1290,7 +1288,7 @@ Next time: [App up!](/blog/over-engineer-your-site-part-5)
                         },
                         {
                             name: "LastModified",
-                            lastModifiedDate: 1736987829980,
+                            lastModifiedDate: 1737840348930,
                         },
                     ],
                 },
