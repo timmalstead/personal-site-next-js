@@ -7,9 +7,13 @@ export type LinkProps = {
 } & NextLinkProps &
     AnchorHTMLAttributes<HTMLAnchorElement>
 
+const externalLinkPrefixes = ["http", "mailto"]
+
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     ({ children, inline, href, className, ...rest }, ref) => {
-        const isExternalLink = href.toString().startsWith("http")
+        const isExternalLink = externalLinkPrefixes.some((prefix) =>
+            href.toString().startsWith(prefix)
+        )
         const inlineClass = inline ? "inline" : ""
         return (
             <NextLink
@@ -17,6 +21,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
                 ref={ref}
                 target={isExternalLink ? "_blank" : "_self"}
                 className={`${className} ${inlineClass}`}
+                prefetch={false}
                 {...rest}
             >
                 {children}
