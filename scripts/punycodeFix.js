@@ -7,4 +7,10 @@
 // i include this script in the local dev and start scripts to limit spam, but do not include it in the dockerfile because of the prod error
 
 // i do the punycode subsittution in the build step, will it work in the prod build?
-require("module-alias").addAlias("punycode", "punycode/")
+
+// going to uninstall module-alias if I'm not going to be running this script in any meaningful way
+// require("module-alias").addAlias("punycode", "punycode/")
+
+console.log(
+    "if you're seeing this, the punycode fix script is running for some reason"
+)

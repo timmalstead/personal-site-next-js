@@ -4,7 +4,6 @@ const { resolve } = require("node:path")
 const serverOnlyPackages = [
     /@google-cloud\/firestore/,
     /@google-cloud\/storage/,
-    /module-alias/,
     /react-markdown/,
     /react-syntax-highlighter/,
     /sharp/,
