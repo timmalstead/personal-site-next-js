@@ -1,5 +1,5 @@
 "use client"
-import Copy from "./CopyIcon"
+import CopyIcon from "./CopyIcon"
 
 interface CopyButtonProps {
     id: string
@@ -14,7 +14,7 @@ const CopyButton = ({ id }: CopyButtonProps) => {
 
     return (
         <button onClick={copyId} title="Copy Heading Address">
-            <Copy />
+            <CopyIcon />
         </button>
     )
 }
