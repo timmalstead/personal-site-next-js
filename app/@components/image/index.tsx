@@ -7,7 +7,7 @@ export type ImageProps = NextImageProps & {
 }
 
 // unpacking name so it doesn't get passed to the NextImage component
-const Image = ({ src, inline, name: _name, ...rest }: ImageProps) => {
+const Image = async ({ src, inline, name: _name, ...rest }: ImageProps) => {
     // for static src imports
     if (typeof src !== "string")
         return (
@@ -18,7 +18,7 @@ const Image = ({ src, inline, name: _name, ...rest }: ImageProps) => {
             />
         )
     // for remote src
-    const imagePath = headers().get("X-Pagename")
+    const imagePath = (await headers()).get("X-Pagename")
     const [startOfSlice, endOfSlice] = [src.indexOf(":") + 1, src.indexOf(".")]
     const widthAndHeight = src.slice(startOfSlice, endOfSlice)?.split("-")
 

@@ -4,7 +4,7 @@ import { getContent } from "@data"
 
 export const dynamic = "force-dynamic"
 export const GET = async (request: NextRequest) => {
-    const pageName = headers().get("X-Pagename") as string
+    const pageName = (await headers()).get("X-Pagename") as string
     const firestoreData = await getContent<{
         title: string
         important: boolean

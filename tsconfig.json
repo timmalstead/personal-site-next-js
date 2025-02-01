@@ -25,7 +25,8 @@
             "@data/*": ["app/@data/*"],
             "@utils": ["app/@utils"],
             "@utils/*": ["app/@utils/*"]
-        }
+        },
+        "target": "ES2017"
     },
     "include": [
         "next-env.d.ts",

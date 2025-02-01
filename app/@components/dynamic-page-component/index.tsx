@@ -5,12 +5,12 @@ import Resolver from "../resolver"
 
 export const generateMetadata = async (): Promise<Metadata> => {
     // will return valid metadata as described in above Metadata interface
-    const dynamicPagePath = `${headers().get("X-Pagename")}`
+    const dynamicPagePath = `${(await headers()).get("X-Pagename")}`
     return await getSeoData(dynamicPagePath)
 }
 
-const DynamicPageComponent = () => {
-    const dynamicPagePath = headers().get("X-Pagename")
+const DynamicPageComponent = async () => {
+    const dynamicPagePath = (await headers()).get("X-Pagename")
     return (
         <main>
             <Resolver dataPath={dynamicPagePath} dataType="page" />

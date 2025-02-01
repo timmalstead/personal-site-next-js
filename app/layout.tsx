@@ -37,29 +37,29 @@ export const viewport: Viewport = {
     ],
 }
 
-const RootLayout = ({
+const RootLayout = async ({
     children,
 }: Readonly<{
     children: ReactNode
 }>) => {
-    const colorMode = getServerValue<ColorMode>({
+    const colorMode = await getServerValue<ColorMode>({
         cookieName: "colorMode",
         headerName: "Sec-CH-Prefers-Color-Scheme",
         defaultName: "dark",
     })
 
-    const reducedMotion = getServerValue<ReducedMotion>({
+    const reducedMotion = await getServerValue<ReducedMotion>({
         cookieName: "reducedMotion",
         headerName: "Sec-CH-Prefers-Reduced-Motion",
         defaultName: "no-preference",
     })
 
-    const browser = getServerValue<Browser>({
+    const browser = await getServerValue<Browser>({
         headerName: "X-Browser",
         defaultName: "chrome",
     })
 
-    const userSettingsStatus = getServerValue<SettingsDismiss>({
+    const userSettingsStatus = await getServerValue<SettingsDismiss>({
         cookieName: "userSettings",
         defaultName: "closed",
     })
