@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
     onepassword: onepassword/secrets@1.0.0
-    docker: circleci/docker@2.8.1
+    docker: circleci/docker@2.8.2
 jobs:
     testing:
         docker:
