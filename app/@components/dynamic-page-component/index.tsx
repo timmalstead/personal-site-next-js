@@ -1,6 +1,6 @@
 import { headers } from "next/headers"
 import type { Metadata } from "next"
-import { getSeoData } from "@data"
+import { getSeoData } from "@data/server"
 import Resolver from "../resolver"
 
 export const generateMetadata = async (): Promise<Metadata> => {

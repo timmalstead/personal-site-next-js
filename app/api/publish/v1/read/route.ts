@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getContent } from "@data"
+import { getContent } from "@data/server"
 import { sendError } from "@utils"
 
 // below is not strictly necessary, but it avoids an annoying prod build error
