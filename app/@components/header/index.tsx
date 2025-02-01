@@ -1,6 +1,6 @@
 import ClientHeader from "./ClientHeader"
-import { Link, Resolver as resolver } from "@components"
-import type { Browser /*, Route */ } from "@utils/server"
+import { Link, Resolver as resolver } from "@components/server"
+import type { Browser } from "@utils/server"
 
 interface HeaderProps {
     browser: Browser

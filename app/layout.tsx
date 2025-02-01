@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
+import { Noto_Sans } from "next/font/google"
 import { getServerValue } from "@utils/server"
 import type {
     ColorMode,
@@ -7,19 +8,20 @@ import type {
     Browser,
     SettingsDismiss,
 } from "@utils/server"
-import { Noto_Sans } from "next/font/google"
 import {
     Header,
     Footer,
+    TagManager,
+    CurrentVersion,
+    DevTools,
+} from "@components/server"
+import {
     UserSettings,
     ColorSwitcher,
     ReduceMotion,
     LayoutZoom,
     PinchZoom,
-    TagManager,
-    CurrentVersion,
-    DevTools,
-} from "@components"
+} from "@components/client"
 import "./layout.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })

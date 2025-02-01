@@ -4,12 +4,12 @@ import {
     type ImageProps,
     LastModified,
     type LastModifiedProps,
-    ReadPercentage,
     Link,
     type LinkProps,
     ObjectComponent,
     type ObjectComponentProps,
-} from "@components"
+} from "@components/server"
+import { ReadPercentage } from "@components/client"
 import { getContent } from "@data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
