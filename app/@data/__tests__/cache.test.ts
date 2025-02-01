@@ -3,7 +3,7 @@ import {
     clearCacheKey,
     getCache,
     setCache,
-} from "@data/server"
+} from "../memoryCache"
 
 const [testCacheKey, testData] = ["/test", { test: "data" }]
 

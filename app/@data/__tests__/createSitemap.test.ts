@@ -1,4 +1,4 @@
-import { createSitemap } from "@data/server"
+import { createSitemap } from "../createSitemap"
 
 let savedSitemap = ""
 jest.mock("../firestore", () => {
