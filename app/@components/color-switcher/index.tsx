@@ -1,5 +1,5 @@
 "use client"
-import { useA11yValue, type ColorMode } from "@utils"
+import { useA11yValue, type ColorMode } from "@utils/client"
 
 const colorToggleId = "color-switch-input"
 

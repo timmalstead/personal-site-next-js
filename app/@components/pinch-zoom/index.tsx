@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
-import { floatingPointToPercentage } from "@utils"
+import { floatingPointToPercentage } from "@utils/client"
 
 const PinchZoom = () => {
     const [zoom, setZoom] = useState<string | null>(null)

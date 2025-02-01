@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react"
-import { setCookie, type A11yKey } from "@utils"
+import { setCookie, type A11yKey } from "@utils/client"
 
 export const useA11yValue = <T>({
     initialValue,

@@ -1,11 +1,3 @@
-// Don't mix up client side and server side utils, or webpack errors may occur
-export {
-    isEven,
-    floatingPointToPercentage,
-    setCookie,
-    reportError,
-    sendError,
-} from "./helpers"
 export type {
     A11yKey,
     Route,
@@ -16,4 +8,6 @@ export type {
     CreateArgs,
     DestoryAndCreateResponse,
 } from "./sharedTypes"
+export { isEven, floatingPointToPercentage } from "./helpers"
+export { setCookie } from "./setCookie"
 export { useA11yValue } from "./useA11yValue"
