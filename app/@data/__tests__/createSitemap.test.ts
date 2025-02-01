@@ -1,3 +1,4 @@
+// purposefully using a relative import
 import { createSitemap } from "../createSitemap"
 
 let savedSitemap = ""
