@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "HOSTNAME='0.0.0.0' NODE_OPTIONS='--disable-warning=DEP0040 DEP0060' USE_TESTING_FIRESTORE=true ACTIVE_ENV=local PORT=8080 CURRENT_VERSION=$(git rev-parse --short HEAD) next dev",
-        "build": "NODE_OPTIONS='--disable-warning=DEP0040 DEP0060' next build",
+        "dev": "HOSTNAME='0.0.0.0' USE_TESTING_FIRESTORE=true ACTIVE_ENV=local PORT=8080 CURRENT_VERSION=$(git rev-parse --short HEAD) next dev",
+        "build": "NODE_OPTIONS='--disable-warning=DeprecationWarning' next build",
         "postbuild": "cp -r .next/static .next/standalone/.next",
-        "start": "HOSTNAME='0.0.0.0' NODE_OPTIONS='--disable-warning=DEP0040 DEP0060' PORT=8080 node .next/standalone/server.js",
+        "start": "HOSTNAME='0.0.0.0' NODE_OPTIONS='--disable-warning=DeprecationWarning' PORT=8080 node .next/standalone/server.js",
         "lint": "next lint",
         "type:check": "tsc --noEmit",
         "version:check": "node ./scripts/confirmNodeVersion",
