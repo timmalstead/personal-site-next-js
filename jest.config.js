@@ -1,3 +1,4 @@
+/** @type {import('jest').Config} */
 const jestConfig = {
     roots: ["<rootDir>/app"],
     transform: {

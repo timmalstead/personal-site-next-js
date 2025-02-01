@@ -22,7 +22,7 @@ import {
     LayoutZoom,
     PinchZoom,
 } from "@components/client"
-import "app/layout.css"
+import "./layout.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
 

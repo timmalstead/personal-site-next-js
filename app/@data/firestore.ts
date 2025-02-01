@@ -1,4 +1,4 @@
 import { Firestore } from "@google-cloud/firestore"
-import { credentials } from "@data/server"
+import { credentials } from "./credentials"
 
 export const firestoreDatabase = new Firestore(credentials)
