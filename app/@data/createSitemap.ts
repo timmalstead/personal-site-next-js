@@ -1,10 +1,9 @@
-import { firestoreDatabase } from "./firestore"
-import { cloudStorage } from "./cloudStorage"
 import type {
     DocumentData,
     CollectionReference,
     DocumentReference,
 } from "@google-cloud/firestore"
+import { firestoreDatabase, cloudStorage } from "@data/server"
 
 interface AssembledData {
     id: string

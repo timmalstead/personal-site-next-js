@@ -1,5 +1,5 @@
 import { test, expect, type Page, type Locator } from "@playwright/test"
-import { testUrl } from "../playwright.config"
+import { testUrl } from "playwright.config"
 
 const getRootHtmlClass = () => document.querySelector("html")?.classList.value
 

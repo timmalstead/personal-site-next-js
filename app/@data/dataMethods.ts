@@ -1,9 +1,13 @@
 import type { DocumentReference } from "@google-cloud/firestore"
 import type { Metadata } from "next"
 import { cache as requestCache } from "react"
-import { firestoreDatabase } from "./firestore"
-import { createSitemap } from "./createSitemap"
-import { getCache, setCache, clearCacheKey } from "./memoryCache"
+import {
+    getCache,
+    setCache,
+    clearCacheKey,
+    firestoreDatabase,
+    createSitemap,
+} from "@data/server"
 import {
     isEven,
     reportError,

@@ -1,4 +1,4 @@
-@import "./globals.css";
+@import "app/globals.css";
 @import "@components/header/header.css";
 @import "@components/footer/footer.css";
 @import "@components/user-settings/user-settings.css";
