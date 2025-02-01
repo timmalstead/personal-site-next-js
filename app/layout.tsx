@@ -42,27 +42,28 @@ const RootLayout = async ({
 }: Readonly<{
     children: ReactNode
 }>) => {
-    const colorMode = await getServerValue<ColorMode>({
-        cookieName: "colorMode",
-        headerName: "Sec-CH-Prefers-Color-Scheme",
-        defaultName: "dark",
-    })
+    const [colorMode, reducedMotion, browser, userSettingsStatus] =
+        await Promise.all([
+            getServerValue<ColorMode>({
+                cookieName: "colorMode",
+                headerName: "Sec-CH-Prefers-Color-Scheme",
+                defaultName: "dark",
+            }),
+            getServerValue<ReducedMotion>({
+                cookieName: "reducedMotion",
+                headerName: "Sec-CH-Prefers-Reduced-Motion",
+                defaultName: "no-preference",
+            }),
+            getServerValue<Browser>({
+                headerName: "X-Browser",
+                defaultName: "chrome",
+            }),
+            getServerValue<SettingsDismiss>({
+                cookieName: "userSettings",
+                defaultName: "closed",
+            }),
+        ])
 
-    const reducedMotion = await getServerValue<ReducedMotion>({
-        cookieName: "reducedMotion",
-        headerName: "Sec-CH-Prefers-Reduced-Motion",
-        defaultName: "no-preference",
-    })
-
-    const browser = await getServerValue<Browser>({
-        headerName: "X-Browser",
-        defaultName: "chrome",
-    })
-
-    const userSettingsStatus = await getServerValue<SettingsDismiss>({
-        cookieName: "userSettings",
-        defaultName: "closed",
-    })
     // it's a bummer, but the layout zoom only seems to work in Chrome
     // which is funny considering that I copied it from MDN
     const isChrome = browser === "chrome" || browser === "chromium"
