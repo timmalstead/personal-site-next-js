@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { Noto_Sans } from "next/font/google"
-import { getServerValue } from "@utils/server"
-import type {
-    ColorMode,
-    ReducedMotion,
-    Browser,
-    SettingsDismiss,
+import {
+    getServerValue,
+    type ColorMode,
+    type ReducedMotion,
+    type Browser,
+    type SettingsDismiss,
 } from "@utils/server"
 import {
     Header,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     description:
         "The website of Timothy Malstead, a software engineer and artist from the United States.",
     alternates: {
-        canonical: "https://timothymalstead.com",
+        canonical: "https://www.timothymalstead.com",
     },
 }
 
