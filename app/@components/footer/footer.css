@@ -1,5 +1,7 @@
 footer {
     --footer-height: 5rem;
+    --spacer-content: "|";
+    --spacer-margin: 0 0.5rem;
     font-size: var(--small-text-size);
     min-height: var(--footer-height);
     background: radial-gradient(
@@ -14,14 +16,26 @@ footer {
 
     nav {
         margin-bottom: 1rem;
+        display: flex;
 
         ul {
             display: flex;
             list-style: none;
 
+            &.logos {
+                li:first-of-type::before {
+                    content: var(--spacer-content);
+                    margin: var(--spacer-margin);
+                }
+            }
+
+            li {
+                display: inherit;
+            }
+
             li:not(:last-of-type)::after {
-                content: "|";
-                margin: 0 0.5rem;
+                content: var(--spacer-content);
+                margin: var(--spacer-margin);
             }
         }
     }
@@ -31,5 +45,19 @@ footer {
     footer {
         min-height: calc(var(--footer-height) * 2);
         padding: 1rem 5%;
+
+        nav {
+            flex-direction: column-reverse;
+
+            ul {
+                &.logos {
+                    margin-bottom: 0.6rem;
+                    li:first-of-type::before {
+                        content: none;
+                        margin: 0;
+                    }
+                }
+            }
+        }
     }
 }
