@@ -51,20 +51,24 @@ const Footer = async () => {
         <footer>
             {Boolean(footerLinks?.length || logos?.length) && (
                 <nav>
-                    <ul>
-                        {footerLinks?.map((link) => (
-                            <li key={link.key}>{link}</li>
-                        ))}
-                    </ul>
-                    <ul className="logos">
-                        {logos?.map(({ key, href, Logo, ...logoProps }) => (
-                            <li key={key} title={key}>
-                                <Link href={href}>
-                                    <Logo {...logoProps} />
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                    {Boolean(footerLinks?.length) && (
+                        <ul>
+                            {footerLinks?.map((link) => (
+                                <li key={link.key}>{link}</li>
+                            ))}
+                        </ul>
+                    )}
+                    {Boolean(logos?.length) && (
+                        <ul className="logos">
+                            {logos?.map(({ key, href, Logo, ...logoProps }) => (
+                                <li key={key} title={key}>
+                                    <Link href={href}>
+                                        <Logo {...logoProps} />
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </nav>
             )}
             <span>{copyRight}</span>
