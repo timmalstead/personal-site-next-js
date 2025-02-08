@@ -1,14 +1,32 @@
 version: 2.1
 orbs:
     onepassword: onepassword/secrets@1.0.0
+    snyk: snyk/snyk@2.2.0
     docker: circleci/docker@2.8.2
 jobs:
+    security_scan:
+        docker:
+            - image: cimg/base:current
+        resource_class: small
+        steps:
+            - checkout
+            - onepassword/install-cli:
+                  version: 2.18.0
+            - onepassword/export:
+                  var-name: SNYK_TOKEN
+                  secret-reference: op://personal-site-gcp/snyk/auth_token
+            - snyk/scan
+            - persist_to_workspace:
+                  root: ~/project
+                  paths:
+                      - .
     testing:
         docker:
             - image: mcr.microsoft.com/playwright:v1.50.0-noble
         resource_class: medium
         steps:
-            - checkout
+            - attach_workspace:
+                  at: ~/project
             - run:
                   name: Install dependencies
                   command: npm ci
@@ -60,11 +78,12 @@ jobs:
 workflows:
     build:
         jobs:
+            - security_scan:
+                  context:
+                      - personal_site
             - testing:
-                  filters:
-                      branches:
-                          only:
-                              - main
+                  requires:
+                      - security_scan
             - build_next_js:
                   requires:
                       - testing
