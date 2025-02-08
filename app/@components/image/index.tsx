@@ -43,7 +43,7 @@ const Image = async ({ src, inline, name: _name, ...rest }: ImageProps) => {
 
     const shouldUseConditionalClasses = !hasWidthAndHeight || inline
     const conditionalClasses = {
-        className: `${!hasWidthAndHeight && "fill-override"} ${inline && "inline"}`,
+        className: `${!hasWidthAndHeight ? "fill-override" : ""} ${inline ? "inline" : ""}`,
     }
     return (
         <NextImage
