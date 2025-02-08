@@ -58,23 +58,31 @@ jobs:
             - onepassword/export:
                   var-name: DOCKER_PASSWORD
                   secret-reference: op://personal-site-gcp/pulumiCircleCiService/key
+            - onepassword/export:
+                  var-name: SNYK_TOKEN
+                  secret-reference: op://personal-site-gcp/snyk/auth_token
             - setup_remote_docker
             - docker/check:
                   registry: $REGISTRY
             - docker/build:
                   image: $REGISTRY/$IMAGE
-            - docker/push:
-                  registry: $REGISTRY
-                  image: $IMAGE
-            - run:
-                  name: Persist latest build sha for preview
-                  command: op item edit application_shas next-preview=$CIRCLE_SHA1
-            - run:
-                  name: Trigger infra build pipeline
-                  command: |
-                      curl --request POST \
-                        --url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \
-                        --header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
+            - snyk/scan:
+                  fail-on-issues: true
+                  monitor-on-build: true
+                  docker-image-name: $REGISTRY/$IMAGE:$CIRCLE_SHA1
+                  target-file: "Dockerfile"
+            # - docker/push:
+            #       registry: $REGISTRY
+            #       image: $IMAGE
+            # - run:
+            #       name: Persist latest build sha for preview
+            #       command: op item edit application_shas next-preview=$CIRCLE_SHA1
+            # - run:
+            #       name: Trigger infra build pipeline
+            #       command: |
+            #           curl --request POST \
+            #             --url "https://circleci.com/api/v2/project/gh/timmalstead/personal-site-gcp-infra/pipeline" \
+            #             --header "Circle-Token: $(op read op://personal-site-gcp/circle-ci-api-use/token)"
 workflows:
     build:
         jobs:
