@@ -94,6 +94,10 @@ workflows:
                   requires:
                       - security_scan
             - build_next_js:
+                  filters:
+                      branches:
+                          only:
+                              - main
                   requires:
                       - testing
                   context:
