@@ -1,4 +1,9 @@
 FROM node:22.13.1-alpine3.21 AS base
+# upgrading openssl manually to fix CVE-2024-13176
+# command taken from https://github.com/gliderlabs/docker-alpine/issues/466#issuecomment-447308493
+RUN apk upgrade --update-cache --available && \
+    apk add openssl && \
+    rm -rf /var/cache/apk/*
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -22,7 +27,7 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -41,9 +46,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 USER nextjs
 
 EXPOSE 8080
-ENV PORT 8080
+
+# need to set the env vars this way so I can run the CMD in a JSON array
+ENV PORT=8080
+ENV HOSTNAME=0.0.0.0
+# couldn't figure out how to target multiple specific deprecation warnings, so I'm disabling all of them in prod
+ENV NODE_OPTIONS=--disable-warning=DeprecationWarning
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-# couldn't figure out how to target multiple specific deprecation warnings, so I'm disabling all of them in prod
-CMD HOSTNAME="0.0.0.0" NODE_OPTIONS='--disable-warning=DeprecationWarning' node server.js
+CMD ["node", "server.js"]

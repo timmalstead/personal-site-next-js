@@ -67,7 +67,6 @@ jobs:
             - docker/build:
                   image: $REGISTRY/$IMAGE
             - snyk/scan:
-                  # Will change fail-on-issues to true when CVE-2024-13176 is fixed: https://www.cve.org/CVERecord?id=CVE-2024-13176
                   fail-on-issues: false
                   monitor-on-build: true
                   docker-image-name: $REGISTRY/$IMAGE:$CIRCLE_SHA1
