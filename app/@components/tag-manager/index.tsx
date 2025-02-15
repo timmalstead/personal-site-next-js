@@ -10,6 +10,7 @@ const TagManager = () =>
         <>
             <Script
                 async
+                id="tag-manager"
                 src={`https://www.googletagmanager.com/gtag/js?id=${gTagID}`}
                 strategy="afterInteractive"
             />

@@ -402,3 +402,16 @@ test("should properly render the date when the content was last modified", async
 
     await page.close()
 })
+
+test("should NOT load tag manager scripts in development", async ({ page }) => {
+    await page.goto("/")
+    const scriptLocators = ["script#tag-manager", "script#gtag"]
+
+    const scriptAssertions = scriptLocators.map(async (locator) => {
+        const script = page.locator(locator)
+        await expect(script).not.toBeAttached()
+    })
+
+    await Promise.all(scriptAssertions)
+    await page.close()
+})
