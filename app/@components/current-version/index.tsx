@@ -4,7 +4,10 @@ const CurrentVersion = () =>
     currentVersion ? (
         <li>
             <label>version</label>
-            <span style={{ cursor: "text", userSelect: "text" }}>
+            <span
+                id="current-version"
+                style={{ cursor: "text", userSelect: "text" }}
+            >
                 {currentVersion}
             </span>
         </li>

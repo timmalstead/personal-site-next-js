@@ -3,6 +3,11 @@ import { testUrl } from "playwright.config"
 
 const getRootHtmlClass = () => document.querySelector("html")?.classList.value
 
+const clickSettings = async (page: Page): Promise<void> => {
+    const settings = page.getByText("settings")
+    await settings.click()
+}
+
 test("Header should be sticky when scrolling up, but not down", async ({
     page,
     browserName,
@@ -30,8 +35,7 @@ test.describe("Color themes", () => {
         )
 
     const findColorSwitcher = async (page: Page): Promise<Locator> => {
-        const settings = page.getByText("settings")
-        await settings.click()
+        await clickSettings(page)
 
         const colorSwitcher = page.getByText(/theme/)
         return colorSwitcher
@@ -178,8 +182,7 @@ test.describe("Color themes", () => {
 test.describe("Reduced motion", () => {
     const [noMotion, motion] = ["reduce", "no-preference"]
     const findReduceMotionSwitcher = async (page: Page): Promise<Locator> => {
-        const settings = page.getByText("settings")
-        await settings.click()
+        await clickSettings(page)
 
         const reduceMotionSwitcher = page.getByText(/motion/)
         return reduceMotionSwitcher
@@ -370,8 +373,7 @@ test("displays zoom pinch percentage accurately", async ({
     }
 
     await page.goto("/")
-    const settings = page.getByText("settings")
-    await settings.click()
+    await clickSettings(page)
 
     const pinchZoomPercentage = page.getByTestId("pinch-zoom-percentage")
 
@@ -413,5 +415,25 @@ test("should NOT load tag manager scripts in development", async ({ page }) => {
     })
 
     await Promise.all(scriptAssertions)
+    await page.close()
+})
+
+test("should load current git sha in lower envs", async ({ page }) => {
+    await page.goto("/")
+
+    const openSettings = page.getByText("↔")
+    await openSettings.click()
+
+    await clickSettings(page)
+
+    const versionLabel = page.getByText("version")
+    await expect(versionLabel).toBeAttached()
+
+    const versionText = page.locator("span#current-version")
+    await expect(versionText).toBeAttached()
+
+    // check to make sure the text is short git sha
+    expect(await versionText.innerText()).toHaveLength(7)
+
     await page.close()
 })
