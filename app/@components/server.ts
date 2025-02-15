@@ -1,4 +1,4 @@
-export { default as Footer } from "./footer"
+export { default as Footer, sharedFooterLogoProps } from "./footer"
 export { default as Header } from "./header"
 export { default as Markdown } from "./markdown"
 export { default as Heading } from "./heading"

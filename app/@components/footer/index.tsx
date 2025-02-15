@@ -16,26 +16,26 @@ type LogoLinkProps = {
 
 const copyRight = `© 2019 - ${new Date().getFullYear()} by Timothy Malstead - All Rights Reserved`
 
-const sharedProps: LogoProps = {
+export const sharedFooterLogoProps: LogoProps = {
     width: "20",
     height: "20",
     fill: "var(--text-color)",
 }
 const logos: LogoLinkProps[] = [
     {
-        ...sharedProps,
+        ...sharedFooterLogoProps,
         key: "Email",
         href: "mailto:timmalstead@gmail.com",
         Logo: (props) => <EmailLogo {...props} />,
     },
     {
-        ...sharedProps,
+        ...sharedFooterLogoProps,
         key: "Mastodon",
         href: "https://mastodon.social/@timothymalstead",
         Logo: (props) => <MastodonLogo {...props} />,
     },
     {
-        ...sharedProps,
+        ...sharedFooterLogoProps,
         key: "Bluesky",
         href: "https://bsky.app/profile/timmalstead.bsky.social",
         Logo: (props) => <BlueskyLogo {...props} />,
