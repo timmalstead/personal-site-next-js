@@ -1,5 +1,5 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark as darkTheme } from "react-syntax-highlighter/dist/esm/styles/prism"
+import darkTheme from "react-syntax-highlighter/dist/esm/styles/prism/one-dark"
 
 // TODO: write tests and improve typing
 // @ts-ignore
