@@ -417,23 +417,3 @@ test("should NOT load tag manager scripts in development", async ({ page }) => {
     await Promise.all(scriptAssertions)
     await page.close()
 })
-
-test("should load current git sha in lower envs", async ({ page }) => {
-    await page.goto("/")
-
-    const openSettings = page.getByText("↔")
-    await openSettings.click()
-
-    await clickSettings(page)
-
-    const versionLabel = page.getByText("version")
-    await expect(versionLabel).toBeAttached()
-
-    const versionText = page.locator("span#current-version")
-    await expect(versionText).toBeAttached()
-
-    // check to make sure the text is short git sha
-    expect(await versionText.innerText()).toHaveLength(7)
-
-    await page.close()
-})

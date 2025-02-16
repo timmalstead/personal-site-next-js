@@ -7,6 +7,6 @@ interface DevToolsProps {
 const shouldLoadDevTools = process.env?.ACTIVE_ENV !== "prod"
 
 const DevTools = ({ children }: DevToolsProps) =>
-    shouldLoadDevTools ? <>{children}</> : <></>
+    shouldLoadDevTools ? <div id="dev-tools">{children}</div> : <></>
 
 export default DevTools
