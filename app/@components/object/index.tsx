@@ -1,10 +1,15 @@
 import { forwardRef, type ObjectHTMLAttributes } from "react"
 import Permission, { type PermissionProps } from "./Permission"
 
-export type ObjectComponentProps = ObjectHTMLAttributes<HTMLObjectElement> &
+type ObjectProps = ObjectHTMLAttributes<HTMLObjectElement>
+export type ObjectComponentProps = ObjectProps &
     PermissionProps & {
         permissionRequired?: boolean
     }
+type ForwardedPermissionProps = Omit<
+    ObjectComponentProps,
+    "permissionMessage" | "permissionAlt"
+>
 
 const ObjectComponent = forwardRef<HTMLObjectElement, ObjectComponentProps>(
     (
@@ -13,14 +18,16 @@ const ObjectComponent = forwardRef<HTMLObjectElement, ObjectComponentProps>(
     ) => {
         const Wrapper =
             permissionRequired && permissionMessage
-                ? (props: any) => (
+                ? (props: ForwardedPermissionProps) => (
                       <Permission
                           permissionMessage={permissionMessage}
                           permissionAlt={permissionAlt}
                           {...props}
                       />
                   )
-                : (props: any) => <div className="object-wrapper" {...props} />
+                : (props: ObjectProps) => (
+                      <div className="object-wrapper" {...props} />
+                  )
 
         return (
             <Wrapper>

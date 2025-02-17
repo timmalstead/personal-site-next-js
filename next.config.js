@@ -25,7 +25,8 @@ const nextConfig = {
             }, {}),
         }
 
-        if (!isServer)
+        const isClient = !isServer
+        if (isClient)
             serverOnlyPackages.forEach((serverPackage) => {
                 config.module.rules.push({
                     test: serverPackage,
@@ -34,7 +35,7 @@ const nextConfig = {
             })
 
         if (isServer && useTestingFirestore) {
-            console.log("Using testing Firestore")
+            console.info("Using testing Firestore")
             config.resolve.alias = {
                 ...config.resolve.alias,
                 "@google-cloud/firestore": resolve(
