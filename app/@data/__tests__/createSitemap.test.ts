@@ -1,7 +1,7 @@
 import { createSitemap } from "@data/server"
 
 let savedSitemap = ""
-jest.mock("../firestore", () => {
+jest.mock("@data/firestore", () => {
     const firestoreMock = class {
         mockActiveData = [
             { id: "home" },
@@ -68,7 +68,7 @@ jest.mock("../firestore", () => {
         firestoreDatabase: new firestoreMock(),
     }
 })
-jest.mock("../cloudStorage", () => {
+jest.mock("@data/cloudStorage", () => {
     const cloudStorageMock = class {
         public bucket() {
             return this
