@@ -1,5 +1,6 @@
 // had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
 const { resolve } = require("node:path")
+const { aliasedDirectories } = require("./aliasedDirectories")
 
 const serverOnlyPackages = [
     /@google-cloud\/firestore/,
@@ -10,7 +11,6 @@ const serverOnlyPackages = [
     /lorem-ipsum/,
 ]
 
-const aliasedDirectories = ["@components", "@data", "@utils"]
 const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
 
 /** @type {import('next').NextConfig} */

@@ -1,5 +1,4 @@
-// purposefully using a relative import
-import { createSitemap } from "../createSitemap"
+import { createSitemap } from "@data/server"
 
 let savedSitemap = ""
 jest.mock("../firestore", () => {

@@ -1,10 +1,9 @@
-// purposefully using a relative import
 import {
     FIFTEEN_MINUTES_IN_MS,
     clearCacheKey,
     getCache,
     setCache,
-} from "../memoryCache"
+} from "@data/server"
 
 const [testCacheKey, testData] = ["/test", { test: "data" }]
 
