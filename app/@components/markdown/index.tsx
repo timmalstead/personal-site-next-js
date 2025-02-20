@@ -30,7 +30,6 @@ const componentsConfig: MarkdownOptions["components"] = {
     ul: ({ children }) => (
         <ul style={{ padding: "0 4rem", marginBottom: "2rem" }}>{children}</ul>
     ),
-    // TODO: improve typing for this component, remember to bring in syntax highlighter props as well
     code: ({ node, ...rest }) => <Code {...rest} />,
 }
 
