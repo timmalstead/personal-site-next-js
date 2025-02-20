@@ -1,5 +1,4 @@
 import { Storage } from "@google-cloud/storage"
-// purposefully using a relative import
-import { credentials } from "./credentials"
+import { credentials } from "@data/server"
 
 export const cloudStorage = new Storage(credentials)

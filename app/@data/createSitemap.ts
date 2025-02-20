@@ -3,9 +3,7 @@ import type {
     CollectionReference,
     DocumentReference,
 } from "@google-cloud/firestore"
-// purposefully using relative imports
-import { firestoreDatabase } from "./firestore"
-import { cloudStorage } from "./cloudStorage"
+import { firestoreDatabase, cloudStorage } from "@data/server"
 
 interface AssembledData {
     id: string

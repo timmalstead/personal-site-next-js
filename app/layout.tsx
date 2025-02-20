@@ -22,7 +22,6 @@ import {
     LayoutZoom,
     PinchZoom,
 } from "@components/client"
-// purposefully using a relative import
 import "./layout.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })
