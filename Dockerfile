@@ -1,9 +1,4 @@
 FROM node:22.14.0-alpine3.21 AS base
-# upgrading openssl manually to fix CVE-2024-13176
-# command taken from https://github.com/gliderlabs/docker-alpine/issues/466#issuecomment-447308493
-RUN apk upgrade --update-cache --available && \
-    apk add openssl && \
-    rm -rf /var/cache/apk/*
 
 # Install dependencies only when needed
 FROM base AS deps
