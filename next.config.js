@@ -1,5 +1,5 @@
 // had to change this from an mjs file to a js file to use the __dirname variable, it seems to like the commonjs syntax better
-const { resolve } = require("node:path")
+const { join } = require("node:path")
 const { aliasedDirectories } = require("./aliasedDirectories")
 
 const serverOnlyPackages = [
@@ -20,7 +20,7 @@ const nextConfig = {
         config.resolve.alias = {
             ...config.resolve.alias,
             ...aliasedDirectories.reduce((acc, dir) => {
-                acc[dir] = resolve(__dirname, `app/${dir}`)
+                acc[dir] = join(__dirname, "app", dir)
                 return acc
             }, {}),
         }
@@ -38,9 +38,11 @@ const nextConfig = {
             console.info("Using testing Firestore")
             config.resolve.alias = {
                 ...config.resolve.alias,
-                "@google-cloud/firestore": resolve(
+                "@google-cloud/firestore": join(
                     __dirname,
-                    "app/@data/firestoreMock"
+                    "app",
+                    "@data",
+                    "firestoreMock"
                 ),
             }
         }
