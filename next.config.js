@@ -2,6 +2,13 @@
 const { join } = require("node:path")
 const { aliasedDirectories } = require("./aliasedDirectories")
 
+const resolvedAlaisedDirectories = aliasedDirectories.reduce((acc, dir) => {
+    acc[dir] = join(__dirname, "app", dir)
+    return acc
+}, {})
+
+const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
+
 const serverOnlyPackages = [
     /@google-cloud\/firestore/,
     /@google-cloud\/storage/,
@@ -9,9 +16,10 @@ const serverOnlyPackages = [
     /react-syntax-highlighter/,
     /sharp/,
     /lorem-ipsum/,
-]
-
-const useTestingFirestore = process.env?.USE_TESTING_FIRESTORE === "true"
+].map((serverPackage) => ({
+    test: serverPackage,
+    use: "null-loader",
+}))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,34 +27,49 @@ const nextConfig = {
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
             ...config.resolve.alias,
-            ...aliasedDirectories.reduce((acc, dir) => {
-                acc[dir] = join(__dirname, "app", dir)
-                return acc
-            }, {}),
+            ...resolvedAlaisedDirectories,
         }
 
         const isClient = !isServer
         if (isClient)
-            serverOnlyPackages.forEach((serverPackage) => {
-                config.module.rules.push({
-                    test: serverPackage,
-                    use: "null-loader",
-                })
-            })
+            config.module.rules = [
+                ...config.module.rules,
+                ...serverOnlyPackages,
+            ]
 
-        if (isServer && useTestingFirestore) {
+        if (isServer) {
             console.info("Using testing Firestore")
             config.resolve.alias = {
                 ...config.resolve.alias,
-                "@google-cloud/firestore": join(
-                    __dirname,
-                    "app",
-                    "@data",
-                    "firestoreMock"
-                ),
+                ...(useTestingFirestore && {
+                    "@google-cloud/firestore": join(
+                        __dirname,
+                        "app",
+                        "@data",
+                        "firestoreMock"
+                    ),
+                }),
             }
         }
         return config
+    },
+    experimental: {
+        turbo: {
+            // I'm not sure I'm feeling turbo until they can differentiate between the server and client
+            // Also don't love that I can't use a __dirname variable for an alias
+            // to turn turbo on, add a --turbopack flag to the next dev command
+            resolveAlias: {
+                ...resolvedAlaisedDirectories,
+                ...(useTestingFirestore && {
+                    "@google-cloud/firestore": join(
+                        ".",
+                        "app",
+                        "@data",
+                        "firestoreMock"
+                    ),
+                }),
+            },
+        },
     },
     rewrites: async () => [
         {
