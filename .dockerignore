@@ -5,5 +5,9 @@ node_modules/
 e2e/
 scripts/
 
+<!-- exception for the start shell script -->
+
+!scripts/start.sh
+
 README.md
 playwright.config.ts
