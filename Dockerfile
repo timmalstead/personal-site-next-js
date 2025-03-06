@@ -22,23 +22,11 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-RUN addgroup --gid 1001 nodejs
-# Don't want to run as a system user, so I can log into the container
-RUN adduser --ingroup nodejs --disabled-password nextjs 
+ENV NODE_ENV=production
 
-# Taken from https://tailscale.com/kb/1108/cloudrun
-# Copy the tailscale binaries
-COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscaled /app/tailscaled
-COPY --from=docker.io/tailscale/tailscale:stable /usr/local/bin/tailscale /app/tailscale
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Do we need the ca-certificates like in the demo? I don't think so
-
-# Need to set the correct permissions, or the tailscaled daemon setup will fail
-RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
-RUN chown nextjs:nodejs /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
-
-# Copying the start script which includes tailscale setup
-COPY --from=builder /app/scripts/start.sh ./
 COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
@@ -48,13 +36,18 @@ RUN chown nextjs:nodejs .next
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-
-# give full app folder access to nextjs user
-RUN chown nextjs:nodejs -R /app
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 8080
 
-# Run the start script to start tailscale and the nextjs app, env vars are passed into the running process
-CMD ["sh", "start.sh"]
+# need to set the env vars this way so I can run the CMD in a JSON array
+ENV PORT=8080
+ENV HOSTNAME=0.0.0.0
+# couldn't figure out how to target multiple specific deprecation warnings, so I'm disabling all of them in prod
+ENV NODE_OPTIONS=--disable-warning=DeprecationWarning
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD ["node", "server.js"]

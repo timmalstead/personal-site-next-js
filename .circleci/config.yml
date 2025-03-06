@@ -15,8 +15,7 @@ jobs:
             - onepassword/export:
                   var-name: SNYK_TOKEN
                   secret-reference: op://personal-site-gcp/snyk/auth_token
-            - snyk/scan:
-                  fail-on-issues: false
+            - snyk/scan
             - persist_to_workspace:
                   root: ~/project
                   paths:
