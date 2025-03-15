@@ -14,6 +14,7 @@ import {
     TagManager,
     CurrentVersion,
     DevTools,
+    Verification,
 } from "@components/server"
 import {
     UserSettings,
@@ -91,11 +92,7 @@ const RootLayout = async ({
                 </UserSettings>
                 <Footer />
                 <TagManager />
-                <a
-                    rel="me"
-                    href="https://mastodon.social/@timothymalstead"
-                    style={{ display: "none" }}
-                />
+                <Verification />
             </body>
         </html>
     )
