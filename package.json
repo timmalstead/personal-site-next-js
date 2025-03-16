@@ -23,8 +23,10 @@
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
     "dependencies": {
+        "@atproto/api": "^0.14.9",
         "@google-cloud/firestore": "^7.11.0",
         "@google-cloud/storage": "^7.15.1",
+        "masto": "^6.10.3",
         "next": "15.1.7",
         "react": "19.0.0",
         "react-dom": "19.0.0",

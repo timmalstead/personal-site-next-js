@@ -15,6 +15,8 @@ const serverOnlyPackages = [
     /react-markdown/,
     /react-syntax-highlighter/,
     /sharp/,
+    /masto/,
+    /@atproto\/api/,
     /lorem-ipsum/,
 ].map((serverPackage) => ({
     test: serverPackage,
