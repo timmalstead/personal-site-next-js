@@ -25,12 +25,12 @@
     "dependencies": {
         "@atproto/api": "^0.14.9",
         "@google-cloud/firestore": "^7.11.0",
-        "@google-cloud/storage": "^7.15.1",
+        "@google-cloud/storage": "^7.15.2",
         "masto": "^6.10.3",
         "next": "15.1.7",
         "react": "19.0.0",
         "react-dom": "19.0.0",
-        "react-markdown": "^9.0.3",
+        "react-markdown": "^9.1.0",
         "react-syntax-highlighter": "^15.6.1",
         "sharp": "^0.33.5"
     },
