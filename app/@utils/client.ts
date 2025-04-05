@@ -8,6 +8,6 @@ export type {
     CreateArgs,
     DestoryAndCreateResponse,
 } from "./sharedTypes"
-export { isEven, floatingPointToPercentage } from "./helpers"
+export { isEven, floatingPointToPercentage, isEmptyObject } from "./helpers"
 export { setCookie } from "./setCookie"
 export { useA11yValue } from "./useA11yValue"

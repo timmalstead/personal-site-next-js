@@ -8,11 +8,13 @@ import {
     type LinkProps,
     ObjectComponent,
     type ObjectComponentProps,
+    Attribution,
 } from "@components/server"
 import { ReadPercentage } from "@components/client"
 import { getContent } from "@data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, type ReactNode } from "react"
+import { isEmptyObject } from "@utils/server"
 
 interface ResolverProps {
     dataPath: string | null
@@ -22,7 +24,13 @@ interface ResolverProps {
 type PossibleContent<T> = T | undefined
 
 type ComponentNames = Lowercase<
-    "Markdown" | "Image" | "LastModified" | "Array" | "Link" | "Object"
+    | "Markdown"
+    | "Image"
+    | "LastModified"
+    | "Array"
+    | "Link"
+    | "Object"
+    | "Attribution"
 >
 
 type ComponentMap = {
@@ -71,6 +79,7 @@ const componentMap: ComponentMap = {
         ),
     object: ({ data, type, ...rest }) =>
         data && type && <ObjectComponent data={data} type={type} {...rest} />,
+    attribution: () => <Attribution />,
 }
 
 const noContentErrorMessage = "No content found"
@@ -90,15 +99,21 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
         if (content === undefined) throw new Error(noContentErrorMessage)
         if (content instanceof Error) throw content
 
-        return (content as ComponentMapEntry).components?.map(
-            ({ useReadPercentage, ...props }, i) => {
+        return (content as ComponentMapEntry).components?.reduce(
+            (acc, props, i) => {
+                if (isEmptyObject(props)) return acc
+                const { useReadPercentage, ...spreadProps } = props
                 const Wrapper = useReadPercentage ? ReadPercentage : Fragment
-                return (
+
+                acc.push(
                     <Wrapper key={`${props?.name}-${i}`}>
-                        {renderComponentMapEntry(componentMap, props)}
+                        {renderComponentMapEntry(componentMap, spreadProps)}
                     </Wrapper>
                 )
-            }
+
+                return acc
+            },
+            [] as ReactNode[]
         )
     } catch (error) {
         const convertedError = error as Error
