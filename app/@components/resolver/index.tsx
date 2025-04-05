@@ -13,7 +13,7 @@ import {
 import { ReadPercentage } from "@components/client"
 import { getContent } from "@data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
-import { Fragment, type ReactNode } from "react"
+import { Fragment, JSX, type ReactNode } from "react"
 import { isEmptyObject } from "@utils/server"
 
 interface ResolverProps {
@@ -113,7 +113,7 @@ const Resolver = async ({ dataPath, dataType }: ResolverProps) => {
 
                 return acc
             },
-            [] as ReactNode[]
+            [] as JSX.Element[]
         )
     } catch (error) {
         const convertedError = error as Error
