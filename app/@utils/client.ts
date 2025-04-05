@@ -11,3 +11,4 @@ export type {
 export { isEven, floatingPointToPercentage, isEmptyObject } from "./helpers"
 export { setCookie } from "./setCookie"
 export { useA11yValue } from "./useA11yValue"
+export { useReadingTime } from "./useReadingTime"
