@@ -9,6 +9,7 @@ import {
     ObjectComponent,
     type ObjectComponentProps,
     Attribution,
+    type AttributionProps,
 } from "@components/server"
 import { ReadPercentage } from "@components/client"
 import { getContent } from "@data/server"
@@ -45,7 +46,8 @@ type ComponentMapEntry = {
 } & ImageProps &
     LastModifiedProps &
     LinkProps &
-    ObjectComponentProps
+    ObjectComponentProps &
+    AttributionProps
 
 const renderComponentMapEntry = (
     componentMap: ComponentMap,
@@ -79,7 +81,7 @@ const componentMap: ComponentMap = {
         ),
     object: ({ data, type, ...rest }) =>
         data && type && <ObjectComponent data={data} type={type} {...rest} />,
-    attribution: () => <Attribution />,
+    attribution: ({ readingTime }) => <Attribution readingTime={readingTime} />,
 }
 
 const noContentErrorMessage = "No content found"
