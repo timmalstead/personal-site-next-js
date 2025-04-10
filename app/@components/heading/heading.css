@@ -5,9 +5,7 @@ div.heading-component {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
-    border-bottom: var(--text-separator-border);
-    border-image: var(--text-separator-border-image);
+    margin-bottom: 0.5rem;
 
     h1,
     h2,

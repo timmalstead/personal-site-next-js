@@ -197,6 +197,15 @@ Thank you for taking the time to visit, I hope you find something here that you 
                             name: "Markdown",
                             text: `              
 # How to Over-Engineer Your Personal Site
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 4,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
 ## Part One: The Why Of It
 A personal website.
 
@@ -272,6 +281,15 @@ Next time: [Tools](/blog/over-engineer-your-site-part-2)
                             name: "Markdown",
                             text: `              
 # How to Over-Engineer Your Personal Site
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 5,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `              
 ## Part Two: Tools
 The tools to be used in my website redesign will include:
 
@@ -370,6 +388,15 @@ Next time: [Head in the clouds](/blog/over-engineer-your-site-part-3)
                             name: "Markdown",
                             text: `
 # How to Over-Engineer Your Personal Site
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 18,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
 ## Part Three: Head in the Clouds
 
 Now that we better understand the scope of the project, and the tools that we will use: we can create the underlying infrastructure with which to run it.
@@ -737,6 +764,15 @@ Next time: [Danger is spelled: DNS!](/blog/over-engineer-your-site-part-4)
                             name: "Markdown",
                             text: `
 # How to Over-Engineer Your Personal Site
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 20,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
 ## Part Four: At Your (Web) Service
 
 In this article, we will create a placeholder web site in a container, and adjust our existing infrastructure to deploy it as a web service available to the public.`,
@@ -1315,6 +1351,15 @@ Next time: [App up!](/blog/over-engineer-your-site-part-5)
                             name: "Markdown",
                             text: `
 # How to Over-Engineer Your Personal Site
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 8,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
 ## Part Five: An Appetizing App
 
 Now that we have our infra for Cloud Run set up, we will go ahead and start on the app for our homepage!

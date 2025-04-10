@@ -28,7 +28,9 @@ const componentsConfig: MarkdownOptions["components"] = {
     img: ({ src, alt, title }) =>
         src && <Image src={src} alt={alt || ""} title={title} />,
     ul: ({ children }) => (
-        <ul style={{ padding: "0 4rem", marginBottom: "2rem" }}>{children}</ul>
+        <ul style={{ padding: "0 4rem", marginBottom: "1.5rem" }}>
+            {children}
+        </ul>
     ),
     code: ({ node, ...rest }) => <Code {...rest} />,
 }
