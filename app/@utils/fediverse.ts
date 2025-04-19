@@ -1,5 +1,9 @@
 import { createRestAPIClient as createMastodonAgent } from "masto"
-import { AtpAgent as BlueSkyAgent, type AppBskyFeedPost } from "@atproto/api"
+import {
+    AtpAgent as BlueSkyAgent,
+    RichText,
+    type AppBskyFeedPost,
+} from "@atproto/api"
 
 type MastodonStatusCreateArgs = Parameters<
     ReturnType<typeof createMastodonAgent>["v1"]["statuses"]["create"]
@@ -36,8 +40,12 @@ export const postOnBluesky = async ({
         password: process.env.BLUESKY_TOKEN,
     })
 
+    const richText = new RichText({ text: status })
+    await richText.detectFacets(blueSky)
+
     return await blueSky.post({
-        text: status,
+        text: richText.text,
+        facets: richText.facets,
         ...blueSkyArgs,
     })
 }
