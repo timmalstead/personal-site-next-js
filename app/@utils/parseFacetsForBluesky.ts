@@ -83,11 +83,6 @@ export const parseFacetsForBluesky = async (
                 const { richTextType, featureAttribute, getFeatureValue } =
                     facetTypes[firstChar as FacetKeys]
 
-                const firstCharIsMention = firstChar === "@"
-                const featureValue = firstCharIsMention
-                    ? await getFeatureValue(status, i, j)
-                    : getFeatureValue(status, i, j)
-
                 const facet = {
                     index: {
                         byteStart: i,
@@ -96,12 +91,14 @@ export const parseFacetsForBluesky = async (
                     features: [
                         {
                             $type: `app.bsky.richtext.facet#${richTextType}`,
-                            [featureAttribute]: featureValue,
+                            // prettier-ignore
+                            [featureAttribute]: await getFeatureValue(status, i, j),
                         },
                     ],
                 }
 
                 facets.push(facet)
+
                 i = j + 1
                 facetParsed = true
             }

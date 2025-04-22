@@ -19,3 +19,4 @@ export {
     type PostOnBlueskyReturn,
     type PostOnMastodonReturn,
 } from "./fediverse"
+export { parseFacetsForBluesky } from "./parseFacetsForBluesky"
