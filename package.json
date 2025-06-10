@@ -24,8 +24,8 @@
         "proxy:preview": "gcloud run services proxy preview-personal-site --port=8081 --region=us-central1"
     },
     "dependencies": {
-        "@atproto/api": "^0.15.6",
-        "@google-cloud/firestore": "^7.11.0",
+        "@google-cloud/firestore": "^7.11.1",
+        "@atproto/api": "^0.15.7",
         "@google-cloud/storage": "^7.16.0",
         "masto": "^6.10.4",
         "next": "^15.3.2",
@@ -33,7 +33,7 @@
         "react-dom": "19.1.0",
         "react-markdown": "^9.1.0",
         "react-syntax-highlighter": "^15.6.1",
-        "sharp": "^0.34.1"
+        "sharp": "^0.34.2"
     },
     "devDependencies": {
         "@playwright/test": "^1.50.0",
