@@ -75,6 +75,47 @@ const standardImageObject = {
 }
 
 let data = {
+    philosophy: {
+        content: {
+            metadata: {
+                title: "Philosophy",
+                description:
+                    "An ongoing attempt to define a personal philosophy",
+                openGraph: {
+                    description:
+                        "An ongoing attempt to define a personal philosophy",
+                    locale: "en_US",
+                    title: "Philosophy",
+                    type: "website",
+                    url: "https://www.timothymalstead.com/philosophy",
+                },
+            },
+            components: [
+                {
+                    name: "Markdown",
+                    text: `
+# Attempting to Define a Personal Philosophy
+`,
+                },
+                {
+                    name: "Attribution",
+                    readingTime: 4,
+                },
+                {
+                    name: "Markdown",
+                    text: `
+## Software
+## Morality
+## Art
+`,
+                },
+                {
+                    name: "LastModified",
+                    lastModifiedDate: 1748731280017,
+                },
+            ],
+        },
+    },
     api: {
         test: {
             content: {
