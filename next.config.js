@@ -55,22 +55,20 @@ const nextConfig = {
         }
         return config
     },
-    experimental: {
-        turbo: {
-            // I'm not sure I'm feeling turbo until they can differentiate between the server and client
-            // Also don't love that I can't use a __dirname variable for an alias
-            // to turn turbo on, add a --turbopack flag to the next dev command
-            resolveAlias: {
-                ...resolvedAlaisedDirectories,
-                ...(useTestingFirestore && {
-                    "@google-cloud/firestore": join(
-                        ".",
-                        "app",
-                        "@data",
-                        "firestoreMock"
-                    ),
-                }),
-            },
+    turbopack: {
+        // I'm not sure I'm feeling turbo until they can differentiate between the server and client
+        // Also don't love that I can't use a __dirname variable for an alias
+        // to turn turbo on, add a --turbopack flag to the next dev command
+        resolveAlias: {
+            ...resolvedAlaisedDirectories,
+            ...(useTestingFirestore && {
+                "@google-cloud/firestore": join(
+                    ".",
+                    "app",
+                    "@data",
+                    "firestoreMock"
+                ),
+            }),
         },
     },
     rewrites: async () => [
