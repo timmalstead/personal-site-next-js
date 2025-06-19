@@ -75,47 +75,6 @@ const standardImageObject = {
 }
 
 let data = {
-    philosophy: {
-        content: {
-            metadata: {
-                title: "Philosophy",
-                description:
-                    "An ongoing attempt to define a personal philosophy",
-                openGraph: {
-                    description:
-                        "An ongoing attempt to define a personal philosophy",
-                    locale: "en_US",
-                    title: "Philosophy",
-                    type: "website",
-                    url: "https://www.timothymalstead.com/philosophy",
-                },
-            },
-            components: [
-                {
-                    name: "Markdown",
-                    text: `
-# Attempting to Define a Personal Philosophy
-`,
-                },
-                {
-                    name: "Attribution",
-                    readingTime: 4,
-                },
-                {
-                    name: "Markdown",
-                    text: `
-## Software
-## Morality
-## Art
-`,
-                },
-                {
-                    name: "LastModified",
-                    lastModifiedDate: 1748731280017,
-                },
-            ],
-        },
-    },
     api: {
         test: {
             content: {
@@ -1652,7 +1611,7 @@ Less than a year after starting in this position, I was asked to become one of t
 
 The past several months at the Gap have seen a great deal of transition, as we move from a "traditional" single page application (React) organized in a distributed micro front end system to a server side first architecture (Next.js). The performance and optimization gains that can be realized in such a system are extremely exciting, and rewriting our components to take advantage of these features has been a very rewarding experience.
 
-These days, I continue to be excited about the present and future state of software, and the web in particular. I plan on continuing to learn as much as I can, and working on interesting software projects, for many years to come.
+These days, I continue to be excited about the present and future state of software, and the web in particular. I’ve been learning Golang recently, and that’s been very fun and rewarding. I plan on continuing to learn as much as I can, and working on interesting software projects, for many years to come.
 
 ## Resume
 `,
@@ -1688,16 +1647,16 @@ While no longer my primary profession, I continue to enjoy creating visual art. 
 
 In the past few years I have been exploring a style somewhere between figurative and cartoonish, usually with high chroma color schemes influenced by my time in fabric design.
 
-At present, I do not have any of my visual work featured on this site. My initial focus is the basic informational pages and the blog. After that is complete, I intend to create an art section.
+At present, I do not have any of my visual work featured on this site. I’ve been experimenting with 3d printing and different types of acrylic media, and have been enjoying myself a great deal. When I feel I have something worth showing, I will post it on this site. I don’t really have a great desire to show my old drawings on here. You can probably find some of them if you look hard enough.
 
 Regarding my blog, I shall do my best to communicate ideas I find interesting, in a clear and concise manner. I am not entirely sure what the subject matter will be, but I think that I am going to have fun finding out.
 
-With art, blogging, and social media, I will not be keeping to a regular cadence of creation. I will post when I feel that I have something worthwhile to communicate, which may be infrequently. In the past, I have sought to impose a quota on my creation. It did not work. It led to resentment of my creative work, which is the exact opposite of what I want from my creative outlets.
+With art, blogging, and social media, I will not be keeping to a regular cadence of creation. I will post when I feel that I have something worthwhile to communicate, which may be infrequently. In the past, I have sought to impose a quota on my creation. It didn’t work. It led to resentment of my creative work, which is the exact opposite of what I want from my creative outlets.
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736819724596,
+                    lastModifiedDate: 1750304314701,
                 },
             ],
         },
