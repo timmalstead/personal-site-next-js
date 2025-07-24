@@ -57,6 +57,7 @@
     "overrides": {
         "@types/react": "19.0.8",
         "@types/react-dom": "19.0.3",
-        "prismjs": "1.30.0"
+        "prismjs": "1.30.0",
+        "form-data": " 2.5.5"
     }
 }
