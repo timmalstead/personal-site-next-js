@@ -58,10 +58,12 @@ header {
     }
 
     nav {
+        overflow-x: scroll;
         display: inherit;
         align-items: center;
 
         ul {
+            overflow-x: visible;
             display: inherit;
             list-style: none;
             li {
@@ -132,8 +134,9 @@ header {
             justify-content: center;
             width: 100vw;
             background-color: var(--contrast-color);
-
+            overflow-x: visible;
             ul {
+                overflow-x: scroll;
                 li {
                     margin-left: 4vw;
                 }
