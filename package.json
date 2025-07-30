@@ -28,7 +28,7 @@
         "@atproto/api": "^0.15.17",
         "@google-cloud/storage": "^7.16.0",
         "masto": "^6.10.4",
-        "next": "^15.3.4",
+        "next": "^15.3.5",
         "react": "19.1.0",
         "react-dom": "19.1.0",
         "react-markdown": "^9.1.0",
