@@ -26,6 +26,9 @@ export const middleware = (request: NextRequest) => {
     response.headers.set("X-Browser", browserName)
     response.headers.set("X-Pagename", pageName)
 
+    // header to not have ai scrape the page
+    response.headers.set("X-Robots-Tag", "noindex")
+
     const isRestrictedRoute = restrictedRoutes.some((route) =>
         pathname.startsWith(route)
     )
