@@ -22,7 +22,7 @@ jobs:
                       - .
     testing:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.50.0-noble
+            - image: mcr.microsoft.com/playwright:v1.54.2-noble
         resource_class: medium
         steps:
             - attach_workspace:
