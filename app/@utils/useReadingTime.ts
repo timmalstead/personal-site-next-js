@@ -26,7 +26,7 @@ export const useReadingTime = (cssSelector: string) => {
             if (wordCount)
                 setReadingTime(Math.ceil(wordCount / AVERAGE_READING_SPEED))
         }
-    }, [])
+    }, [cssSelector])
 
     return readingTime
 }
