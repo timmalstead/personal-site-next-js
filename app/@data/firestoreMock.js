@@ -168,11 +168,14 @@ Thank you for taking the time to visit, I hope you find something here that you 
 - [Part Three: Head in the Clouds](/blog/over-engineer-your-site-part-3)
 - [Part Four: At Your (Web) Service](/blog/over-engineer-your-site-part-4)
 - [Part Five: An Appetizing App](/blog/over-engineer-your-site-part-5)
+
+### Setting Up a Home Network With Tailscale
+- [Part One: They Also Server Who Only Stand and Wait](/blog/setting-up-a-home-network-with-tailscale)
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736987829980,
+                    lastModifiedDate: 1754532920360,
                 },
             ],
         },
@@ -1554,6 +1557,77 @@ I like the open web, and I like working with web technologies. For me, the web r
                         {
                             name: "LastModified",
                             lastModifiedDate: 1737840348930,
+                        },
+                    ],
+                },
+            },
+        },
+        "setting-up-a-home-network-with-tailscale-part-1": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "Setting Up a Home Network With Tailscale: Part One",
+                        description:
+                            "First entry in a series about setting up a home network with the Tailscale service",
+                        openGraph: {
+                            description:
+                                "First entry in a series about setting up a home network with the Tailscale service",
+                            locale: "en_US",
+                            title: "Setting Up a Home Network With Tailscale: Part One",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/setting-up-a-home-network-with-tailscale-part-1",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# Setting Up a Home Network With Tailscale
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 100000,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
+## Part One: They Also Server Who Only Stand and Wait
+
+I've been enjoying using Tailscale for some time now.
+
+[Tailscale](https://tailscale.com) is a service built on the [WireGuard protocol](https://www.wireguard.com/protocol/) that allows for quick and easy setup of a software defined VPN. That last part is important. One of the things that I've always found most offputting and scary about VPNs is the hardware changes necessary to make them. I don't really want to mess around with hardware settings or muck about with the internals of my router to have an easy way for my computers to communicate. I just want them to communicate. Tailscale makes that very easy and abstracts away the unpleasent parts of creating a VPN.
+
+Tailscale is what's called an overlay network. It routes traffic between devices running Tailscale, but doesn't touch the rest of your traffic. Thus, I've mostly been using it as an easy way to SSH into my computers when needed and then turning it off and turning on my everyday VPN ([NordVPN](https://nordvpn.com/)) in its place.
+
+This works just fine. I mean just fine. No problems here. Not a one.
+
+Buuuuuutttttt.
+
+It might be nice to not have to toggle between the two. Could be nice to enjoy the convenience of Tailscale while still keeping my public internet traffic protected as well. Luckily Tailscale has a feature called [exit nodes](https://tailscale.com/kb/1103/exit-nodes) that is built to do just that.
+
+I going to see if I can figure out how to set up an exit node, and maybe from there see if I can turn it into a full-fledged home network.
+
+Sound fun? Well read on friend!
+
+## Node, but not JS
+
+Before I really get started, I should say that I will not be discussing how to install Tailscale on individual devices. They have [excellent documentation on the topic](https://tailscale.com/kb/1347/installation) and you should be able to get going fairly easily. If you want to follow along with my further work, go ahead and get Tailscale running on one or more devices and I'll be right here when you are done. I'm patient like that.
+
+Okey doke. Now that we've gotten that out of the way, let's focus on our goal: to set up a Tailscale exit node using NordVPN to route our public traffic. As every good developer knows, the only thing better than figuring out the hard parts of a technical problem is having it already figured out for you. To that end, I was able to find an artice by an engineer named Jimmy Wei on this exact topic: [Setting up a Tailscale Exit Node through NordVPN](https://thedevquill.substack.com/p/setting-up-a-tailscale-exit-node). I will be using this as the basis for the first part of this effort.
+
+I copied the code featured pretty much verbatim ([repo here](https://github.com/timmalstead/tailscale-exit-node-with-nord-vpn)), got the [NordVPN token](https://my.nordaccount.com/dashboard/nordvpn/access-tokens/) and the [Tailscale token](https://login.tailscale.com/admin/settings/keys), fired up \`docker compose up -d\` and held my breath.
+
+And...not much happened. The images pulled and built just fine, and everything worked up to a point. Eventually though, error messages like \`✘ Container tailscale-exit-node-with-nord-vpn-vpn-1\` and \`dependency failed to start: container tailscale-exit-node-with-nord-vpn-vpn-1 is unhealthy\` popped up. Alas!
+
+Never being one to take the hint that something may be beyond me, I dug around a bit in the Tailscale logs in the Tailscale Docker container. I noticed that it was refusing connection to \`controlplane.tailscale.com\`. I tried a \`ping\` command. Nada. I was beginning to think that this may be a firewall issue. It was then I realized that I had not turned my connection to my desktop NordVPN off. I did that and it built just fine.
+
+Alas and alack, it wanted to not work still! But it wasn't just me.
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1754532920360,
                         },
                     ],
                 },
