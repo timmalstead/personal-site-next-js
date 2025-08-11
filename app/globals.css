@@ -99,6 +99,18 @@ button {
     cursor: pointer;
 }
 
+/* adapted from https://css-tricks.com/snippets/css/simple-and-nice-blockquote-styling/ */
+blockquote {
+    background: var(--contrast-color);
+    border-left: 1rem solid var(--text-color);
+    margin: 1.5rem 1rem;
+    padding: 0.5rem 1rem;
+
+    p {
+        display: inline;
+    }
+}
+
 @media screen and (min-width: 1800px) {
     body {
         font-size: min(1vw, 2rem);
