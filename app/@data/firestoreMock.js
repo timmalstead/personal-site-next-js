@@ -168,11 +168,14 @@ Thank you for taking the time to visit, I hope you find something here that you 
 - [Part Three: Head in the Clouds](/blog/over-engineer-your-site-part-3)
 - [Part Four: At Your (Web) Service](/blog/over-engineer-your-site-part-4)
 - [Part Five: An Appetizing App](/blog/over-engineer-your-site-part-5)
+
+### Setting Up a Home Network With Tailscale
+- [Part One: They Also Server Who Only Stand and Wait](/blog/setting-up-a-home-network-with-tailscale-part-1)
 `,
                 },
                 {
                     name: "LastModified",
-                    lastModifiedDate: 1736987829980,
+                    lastModifiedDate: 1754532920360,
                 },
             ],
         },
@@ -1554,6 +1557,196 @@ I like the open web, and I like working with web technologies. For me, the web r
                         {
                             name: "LastModified",
                             lastModifiedDate: 1737840348930,
+                        },
+                    ],
+                },
+            },
+        },
+        "setting-up-a-home-network-with-tailscale-part-1": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "Setting Up a Home Network With Tailscale: Part One",
+                        description:
+                            "First entry in a series about setting up a home network with the Tailscale service",
+                        openGraph: {
+                            description:
+                                "First entry in a series about setting up a home network with the Tailscale service",
+                            locale: "en_US",
+                            title: "Setting Up a Home Network With Tailscale: Part One",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/setting-up-a-home-network-with-tailscale-part-1",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# Setting Up a Home Network With Tailscale
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 100000,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
+## Part One: They Also Server Who Only Stand and Wait
+
+I've been enjoying using Tailscale for some time now.
+
+[Tailscale](https://tailscale.com) is a service built on the [WireGuard protocol](https://www.wireguard.com/protocol/) that allows for quick and easy setup of a software defined VPN. That last part is important. One of the things that I've always found most offputting and scary about VPNs is the hardware changes necessary to make them. I don't really want to mess around with hardware settings or muck about with the internals of my router to have an easy way for my computers to communicate. I just want them to communicate. Tailscale makes that very easy and abstracts away the unpleasent parts of creating a VPN.
+
+Tailscale is what's called an overlay network. It routes traffic between devices running Tailscale, but doesn't touch the rest of your traffic. Thus, I've mostly been using it as an easy way to SSH into my computers when needed and then turning it off and turning on my everyday VPN ([NordVPN](https://nordvpn.com/)) in its place.
+
+This works just fine. I mean just fine. No problems here. Not. a. one.
+
+Buuuuuutttttt.
+
+It might be nice to not have to toggle between the two. Could be nice to enjoy the convenience of Tailscale while still keeping my public internet traffic protected as well. Luckily Tailscale has a feature called [exit nodes](https://tailscale.com/kb/1103/exit-nodes) that is built to do just that.
+
+I'm going to see if I can figure out how to set up an exit node to my liking, and maybe from there see if I can turn it into a full-fledged home network.
+
+Sound fun? Well read on friend!
+
+## An easy way via Mac
+
+Before I really get started, I should say that I will not be discussing how to install Tailscale on individual devices. They have [excellent documentation on the topic](https://tailscale.com/kb/1347/installation) and you should be able to get going fairly easily. If you want to follow along with my further work, go ahead and get Tailscale running on one or more devices and I'll be right here when you are done. I'm patient like that.
+
+As it stands right now I have both Tailscale and NordVPN installed on my Mac. I can easily run both programs and [use my Mac as the exit node](https://tailscale.com/kb/1103/exit-nodes?tab=macos#advertise-a-device-as-an-exit-node). After that, I can connect to my NordVPN network and set the other devices in my Tailscale network to route through my Mac as an exit node. I've done this before and it works just fine. The problem with that is I don't want my Mac machine to be responsible for the work that *should* be done by a server. Let's see if there is a better way to do this.
+
+## Trying containers
+
+Now that we know we have a reliable fallback, let's see if we can set up a Tailscale exit node using containers. [A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another](https://www.docker.com/resources/what-container/). One advantage of containers is that if I am able to produce a configuration that works for me, I can choose to deploy that in a cloud environment, a server at my home or any other computer I have capable of running containers. For this project I will be using [Docker](https://www.docker.com/) and [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+As every good developer knows, the only thing better than figuring out the hard parts of a technical problem is having it already figured out for you. To that end, I was able to find an artice by an engineer named Jimmy Wei on this exact topic: [Setting up a Tailscale Exit Node through NordVPN](https://thedevquill.substack.com/p/setting-up-a-tailscale-exit-node). I will be using this as the basis for this effort.
+
+I copied the code featured pretty much verbatim, got the [NordVPN token](https://my.nordaccount.com/dashboard/nordvpn/access-tokens/) and the [Tailscale token](https://login.tailscale.com/admin/settings/keys), fired up \`docker compose up -d\` and held my breath.
+
+And...not much happened. The images pulled and built just fine, and everything worked up to a point. Eventually though, error messages like \`✘ Container tailscale-exit-node-with-nord-vpn-vpn-1\` and \`dependency failed to start: container tailscale-exit-node-with-nord-vpn-vpn-1 is unhealthy\` popped up. Alas!
+
+Never being one to take the hint that something may be beyond me, I dug around a bit in the Tailscale logs in the Tailscale Docker container. I noticed that it was refusing connection to \`controlplane.tailscale.com\`. I tried a \`ping\` command. Nada. I was beginning to think that this may be a firewall issue. It was then I realized that I had not turned my connection to my desktop NordVPN off. I did that and it built just fine.
+
+I am smart.
+
+But even with that sorted, it still didn't want to work. The Tailscale container started as expected, but the NordVPN connection would time out and/or insist that my access token wasn't valid. After a bit more digging, I noticed there was a discrepancy in the [version of NordVPN](https://github.com/bubuntux/nordvpn/blob/master/Dockerfile#L4) that was being advertised in the base Dockerfile of the Nord container, \`3.20.0\`, and what was returned when the \`nordvpn version\` command was entered in the terminal of the Nord container instance, \`3.16.2\`. Perhaps some meddling was in order.
+
+I messed around a bit with loading \`3.20.0\` directly from the NordVPN Debian repos. I was able to do it, and I had to sign in manually instead of the automated flow used by the bubuntux repo, but it still didn't fix the issue. From what I can tell something was blocking the connection of the Linux server (LISO) running in the container to NordVPN's endpoints.
+
+I [got the idea](https://unix.stackexchange.com/questions/375387/how-to-trace-networking-activity-of-a-command) of using \`netstat\` to listen in on calls made from my system to see if there were any IPs I could whitelist. Funnily enough, \`netstat\` was not present on the bubuntux machine, but \`ss\` was. It would seem that this is more or less a replacement for it. Good to know.
+
+Using \`ss\` in combination with \`watch\` (\`watch 'ss -np --inet | grep nordvpn'\`), I was able to find several IPs that I could whitelist, but they kept changing while the command ran. We were fast approcahing the limits of my networking knowledge. I even tried to [install the NordVPN CLI client](https://support.nordvpn.com/hc/en-us/articles/20196094470929-Installing-NordVPN-on-Linux-distributions) in a stock Ubuntu container to see if that would work, but it did not. I could feel myself starting to lose interest.
+
+From what I can tell, this is a common problem with people trying to use the NordVPN cli in containers, so I am heartened by the knowledge that this is not just me. As it turns out, software is complex, and networking especially so. I wouldn't be surprised if I picked it up again at some point, but for the moment this complexity has bested me.
+
+## A Pi Have I
+
+After a little time away to sulk and nurse my bruised ego, I wanted to tackle this problem again. I began to think about trying to tackle this on my Raspberry Pi. I've had a [Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/) lying around for quite a while, and I'm not really doing much with it. I do have it on my Tailscale network though, so I figure it's worth a shot.
+
+In practice, I don't really expect to route my internet traffic through a device with a 1GHz, single-core CPU and 512MB of RAM, but I still wanted to see if I could do it as a proof of concept. *Whatever* it is that's making it not work in a Docker environment, I hope that it will not be the case on my Pi.
+
+> Side note: How cool is the Pi Zero W? When I was a small lad, this would have been quite an impressive machine, and now we have it for ~$20 and it's the size of a pack of gum *and* has wi-fi. Sometimes I love the future.
+
+I was able to set up the Pi as an exit node pretty easily. It only took two commands: \`sudo tailscale set --advertise-exit-node\` and \`sudo tailscale up\`. But when I tried to login to NordVPN using the CLI client detailed in the article above, I kept getting a \`Segmentation fault\` error. After some digging, I found out that this was [a known error with NordVPN on Raspberry Pi](https://www.reddit.com/r/nordvpn/comments/lky2cz/linux_cli_segmentation_fault/), and it didn't look like it would be solved any time soon.
+
+And so, a second way of trying to make this work was stopped before it even began.
+
+## Trying VMs
+
+I gotta be honest ya'll, I am not used to being stymied like this on technical problems twice in a row.
+
+Created a vm, installed tailscale, installed nordvpn, logged in, tried to connect and things froze.
+
+Adding subnet routing using steps detailed here: https://tailscale.com/kb/1019/subnets?tab=linux#enable-ip-forwarding
+
+Remember to advertise the routes on the subnet as shown above
+
+need to whitelist port 22 for ssh calls, nordvpn whitelist add port 22 for ssh
+
+nordvpn whitelist add port 41641 because it looks like that is what tailscale runs on
+
+nordvpn whitelist add subnet 100.64.0.0/10 
+nordvpn whitelist add subnet fd7a:115c:a1e0::/48  
+nordvpn whitelist add port 41641
+
+shutdown and restart
+
+did not work.
+
+may try userspace networking https://tailscale.com/kb/1112/userspace-networking
+
+Once again I am stymied. I am hoping I can do this on a physical server, but if not I'll probably need to do mullvad vpn
+
+## Correction on Mac
+
+Doesn't seem like it works the way I thought it did.
+
+## Mullvad
+
+it would seem that what I want to do is impossible, at least for me
+
+signed up for mullvad vpn, put it on my devices. nice and easy. made some helper functions for using it on the cli
+
+## Physical Server
+
+Setting up ubuntu server, booting from a flash drive
+
+Choosing an option for an sshd server, allowing password authentication via ssh
+
+ssh ubuntu-server, enter password. will leave at that for now.
+
+sudo apt install openssh-server
+
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+ssh timmalstead@ubuntu-server.local to test
+
+from connecting computer: ssh-keygen -t rsa -b 4096
+
+from connecting computer: cat ~/.ssh/ubuntu_server.pub | ssh timmalstead@ubuntu-server "cat >> ~/.ssh/authorized_keys"
+
+Haven't figured out the rhyme or reason for when you do or don't need .local
+
+add in following to ~/.ssh/config
+
+later add to other devices
+
+df -h to check that size is correct
+
+connect all computers together via ssh, connect external drives, set up rclone and rsync, put on regular schedule, get taildrive enabled for all computers
+
+install steps for tailscale: https://tailscale.com/kb/1476/install-ubuntu-2404
+
+tailscale up and add that bad boy to your tailnet!
+
+ssh should work when both machines are connected to tailscale
+
+systemctl status tailscaled.service to check to see that it should load at startup
+
+add the server to the mullvad vpn, make sure to hit save
+
+install helper functions from cloned public github repo
+~/tailscale-mullvad-vpn-functions/tailscale-vpn-helpers.sh
+
+use the tailscale helpers to set an endpoint
+
+create a key on phone, ssh copy it in to the authorized keys file on ubuntu server
+
+create an ssh config entry
+
+copy a shortcut file and update as needed
+
+did the same steps from the ipad
+
+## File sharing
+for mac  defaults write /Users/$(whoami)/Library/Preferences/io.tailscale.ipn.macsys.plist FileSharingConfiguration show
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1754952559727,
                         },
                     ],
                 },
