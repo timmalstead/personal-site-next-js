@@ -1,0 +1,19 @@
+main.kagi-tryout-styles {
+    overflow: scroll;
+    padding: 1rem 5%;
+    padding-top: 2.5rem;
+
+    pre {
+        width: fit-content;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    main.kagi-tryout-styles {
+        padding-top: 1.5rem;
+
+        pre {
+            width: auto;
+        }
+    }
+}
