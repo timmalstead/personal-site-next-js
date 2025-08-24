@@ -148,7 +148,7 @@ In the \`[open]\` styling we need to set all of the \`<list>\` elements after th
 
 We also need to change the content of the \`ul::after\` element to "Show less".
 
-The paragraph implementation uses a similar technique, but instead of counting the childern and enforcing styles based on the number of child elements, we count the number of lines in the \`<p>\` element using the line height unit of measurement, \`lh\`. After the 10th element we hide the remaining lines and show them when the state is changed to \`[open]\`.
+The paragraph implementation uses a similar technique, but instead of counting the children and enforcing styles based on the number of child elements, we count the number of lines in the \`<p>\` element using the line height unit of measurement, \`lh\`. After the 10th element we hide the remaining lines and show them when the state is changed to \`[open]\`.
 
 This code has been tested in Orion, Safari, Chrome, Firefox and Edge browsers.
 
