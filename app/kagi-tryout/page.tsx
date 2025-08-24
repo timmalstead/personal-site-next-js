@@ -48,9 +48,12 @@ To that end, I am seeking the position of Software Developer (Web & Marketing Sy
 
 ## Task 1 - HTML Recipes
 
-[See the code for the Recipe Widget on GitHub (new tab will open)](https://github.com/timmalstead/kagi-tryout/tree/main/recipe-widget)
+[See the code for the Recipe Widget on GitHub (new tab will open)](https://github.com/timmalstead/kagi-tryout/tree/main).
+
+If you wish to see this code running in isolation, you can [find it on GitHub pages (new tab will open)](https://timmalstead.github.io/kagi-tryout/).
 
 I want to note that the code shown below is the *exact* code, fetched from the GitHub repo shown above. Some minor formatting changes were made to make it easier to fit into the flow of this page, for example the CSS was put into a <style> tag, but no changes were made to the functionality of these components. The code I used to fetch the HTML and CSS [can be seen here](https://github.com/timmalstead/personal-site-next-js/blob/main/app/kagi-tryout/fetchRecipeWidget.tsx).
+
 
 The instruction given for the first task is this:
 

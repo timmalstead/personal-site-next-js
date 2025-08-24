@@ -13,7 +13,7 @@ type HtmlComponents =
 const RAW_CODE_ENDPOINT =
     "https://raw.githubusercontent.com/timmalstead/kagi-tryout/refs/heads/main"
 
-const fileEndpoints = ["/recipe-widget/index.html", "/recipe-widget/styles.css"]
+const fileEndpoints = ["/index.html", "/styles.css"]
 
 const [openingHtmlTag, closingHtmlTag] = [
     '<div class="recipe-widget">',
