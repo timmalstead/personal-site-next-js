@@ -1,6 +1,6 @@
 // don't change the structure of the html or css too much so this will keep working!
 import { Code } from "@components/server"
-import type { ReactNode, CSSProperties } from "react"
+import type { ReactNode } from "react"
 
 type HtmlComponents =
     | "HtmlCode"
@@ -59,8 +59,6 @@ export const fetchRecipeWidget = async (): Promise<{
 ${rawCss}
 </style>`
 
-    const fitChild: CSSProperties = { width: "fit-content" }
-
     return {
         HtmlCode: () => <Code className={"html"}>{rawHtml}</Code>,
         CssCode: () => <Code className={"css"}>{rawCss}</Code>,
@@ -72,7 +70,6 @@ ${rawCss}
                 dangerouslySetInnerHTML={{
                     __html: recipeShortChecklistHtml,
                 }}
-                style={fitChild}
             />
         ),
         RecipeFullChecklist: () => (
@@ -80,14 +77,10 @@ ${rawCss}
                 dangerouslySetInnerHTML={{
                     __html: recipeFullChecklistHtml,
                 }}
-                style={fitChild}
             />
         ),
         RecipeParagraph: () => (
-            <div
-                dangerouslySetInnerHTML={{ __html: recipeParagraph }}
-                style={fitChild}
-            />
+            <div dangerouslySetInnerHTML={{ __html: recipeParagraph }} />
         ),
     }
 }

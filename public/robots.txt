@@ -19,5 +19,6 @@ Disallow: /
 User-Agent: *
 Allow: /
 Disallow: /api/
+Disallow: /kagi-tryout
 
 Sitemap: https://www.timothymalstead.com/assets/sitemap.xml
