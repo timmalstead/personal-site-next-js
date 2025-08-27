@@ -1758,6 +1758,35 @@ if you use a realtive path, it will create that as a mount point from root
 
 ## File sharing
 for mac  defaults write /Users/$(whoami)/Library/Preferences/io.tailscale.ipn.macsys.plist FileSharingConfiguration show
+
+followed the steps on https://tailscale.com/kb/1369/taildrive to set up my tailnet policy
+
+easy to share on mac
+
+easy to share on ubuntu
+
+iOS worked like a charm with no config at all
+
+It was a bummer, but the native way to do it via mac os finder was sloooooooow
+
+or maybe it just takes a while at first. I'll get to that. May be a better app for that.
+
+Nope, looks like it is just slow over webdav in general. slow with android too.
+
+Dang. in fact, when I had to force stop a frozen file transfer, material files wouldn't open up again. Had to restart my phone to use it again.
+
+So it looks like the webdav connection can't really be counted on. At first I thought it might be because they were external drives, but it looks like that's not it.
+
+And then all of a sudden it start working really well. Huh.
+So looks like it's not so great for large files and such. Can copy that via scp or ssh, so that's not too big a deal. Good for small documents though, it seems.
+
+Definitely think it has potential for the future. They just need to get it faster and more reliable.
+
+Guess that's why people get NAS.
+
+Did find a better option on Android called CX file explorer. There may be a better option on mac as well. Maybe on ipad too?
+
+Next I'll get backup working. Probably on the external drive and also a local copy on the server.
 `,
                         },
                         {
