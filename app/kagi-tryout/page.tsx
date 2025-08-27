@@ -257,6 +257,12 @@ From the start, I knew I wanted to make use of the native [Performance web api](
 I'm pretty happy with it. To the benchmarks!
 
 To start with, all of these are very much fast enough to deal with the problem as presented above. Figuring out the order 5 people will be seen in is something all of these algorithims will deal with quite handily. In my testing, which can be viewed in the console, I am seeing average execution times all on the order of thouandths of a millisecond. To see real difference in these, the kind of difference that a human would notice, I believe you would have to extend the list of people to be seen into the hundreds of thousands, possibly into the millions.
+
+## Conclusion
+
+I had fun with these! Being able to solve problems in new and interesting ways using only the raw materials of the web remains one of the most satisfying things for me as an engineer. Also, I learned some new stuff too. Before this assignment I had never had occasion to use the CSS \`:has\` pseudo-class to effectively create control-flow in a component tree before. Fun!
+
+Thank you again for the consideraton of my work. I hope that you will have as much fun reading about my thought process as I had writing about it. Enjoy, and I hope to hear from you soon! 🖖
 `}
             </Markdown>
             <LastModified lastModifiedDate={1756258245262} />
