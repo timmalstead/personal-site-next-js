@@ -1740,6 +1740,22 @@ copy a shortcut file and update as needed
 
 did the same steps from the ipad
 
+mount the drives in ubuntu server
+
+lsblk -f
+
+mkdri drives
+
+sudo mount -t <Filesystem> /path/to/drive /mount/point
+
+sudo nano /etc/fstab
+
+/dev/Drive-name       /mounting-point           Filesystem    defaults        0       0
+
+make sure to not use a shortened path to your mount points, use a full from root
+
+if you use a realtive path, it will create that as a mount point from root
+
 ## File sharing
 for mac  defaults write /Users/$(whoami)/Library/Preferences/io.tailscale.ipn.macsys.plist FileSharingConfiguration show
 `,
