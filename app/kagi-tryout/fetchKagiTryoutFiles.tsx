@@ -9,21 +9,27 @@ type HtmlComponents =
     | "RecipeShortChecklist"
     | "RecipeFullChecklist"
     | "RecipeParagraph"
+    | "JsToLoad"
+    | "Benchmark"
+    | "CourtOne"
+    | "CourtTwo"
+    | "CourtThree"
 
 const RAW_CODE_ENDPOINT =
     "https://raw.githubusercontent.com/timmalstead/kagi-tryout/refs/heads/main"
 
-const fileEndpoints = ["/index.html", "/styles.css"]
+// cors error due to native Next.js Script component returning as text/plain instead of text/javascript, so I'm fetching it this way
+const fileEndpoints = ["/index.html", "/styles.css", "/court.js"]
 
 const [openingHtmlTag, closingHtmlTag] = [
     '<div class="recipe-widget">',
     "</div>",
 ]
 
-export const fetchRecipeWidget = async (): Promise<{
+export const fetchKagiTryoutFiles = async (): Promise<{
     [title in HtmlComponents]: () => ReactNode
 }> => {
-    const [rawHtml, rawCss] = await Promise.all(
+    const [rawHtml, rawCss, rawJs] = await Promise.all(
         fileEndpoints.map(async (fileEndpoint) =>
             fetch(`${RAW_CODE_ENDPOINT}${fileEndpoint}`).then((response) =>
                 response.text()
@@ -59,9 +65,14 @@ export const fetchRecipeWidget = async (): Promise<{
 ${rawCss}
 </style>`
 
+    const jsScript = `<script>${rawJs}</script>`
+
+    const [benchmarkCode, courtOneCode, courtTwoCode, courtThreeCode] =
+        rawJs.split("//")
+
     return {
-        HtmlCode: () => <Code className={"html"}>{rawHtml}</Code>,
-        CssCode: () => <Code className={"css"}>{rawCss}</Code>,
+        HtmlCode: () => <Code className="html">{rawHtml}</Code>,
+        CssCode: () => <Code className="css">{rawCss}</Code>,
         RecipeStyles: () => (
             <div dangerouslySetInnerHTML={{ __html: slicedStyles }} />
         ),
@@ -82,5 +93,10 @@ ${rawCss}
         RecipeParagraph: () => (
             <div dangerouslySetInnerHTML={{ __html: recipeParagraph }} />
         ),
+        JsToLoad: () => <div dangerouslySetInnerHTML={{ __html: jsScript }} />,
+        Benchmark: () => <Code className="javascript">{benchmarkCode}</Code>,
+        CourtOne: () => <Code className="javascript">{courtOneCode}</Code>,
+        CourtTwo: () => <Code className="javascript">{courtTwoCode}</Code>,
+        CourtThree: () => <Code className="javascript">{courtThreeCode}</Code>,
     }
 }

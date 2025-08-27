@@ -5,7 +5,7 @@ import {
     LastModified,
     Markdown,
 } from "@components/server"
-import { fetchRecipeWidget } from "./fetchRecipeWidget"
+import { fetchKagiTryoutFiles } from "./fetchKagiTryoutFiles"
 import "./kagi-tryout-styles.css"
 
 export const metadata: Metadata = {
@@ -31,13 +31,19 @@ const KagiTryout = async () => {
         RecipeShortChecklist,
         RecipeFullChecklist,
         RecipeParagraph,
-    } = await fetchRecipeWidget()
+        JsToLoad,
+        Benchmark,
+        CourtOne,
+        CourtTwo,
+        CourtThree,
+    } = await fetchKagiTryoutFiles()
 
     return (
         <main className="kagi-tryout-styles">
             <RecipeStyles />
+            <JsToLoad />
             <Heading level="h1">Kagi FE Demo Project</Heading>
-            <Attribution readingTime={13} />
+            <Attribution readingTime={20} />
             <Markdown>
                 {`
 Hello, my name is Timothy Malstead and I am very pleased to welcome you to my tryout project for Kagi.
@@ -154,9 +160,106 @@ This code has been tested in Orion, Safari, Chrome, Firefox and Edge browsers.
 
 ## Task 2 - JavaScript optimization
 
+[See the code for JavaScript optimization on GitHub (new tab will open)](https://github.com/timmalstead/kagi-tryout/tree/main).
+
+If you wish to see this code running in isolation, you can [find it on GitHub pages (new tab will open)](https://timmalstead.github.io/kagi-tryout/). You can then open the console and target the functions \`benchmark\`, \`determineCourtHearingTime1\`, \`determineCourtHearingTime2\` and \`determineCourtHearingTime1\`.
+
+### API
+
+For your convenience, I've also placed those functions on this page, and you can target them by opening up on the console on dev tools. Note that if you turned off JavaScript to review the above HTML elements, you will need to turn it back on to test these functions.
+
+On either page I would recommend using the following structure to call and benchmark the functions.
+
+\`\`\`javascript
+benchmark({
+    callbackToBenchmark: determineCourtHearingTime1,
+    callbackArgs: ["Timothy", 3, "Adam Betty Frank Mike"],
+    expectedOutput: 60,
+    timesToRun: 100,
+})
+\`\`\`
+
+\`callbackToBenchmark\` is either of the three functions created for this exercise: \`determineCourtHearingTime1\`, \`determineCourtHearingTime2\` or \`determineCourtHearingTime3\`. I will detail each of these functions below.
+
+\`callbackArgs\` is an array of the three arguments given for this exercise. The first is a string, a proper name with a beginning with a capital letter. The second is an integer representing the total number of judges at a given time and the third is a string of proper names beginning with capital letters, separated by spaces.
+
+\`expectedOutput\` is the expected output of the \`callbackToBenchmark\`, when supplied with \`callbackArgs\`. If the actual output is not equal to the expected output, this will not prevent the function from being benchmarked.
+
+\`timesToRun\` is an integer representing the total number of times to run the function while being benchmarked. Note that this is in addition to the first time the callback is called to determine its output.
+
+This code is runtime agnostic, and should be able to run in Node, Bun or other JS runtimes.
+
+As with the HTML and CSS code above, this is the *exact* code that was written for the Kagi tryout repo.
+
+### Code
+
+The instruction given for this task was:
+
+> You are at court for a traffic ticket and there are 4 other people with you. You are told that everyone's hearing will be in alphabetical order. It takes 30 minutes for each hearing. All of the judges are free now and can see one person at a time. How long will it take for your hearing to end?
+> Your inputs are:
+> * string - your name
+> * int - number of judges
+> * string - names of four other people separated by spaces
+> 
+> Example:
+> \`\`\`javascript
+> court("Jules", 3, "Adam Betty Frank Mike")
+> 60
+> court("Zane", 1, "Mark Hank Ana Vivian")
+> 150
+> \`\`\`
+> Write the fastest JavaScript routine that you possibly can. Include a simple benchmark. Submit when you can not get it any faster and explain your optimization journey.
+
+With all of that in mind, I got to work on a first draft.
 `}
             </Markdown>
-            <LastModified lastModifiedDate={1756068420753} />
+            <CourtOne />
+            <Markdown>
+                {`
+My first thought was that I wanted to use a Set, but I realized that there was no guarantee that there wouldn't be duplicate names given as arguments. Since a Set would dedupe those, it would probably be better not to go down that path.
+
+From what I could see, it was a safe assumption that we would always get proper names given to us with one capital letter at the start. Thus we could use the tried and true method of splitting on a space and sorting the resulting array with the \`Array.sort\` method. When used without an argument, \`Array.sort\` sorts by the UTF code unit values, which fortunately for us means it also sorts alphabetically.
+
+After that, I used a \`while\` loop to consume the array, splicing out a length equal to the amount of working judges and checking to see if my name was in that group. If it was, I would break the loop. If was not, I would continue until the entire group had been consumed. Either way, I would increment the mutable \`timeUntilMyHearingIsOver\` integer variable. After that is done I return the increment count times thirty.
+
+I like this solution, it's clean and not overly verbose. It avoids nested iterations and should have a linear runtime. I began to wonder, though, if it might be solving for all the possible permutations of the problem. What is multiple people showed up with the same name as the person who was being targeted? Maybe it would make sense to do another version with a specific bit of state to keep track of who the person being targeted is, even among those with the same name.
+`}
+            </Markdown>
+            <CourtTwo />
+            <Markdown>
+                {`
+This is a bit better. It keeps track of who I am, even among people with the same name. It does add extra iterations and thus a longer runtime, but I thought that was surely a fine tradeoff for the extra safety it would bring.
+
+Until I realized it didn't really add anything.
+
+I had fallen into the classic engineer's trap of solving for a problem that wasn't there. Sure, it would be great to keep track of who the targeted person was among other people who may have the same name, IF there was a concept of arrival time among the inputs. But there wasn't. With the problem as it was stated, you would need to assume that ANY name that was the same name being targeted was the correct name. So my first answer would have been more performant and thus preferable.
+
+After this, I thought long and hard about what could be done to optimize my first solution. Not to soudn too full of myself, but there was nothing in what I had written that I could think to improve upon. I couldn't think of any ways reduce iterations in the preparation of the queue or in the consumption of it, and I couldn't think of any code that was there that did not need to be. I also couldn't think of anything that needed to be added. It had one job to do and, as far as I could tell, it was doing it well, accurately and in an efficient way.
+
+The only thing I could think to do, and this was a longshot, was to write a version that did not make use of methods and only used imperative code and c-style loops, as I know that function calls can be expensive in JavaScript, especially when used with callbacks and iterations.
+`}
+            </Markdown>
+            <CourtThree />
+            <Markdown>
+                {`
+I don't love this. I'm not a big fan of breaking down things like this instead of using trusted abstractions to deal with (usually) already solved problems, but it just *might* squeeze out a little bit more performance. It does introduce some nested looping in the sorting of the names, but as I understand it the native sort functions in JavaScript abstract over that as well. There's not really a way fully around it.
+
+So now we have three pretty good functions that solve the presented problem. Let's move on to some benchmarks.
+
+### Benchmarking
+
+From the start, I knew I wanted to make use of the native [Performance web api](https://developer.mozilla.org/en-US/docs/Web/API/Performance), and include an option to average out multiple iterations of the callback and also to inform in the function output what was expected. I came up with the following.
+`}
+            </Markdown>
+            <Benchmark />
+            <Markdown>
+                {`
+I'm pretty happy with it. To the benchmarks!
+
+To start with, all of these are very much fast enough to deal with the problem as presented above. Figuring out the order 5 people will be seen in is something all of these algorithims will deal with quite handily. In my testing, which can be viewed in the console, I am seeing average execution times all on the order of thouandths of a millisecond. To see real difference in these, the kind of difference that a human would notice, I believe you would have to extend the list of people to be seen into the hundreds of thousands, possibly into the millions.
+`}
+            </Markdown>
+            <LastModified lastModifiedDate={1756258245262} />
         </main>
     )
 }

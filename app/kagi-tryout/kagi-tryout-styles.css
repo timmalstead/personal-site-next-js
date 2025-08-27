@@ -20,6 +20,12 @@ main.kagi-tryout-styles {
         align-self: center;
         width: fit-content;
     }
+
+    blockquote {
+        pre {
+            margin: 0 auto;
+        }
+    }
 }
 
 @media screen and (max-width: 600px) {
