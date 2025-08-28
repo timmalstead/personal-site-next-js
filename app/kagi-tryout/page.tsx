@@ -43,7 +43,7 @@ const KagiTryout = async () => {
             <RecipeStyles />
             <JsToLoad />
             <Heading level="h1">Kagi FE Demo Project</Heading>
-            <Attribution readingTime={20} />
+            <Attribution readingTime={23} />
             <Markdown>
                 {`
 Hello, my name is Timothy Malstead and I am very pleased to welcome you to my tryout project for Kagi.
@@ -82,7 +82,7 @@ I created three individual components to illustrate the three requested states o
 * A version with checkboxes with 11 ingredients or more, where the "Show more" and "Show less" text *are both meant* to be seen.
 * A version without checkboxes but with a paragraph of information with more than 10 lines.
 
-Before we get to the components themseleves, I would suggest you reload this page without the use of JavaScript, to make sure that I am being honest when I say that I am only using HTML and CSS. When JavaScript is disabled on this site, you will not see the small settings flyout on the lower right of the screen.
+Before we get to the components themselves, I would suggest you reload this page without the use of JavaScript, to make sure that I am being honest when I say that I am only using HTML and CSS. When JavaScript is disabled on this site, you will not see the small settings flyout on the lower right of the screen.
 
 Let's look at the version with checkboxes and 10 or fewer ingredients.
 `}
@@ -100,13 +100,13 @@ Let's see how things look when we have a longer list of ingredients.
                 {`
 Ah okay, now things are getting a bit more interesting. The checkbox functionality is the same, but now we have a small block of text at the bottom of the widget that will open and close the widget. When the widget is open, the text will change from "Show more" to "Show less".
 
-Lastly, let's take a look at widget when it is used with a paragraph of text instead of checkboxes.
+Lastly, let's take a look at the widget when it is used with a paragraph of text instead of checkboxes.
 `}
             </Markdown>
             <RecipeParagraph />
             <Markdown>
                 {`
-Here we are seeing 10 lines of text with same open/closed toggle from the previous component. When clicked, this component will open up to display the rest of the text in the paragraph. Click again and it will go back to only displaying 10 lines of text.
+Here we are seeing 10 lines of text with the same open/closed toggle from the previous component. When clicked, this component will open up to display the rest of the text in the paragraph. Click again and it will go back to only displaying 10 lines of text.
 
 That's it for the components. I believe they implement the directions quite well.
 
@@ -122,7 +122,7 @@ Let's break this down. We start with \`!DOCTYPE\` and \`<html>\` tags, and some 
 
 From the start I knew I wanted to use a \`<details>\` tag for this. This is because it gives us access to the very useful \`[open]\` attribute. Used with the \`<summary>\` tag to display information, we can predicate styling on the closed state (which is the default) and the \`[open]\` state as well.
 
-One thing you're probably notice from the start is that I am only using one class name for this widget at the top level. This is intentional. I am not rigidly dogmatic about the use of classes and feel that as long as something is properly namespaced, in this instance with the \`div.recipe-class\` selector, that it is often easier to target loosely inside that namespace. This allows me to write simpler and more declarative CSS, which is always a goal. The relatively recent addition of [nesting to the CSS spec](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting) makes this very simple to do. Of course, I've often worked with very specific naming methodologies, but if left to my own devices I will usually structure things like this.
+One thing you will probably notice from the start is that I am only using one class name for this widget at the top level. This is intentional. I am not rigidly dogmatic about the use of classes and feel that as long as something is properly namespaced, in this instance with the \`div.recipe-class\` selector, that it is often easier to target loosely inside that namespace. This allows me to write simpler and more declarative CSS, which is always a goal. The relatively recent addition of [nesting to the CSS spec](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting) makes this very simple to do. Of course, I've often worked with very specific naming methodologies, but if left to my own devices I will usually structure things like this.
 
 Now let's move on to the CSS code:
 `}
@@ -144,13 +144,13 @@ I also hide the \`list-style\` property so I will not see the default triangle c
 
 The next two blocks differentiate the styling applied to the checkbox version and the paragraph version. This is done by use of the [:has pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:has). We have one block of styling for when the \`<details>\` tag has a \`<ul>\` tag for a grandchild, and one for when it has a \`<p>\` tag for a grandchild.
 
-In the checkbox styling, I define the needed styling for the \`<ul>\`, \`<li>\`, \`<label>\` and \`<input>\` tags. I also create an \`::after\` pseudo element for the \`<ul>\` tag but I do not yet set it to be active. I only want that to be active when there are 11 or more child \`<li>\` elments of the \`<ul>\` tag. I will set that condition next.
+In the checkbox styling, I define the needed styling for the \`<ul>\`, \`<li>\`, \`<label>\` and \`<input>\` tags. I also create an \`::after\` pseudo element for the \`<ul>\` tag but I do not yet set it to be active. I only want that to be active when there are 11 or more child \`<li>\` elements of the \`<ul>\` tag. I will set that condition next.
 
-To create this condition I again use the \`:has\` pseudo-class, this time in combination with the [:nth-child pseudo class](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child) with an argument of 11. Here I am saying that I *only* want the enclosed styles to be applied when there are 11 or more child \`<li>\` elments of the \`<ul>\` tag. The first style I apply in this block is to make all child \`<li>\` elements *after* the 11th to not display and I set the \`::after\` pseudo-class to be visible and to accept pointer events.
+To create this condition I again use the \`:has\` pseudo-class, this time in combination with the [:nth-child pseudo class](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child) with an argument of 11. Here I am saying that I *only* want the enclosed styles to be applied when there are 11 or more child \`<li>\` elements of the \`<ul>\` tag. The first style I apply in this block is to make all child \`<li>\` elements *after* the 11th to not display and I set the \`::after\` pseudo-class to be visible and to accept pointer events.
 
-Since clicking the "Open more" text is the only thing that will set the the \`[open]\` attribute of the \`<details>\` element, the rest of this styling can be done targeting the \`[open]\` attribute. Note that this could also be done by targeting the [:open pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:open), but that pseudo-class is not currently supported in webkit based browsers.
+Since clicking the "Open more" text is the only thing that will set the \`[open]\` attribute of the \`<details>\` element, the rest of this styling can be done targeting the \`[open]\` attribute. Note that this could also be done by targeting the [:open pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:open), but that pseudo-class is not currently supported in webkit based browsers.
 
-In the \`[open]\` styling we need to set all of the \`<list>\` elements after the 11th to be visible by again applying styling with \`:nth-child\`. Here you will notice the use of an \`!important\` directive on the \`display\` rule. As a general thing I try to avoid these, but for here where this declaration cannot win on specificity alone, I think it's a fine use of it. I greatly enjoy using this technique to hide and display elements, because I can let the elements presence or absence dictate the height of the element and thus do not have to manually manage the size of the component or do too much math.
+In the \`[open]\` styling we need to set all of the \`<list>\` elements after the 11th to be visible by again applying styling with \`:nth-child\`. Here you will notice the use of an \`!important\` directive on the \`display\` rule. As a general thing I try to avoid these, but for here where this declaration cannot win on specificity alone, I think it's a fine use of it. I greatly enjoy using this technique to hide and display elements, because I can let the element's presence or absence dictate the height of the element and thus do not have to manually manage the size of the component or do too much math.
 
 We also need to change the content of the \`ul::after\` element to "Show less".
 
@@ -220,9 +220,9 @@ My first thought was that I wanted to use a Set, but I realized that there was n
 
 From what I could see, it was a safe assumption that we would always get proper names given to us with one capital letter at the start. Thus we could use the tried and true method of splitting on a space and sorting the resulting array with the \`Array.sort\` method. When used without an argument, \`Array.sort\` sorts by the UTF code unit values, which fortunately for us means it also sorts alphabetically.
 
-After that, I used a \`while\` loop to consume the array, splicing out a length equal to the amount of working judges and checking to see if my name was in that group. If it was, I would break the loop. If was not, I would continue until the entire group had been consumed. Either way, I would increment the mutable \`timeUntilMyHearingIsOver\` integer variable. After that is done I return the increment count times thirty.
+After that, I used a \`while\` loop to consume the array, splicing out a length equal to the amount of working judges and checking to see if my name was in that group. If it was, I would break the loop. If it was not, I would continue until the entire group had been consumed. Either way, I would increment the mutable \`timeUntilMyHearingIsOver\` integer variable. After that is done I return the increment count times thirty.
 
-I like this solution, it's clean and not overly verbose. It avoids nested iterations and should have a linear runtime. I began to wonder, though, if it might be solving for all the possible permutations of the problem. What is multiple people showed up with the same name as the person who was being targeted? Maybe it would make sense to do another version with a specific bit of state to keep track of who the person being targeted is, even among those with the same name.
+I like this solution, it's clean and not overly verbose. It avoids nested iterations and should have a linear runtime. I began to wonder, though, if it might be solving for all the possible permutations of the problem. What if multiple people showed up with the same name as the person who was being targeted? Maybe it would make sense to do another version with a specific bit of state to keep track of who the person being targeted is, even among those with the same name.
 `}
             </Markdown>
             <CourtTwo />
@@ -234,7 +234,7 @@ Until I realized it didn't really add anything.
 
 I had fallen into the classic engineer's trap of solving for a problem that wasn't there. Sure, it would be great to keep track of who the targeted person was among other people who may have the same name, IF there was a concept of arrival time among the inputs. But there wasn't. With the problem as it was stated, you would need to assume that ANY name that was the same name being targeted was the correct name. So my first answer would have been more performant and thus preferable.
 
-After this, I thought long and hard about what could be done to optimize my first solution. Not to soudn too full of myself, but there was nothing in what I had written that I could think to improve upon. I couldn't think of any ways reduce iterations in the preparation of the queue or in the consumption of it, and I couldn't think of any code that was there that did not need to be. I also couldn't think of anything that needed to be added. It had one job to do and, as far as I could tell, it was doing it well, accurately and in an efficient way.
+After this, I thought long and hard about what could be done to optimize my first solution. There was nothing in what I had written that I could think to improve upon. I couldn't think of any ways to reduce iterations in the preparation of the queue or in the consumption of it, and I couldn't think of any code that was there that did not need to be. I also couldn't think of anything that needed to be added. It had one job to do and, as far as I could tell, it was doing it well, accurately and in an efficient way.
 
 The only thing I could think to do, and this was a longshot, was to write a version that did not make use of methods and only used imperative code and c-style loops, as I know that function calls can be expensive in JavaScript, especially when used with callbacks and iterations.
 `}
@@ -256,16 +256,32 @@ From the start, I knew I wanted to make use of the native [Performance web api](
                 {`
 I'm pretty happy with it. To the benchmarks!
 
-To start with, all of these are very much fast enough to deal with the problem as presented above. Figuring out the order 5 people will be seen in is something all of these algorithims will deal with quite handily. In my testing, which can be viewed in the console, I am seeing average execution times all on the order of thouandths of a millisecond. To see real difference in these, the kind of difference that a human would notice, I believe you would have to extend the list of people to be seen into the hundreds of thousands, possibly into the millions.
+To start with, all of these are very much fast enough to deal with the problem as presented above. Figuring out the order 5 people will be seen in is something all of these algorithms will deal with quite handily. In my testing, which can be viewed in the console, I am seeing average execution times all on the order of thousandths of a millisecond. To see real difference in these, the kind of difference that a human would notice, I believe you would have to extend the list of people to be seen into the hundreds of thousands, possibly into the millions.
+
+I was correct that my second solution, which included the unneeded additional state about which name was mine, did perform more slowly. But not by much! In my testing on the console of this page, I often saw around a 1-2 thousandth of a millisecond difference between my first and second solutions, and about the same difference between the first second and the third as well. Usually I am seeing ~2-3 thousandths of a millisecond on average to completion with the first and third and around ~2.5-5 thousandths with the second. Again, I would not use my second solution because I think that it has parts that are unneeded and without purpose, but it will perform just fine to find the answer for 5 people.
+
+Of more interest to me was the comparison between my first and third solutions. On average I would see ~1.5 thousandths of a millisecond average difference in completion time, *usually* in favor of my first solution. Sometimes the third solution would beat it in speed, but not very often. I'm running these tests on a Mac book and so, there are a lot of processes going on and it's difficult to control for them all.
+
+I confess that I thought my third was going to be more efficient. I was mistaken. Even though it's imperative code and does not make use of methods, it tends to run just a hair slower. I believe this is down to the array methods I'm using being native code. That is to say, again as I understand it, that calls to these methods are actually passed off to C++ or other machine code by the runtime which can be run much more quickly than in an interpreted language like JavaScript. This seems to be true for both Node and the browsers that I ran this on (Orion, Chrome, Safari, Firefox and Edge).
+
+Speaking more on the browsers, I believe that there are differences in the way certain browsers calculate the duration of the performance api tools. In Orion, Safari and Firefox: the benchmarking results would often return 0 milliseconds as the time run if you running less than 500 times. Chrome and Edge seemed to give much more fine-grained results with fewer iterations.
+
+So, in the end, I think that either my first or third functions would be a good solution to this problem. If this problem ran into the millions of names for inputs, I think further testing would be in order and it would depend heavily on what kind of machine and runtime it was being executed.
+
+In practice though, I would go with my first solution pretty much all the time. It's concise, gets the job done well and any possible performance losses are academic. As it turned out, I think I got it right the first time and then wrote two more functions that proved that point, more or less. It's not always like that, but sometimes it is.
+
+I would encourage you to open the console on either this page or my source code and try the solutions yourself, and please let me know if you see something that I did not. I tend to view writing performant code as much an art as a science, and there is always more to learn.
 
 ## Conclusion
 
 I had fun with these! Being able to solve problems in new and interesting ways using only the raw materials of the web remains one of the most satisfying things for me as an engineer. Also, I learned some new stuff too. Before this assignment I had never had occasion to use the CSS \`:has\` pseudo-class to effectively create control-flow in a component tree before. Fun!
 
-Thank you again for the consideraton of my work. I hope that you will have as much fun reading about my thought process as I had writing about it. Enjoy, and I hope to hear from you soon! 🖖
+Thank you again for the consideration of my work. I hope that you will have as much fun reading about my thought process as I had writing about it.
+
+Enjoy, and I hope to hear from you soon! 🖖
 `}
             </Markdown>
-            <LastModified lastModifiedDate={1756258245262} />
+            <LastModified lastModifiedDate={1756341625784} />
         </main>
     )
 }
