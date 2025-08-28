@@ -2,12 +2,7 @@ main.kagi-tryout-styles {
     display: flex;
     flex-direction: column;
     overflow: scroll;
-    padding: 1rem 5%;
-    padding-top: 2.5rem;
-
-    h3 {
-        margin-bottom: 2rem;
-    }
+    padding: 2.5rem 15% 1rem 15%;
 
     div:has(> div.recipe-widget) {
         align-self: center;
@@ -18,7 +13,8 @@ main.kagi-tryout-styles {
 
     pre {
         align-self: center;
-        width: fit-content;
+        width: 100%;
+        overflow: scroll;
     }
 
     blockquote {
@@ -30,10 +26,6 @@ main.kagi-tryout-styles {
 
 @media screen and (max-width: 600px) {
     main.kagi-tryout-styles {
-        padding-top: 1.5rem;
-
-        pre {
-            width: auto;
-        }
+        padding: 1.5rem 5% 1rem 5%;
     }
 }

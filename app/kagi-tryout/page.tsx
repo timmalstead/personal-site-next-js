@@ -58,7 +58,7 @@ To that end, I am seeking the position of Software Developer (Web & Marketing Sy
 
 If you wish to see this code running in isolation, you can [find it on GitHub pages (new tab will open)](https://timmalstead.github.io/kagi-tryout/).
 
-I want to note that the code shown below is the *exact* code, fetched from the GitHub repo shown above. Some minor formatting changes were made to make it easier to fit into the flow of this page, for example the CSS was put into a <style> tag, but no changes were made to the functionality of these components. The code I used to fetch the HTML and CSS [can be seen here](https://github.com/timmalstead/personal-site-next-js/blob/main/app/kagi-tryout/fetchRecipeWidget.tsx).
+I want to note that the code shown below is the *exact* code, fetched from the GitHub repo shown above. Some minor formatting changes were made to make it easier to fit into the flow of this page, for example the CSS was put into a <style> tag, but no changes were made to the functionality of these components. The code I used to fetch the HTML and CSS [can be seen here](https://github.com/timmalstead/personal-site-next-js/blob/main/app/kagi-tryout/fetchKagiTryoutFiles.tsx).
 
 
 The instruction given for the first task is this:
@@ -162,11 +162,11 @@ This code has been tested in Orion, Safari, Chrome, Firefox and Edge browsers.
 
 [See the code for JavaScript optimization on GitHub (new tab will open)](https://github.com/timmalstead/kagi-tryout/tree/main).
 
-If you wish to see this code running in isolation, you can [find it on GitHub pages (new tab will open)](https://timmalstead.github.io/kagi-tryout/). You can then open the console and target the functions \`benchmark\`, \`determineCourtHearingTime1\`, \`determineCourtHearingTime2\` and \`determineCourtHearingTime1\`.
+If you wish to see this code running in isolation, you can [find it on GitHub pages (new tab will open)](https://timmalstead.github.io/kagi-tryout/). You can then open the console and target the functions \`benchmark\`, \`determineCourtHearingTime1\`, \`determineCourtHearingTime2\` and \`determineCourtHearingTime3\`.
 
 ### API
 
-For your convenience, I've also placed those functions on this page, and you can target them by opening up on the console on dev tools. Note that if you turned off JavaScript to review the above HTML elements, you will need to turn it back on to test these functions.
+For your convenience, I've also placed those functions on this page, and you can use them in the dev tools console. Note that if you turned off JavaScript to review the above HTML elements, you will need to turn it back on to test these functions.
 
 On either page I would recommend using the following structure to call and benchmark the functions.
 
@@ -222,17 +222,17 @@ From what I could see, it was a safe assumption that we would always get proper 
 
 After that, I used a \`while\` loop to consume the array, splicing out a length equal to the amount of working judges and checking to see if my name was in that group. If it was, I would break the loop. If it was not, I would continue until the entire group had been consumed. Either way, I would increment the mutable \`timeUntilMyHearingIsOver\` integer variable. After that is done I return the increment count times thirty.
 
-I like this solution, it's clean and not overly verbose. It avoids nested iterations and should have a linear runtime. I began to wonder, though, if it might be solving for all the possible permutations of the problem. What if multiple people showed up with the same name as the person who was being targeted? Maybe it would make sense to do another version with a specific bit of state to keep track of who the person being targeted is, even among those with the same name.
+I like this solution, it's clean and not overly verbose. It avoids nested iterations and has a linear runtime. I began to wonder, though, if it might be solving for all the possible permutations of the problem. What if multiple people showed up with the same name as the person who was being targeted? Maybe it would make sense to do another version with a specific bit of state to keep track of who the person being targeted is, even among those with the same name.
 `}
             </Markdown>
             <CourtTwo />
             <Markdown>
                 {`
-This is a bit better. It keeps track of who I am, even among people with the same name. It does add extra iterations and thus a longer runtime, but I thought that was surely a fine tradeoff for the extra safety it would bring.
+This is a bit better. It keeps track of who I am, even among people with the same name. It does add extra iterations and thus a longer runtime, but I thought that was a fine tradeoff for the extra safety it would bring.
 
 Until I realized it didn't really add anything.
 
-I had fallen into the classic engineer's trap of solving for a problem that wasn't there. Sure, it would be great to keep track of who the targeted person was among other people who may have the same name, IF there was a concept of arrival time among the inputs. But there wasn't. With the problem as it was stated, you would need to assume that ANY name that was the same name being targeted was the correct name. So my first answer would have been more performant and thus preferable.
+I had fallen into the classic trap of solving for a problem that wasn't there. Sure, it would be great to keep track of who the targeted person was among other people who may have the same name, IF there was a concept of arrival time among the inputs. But there wasn't. With the problem as it was stated, you would need to assume that ANY name that was the same name being targeted was the correct name. So my first answer would have been more performant and thus preferable.
 
 After this, I thought long and hard about what could be done to optimize my first solution. There was nothing in what I had written that I could think to improve upon. I couldn't think of any ways to reduce iterations in the preparation of the queue or in the consumption of it, and I couldn't think of any code that was there that did not need to be. I also couldn't think of anything that needed to be added. It had one job to do and, as far as I could tell, it was doing it well, accurately and in an efficient way.
 
@@ -248,7 +248,7 @@ So now we have three pretty good functions that solve the presented problem. Let
 
 ### Benchmarking
 
-From the start, I knew I wanted to make use of the native [Performance web api](https://developer.mozilla.org/en-US/docs/Web/API/Performance), and include an option to average out multiple iterations of the callback and also to inform in the function output what was expected. I came up with the following.
+From the start, I knew I wanted to make use of the native [Performance web api](https://developer.mozilla.org/en-US/docs/Web/API/Performance), and include an option to average out multiple iterations of the callback and also to inform if the function output resolved to what was expected. I came up with the following.
 `}
             </Markdown>
             <Benchmark />
@@ -258,23 +258,25 @@ I'm pretty happy with it. To the benchmarks!
 
 To start with, all of these are very much fast enough to deal with the problem as presented above. Figuring out the order 5 people will be seen in is something all of these algorithms will deal with quite handily. In my testing, which can be viewed in the console, I am seeing average execution times all on the order of thousandths of a millisecond. To see real difference in these, the kind of difference that a human would notice, I believe you would have to extend the list of people to be seen into the hundreds of thousands, possibly into the millions.
 
-I was correct that my second solution, which included the unneeded additional state about which name was mine, did perform more slowly. But not by much! In my testing on the console of this page, I often saw around a 1-2 thousandth of a millisecond difference between my first and second solutions, and about the same difference between the first second and the third as well. Usually I am seeing ~2-3 thousandths of a millisecond on average to completion with the first and third and around ~2.5-5 thousandths with the second. Again, I would not use my second solution because I think that it has parts that are unneeded and without purpose, but it will perform just fine to find the answer for 5 people.
+I was correct that my second solution, which included the unneeded additional state about which name was mine, did perform more slowly. But not by much! In my testing on the console of this page, I often saw around a 1-2 thousandth of a millisecond difference between my first and second solutions, and about the same difference between the second and the third as well. 
 
-Of more interest to me was the comparison between my first and third solutions. On average I would see ~1.5 thousandths of a millisecond average difference in completion time, *usually* in favor of my first solution. Sometimes the third solution would beat it in speed, but not very often. I'm running these tests on a Mac book and so, there are a lot of processes going on and it's difficult to control for them all.
+Usually I am seeing ~2-3 thousandths of a millisecond on average to completion with the first and third and around ~2.5-5 thousandths with the second. Again, I would not use my second solution because I think that it has parts that are unneeded and without purpose, but it will perform just fine to find the answer for 5 people.
 
-I confess that I thought my third was going to be more efficient. I was mistaken. Even though it's imperative code and does not make use of methods, it tends to run just a hair slower. I believe this is down to the array methods I'm using being native code. That is to say, again as I understand it, that calls to these methods are actually passed off to C++ or other machine code by the runtime which can be run much more quickly than in an interpreted language like JavaScript. This seems to be true for both Node and the browsers that I ran this on (Orion, Chrome, Safari, Firefox and Edge).
+Of more interest to me was the comparison between my first and third solutions. On average I would see ~1.5 thousandths of a millisecond average difference in completion time, *usually* in favor of my first solution. Sometimes the third solution would beat it in speed, but not very often. I'm running these tests on a Mac book and so, there are a lot of processes going on and it's difficult to control for them all. You may be able to get less noisy reading on a machine built to run fewer processes, like say an Alpine Linux container or something like that.
 
-Speaking more on the browsers, I believe that there are differences in the way certain browsers calculate the duration of the performance api tools. In Orion, Safari and Firefox: the benchmarking results would often return 0 milliseconds as the time run if you running less than 500 times. Chrome and Edge seemed to give much more fine-grained results with fewer iterations.
+I confess that I thought my third solution was going to be more efficient. I was mistaken. Even though it's imperative code and does not make use of methods, it tends to run just a hair slower. I believe this is down to the array methods I'm using being native code. That is to say, as I understand it, that calls to these methods are actually passed off to C++ or other machine code by the runtime which can be run much more quickly than in an interpreted language like JavaScript. This seems to be true for both Node and the browsers that I ran this on (Orion, Chrome, Safari, Firefox and Edge).
 
-So, in the end, I think that either my first or third functions would be a good solution to this problem. If this problem ran into the millions of names for inputs, I think further testing would be in order and it would depend heavily on what kind of machine and runtime it was being executed.
+Speaking more on the browsers, I believe that there are differences in the way certain browsers calculate the duration of the performance api tools. In Orion, Safari and Firefox: the benchmarking results would often return 0 milliseconds as the time run if you ran it fewer than 500 times. Chrome and Edge seemed to give much more fine-grained results with fewer iterations.
 
-In practice though, I would go with my first solution pretty much all the time. It's concise, gets the job done well and any possible performance losses are academic. As it turned out, I think I got it right the first time and then wrote two more functions that proved that point, more or less. It's not always like that, but sometimes it is.
+So, in the end, I think that either my first or third functions would be a good solution to this problem. If this problem ran into the millions of names for inputs, I think further testing would be in order and it would depend heavily on what kind of machine and runtime was executing the code.
 
-I would encourage you to open the console on either this page or my source code and try the solutions yourself, and please let me know if you see something that I did not. I tend to view writing performant code as much an art as a science, and there is always more to learn.
+In practice though, I would go with my first solution pretty much all the time. It's concise, gets the job done well and any possible performance losses are negligible. As it turned out, I think I got it right the first time and then wrote two more functions that proved that fact. It's not always like that, but sometimes it is.
+
+I would encourage you to open the console on either this page or my [source code page](https://timmalstead.github.io/kagi-tryout/) and try the solutions yourself, and please let me know if you see something that I did not. I view writing performant code as much an art as a science, and there is always more to learn.
 
 ## Conclusion
 
-I had fun with these! Being able to solve problems in new and interesting ways using only the raw materials of the web remains one of the most satisfying things for me as an engineer. Also, I learned some new stuff too. Before this assignment I had never had occasion to use the CSS \`:has\` pseudo-class to effectively create control-flow in a component tree before. Fun!
+I had fun with these! Being able to solve problems in new and interesting ways using only the raw materials of the web remains one of the most satisfying things for me as an engineer. Also, I learned some new stuff too. Before this assignment I had never had occasion to use the CSS \`:has\` pseudo-class to effectively create control-flow in a component before. Fun!
 
 Thank you again for the consideration of my work. I hope that you will have as much fun reading about my thought process as I had writing about it.
 
