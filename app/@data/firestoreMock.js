@@ -170,7 +170,7 @@ Thank you for taking the time to visit, I hope you find something here that you 
 - [Part Five: An Appetizing App](/blog/over-engineer-your-site-part-5)
 
 ### Setting Up a Home Network With Tailscale
-- [Part One: They Also Server Who Only Stand and Wait](/blog/setting-up-a-home-network-with-tailscale-part-1)
+- [Setting up Tailscale and Taildrive](/blog/setting-up-a-home-network-with-tailscale)
 `,
                 },
                 {
@@ -1562,7 +1562,7 @@ I like the open web, and I like working with web technologies. For me, the web r
                 },
             },
         },
-        "setting-up-a-home-network-with-tailscale-part-1": {
+        "setting-up-a-home-network-with-tailscale-part-1-DO-NOT-PUBLISH": {
             content: {
                 data: {
                     metadata: {
@@ -1787,6 +1787,413 @@ Guess that's why people get NAS.
 Did find a better option on Android called CX file explorer. There may be a better option on mac as well. Maybe on ipad too?
 
 Next I'll get backup working. Probably on the external drive and also a local copy on the server.
+
+Getting backup
+
+create a service account on google, can see steps here: https://rclone.org/drive/
+
+dpkg --print-architecture to make sure that the architecture is what's expected
+
+one liner to install one password on a server: https://developer.1password.com/docs/cli/install-server/
+
+may need to install unzip from apt and then sudo on that line
+
+op vault list
+
+sign in address is my.1password.com
+
+Auth code is in Authy
+
+$(op read op://Private/rclone/gdrive_credentials), although you can't copy it that way
+
+sudo apt install rclone
+
+need to enable google drive api on a google cloud account, then get a credential from ther that has a client_id and client_secret value, those will be setup when you create a new remote
+
+rclone config, enter values as needed
+
+will need to authorize drive from a machine with a gui and web browser available.
+
+you will get a config token, paste that in when setting up the remote
+
+can then use rclone listremotes to make sure things are working
+
+type this all up properly after first sync and THEN create the dang cron job
+
+rclone sync 'ubuntu-server-gdrive:/' '/home/timmalstead/local-gdrive/' --exclude='/old_do_not_add/**' --progress --drive-acknowledge-abuse 
+
+I guess they don't use the inplace flag on the linux implementation
+
+rsync -avP '/home/timmalstead/local-gdrive/' '/home/timmalstead/external-TOSHBIA-EXT/gdrive/'
+
+cron job
+
+timedatectl list-timezones | grep US
+
+sudo timedatectl set-timezone US/Pacific, this isn't working for some reason
+
+sudo apt install tzdata, or else there may not be timezone data
+
+sudo dpkg-reconfigure tzdata
+
+huh, didn't think it would need that but here we are
+
+which cron, make sure it's installed
+
+sudo systemctl enable cron, to make it run in background
+
+chmod +x {{script to run}}
+
+chmod -R 777 {{folder to target}}, to give permission to copy to/from all folders. -R makes it recursive. did it for local and external backup file folders
+
+chmod 777 * also in the directory itself.
+
+still seeing permission denied errors in rsync...
+
+also seeing the errors in rclone.
+
+looks like i may need to format the drives from *fat to ntfs? cat /etc/fstab 
+
+Okay, I did not know that.
+
+Looks like I'll have to reformat these to nfts before I can do rclone or rsync. Huh, I guess Mac plays nice with windows file systems in way that Linux does not.
+
+lsblk -f to list drives
+
+comment out the line in /etc/fstab that you are going to remove
+
+sudo umount {mountpoint} to unmount BEFORE you format
+
+formatting will take a bit
+
+formatted using steps from the following two links: https://linuxvox.com/blog/ubuntu-format-hard-drive/, https://cloudinfrastructureservices.co.uk/how-to-create-partitions-in-ubuntu-linux-using-fdisk/
+
+sudo mkfs.ntfs /dev/{{drive}} to format to nfts, then need to repartition and relabel
+
+sudo fdisk /dev/sdb, m, n, p, w
+
+need to reboot the system after creating the partition
+
+sudo chmod -R 777 external-D512 for permissions
+
+rsync -avP '/home/timmalstead/local-gdrive/' '/home/timmalstead/external-TOSHBIA-EXT/gdrive/'
+
+sudo e2label /dev/sda1 "LABEL NAME", to label a drive.
+
+have to unmount first though, 
+
+sudo mkfs.ext4 /dev/sdb1, on Toshiba AFTER it was partitoned. seems to have worked.
+
+so it seems I actually changed them to ext4, not ntfs
+
+SO unmount drives, format with mkfs.ntfs, (sudo fdisk /dev/sdb, m, n, p, w), sudo mkfs.ext4 if needed, sudo e2label {drive address} "LABEL NAME", mount, add to fstab, restart, sudo chmod -R 777 [mount point]
+
+should be able to rclone and rsync after that
+
+next is to put it in a cron job
+
+crontab -e
+
+https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
+`,
+                        },
+                        {
+                            name: "LastModified",
+                            lastModifiedDate: 1754952559727,
+                        },
+                    ],
+                },
+            },
+        },
+        "setting-up-a-home-network-with-tailscale": {
+            content: {
+                data: {
+                    metadata: {
+                        title: "Setting Up a Home Network With Tailscale",
+                        description:
+                            "Blog entry detailing setting up a home network with the Tailscale service",
+                        openGraph: {
+                            description:
+                                "Blog entry detailing setting up a home network with the Tailscale service",
+                            locale: "en_US",
+                            title: "Setting Up a Home Network With Tailscale",
+                            type: "website",
+                            url: "https://www.timothymalstead.com/blog/setting-up-a-home-network-with-tailscale",
+                        },
+                    },
+                    components: [
+                        {
+                            name: "Markdown",
+                            text: `
+# Setting Up a Home Network With Tailscale
+`,
+                        },
+                        {
+                            name: "Attribution",
+                            readingTime: 100000,
+                        },
+                        {
+                            name: "Markdown",
+                            text: `
+I've been enjoying using Tailscale for some time now.
+
+[Tailscale](https://tailscale.com) is a service built on the [WireGuard protocol](https://www.wireguard.com/protocol/) that allows for quick and easy setup of a software defined VPN. That last part is important. One of the things that I've always found most offputting and scary about VPNs is the hardware changes necessary to make them. I don't really want to mess around with hardware settings or muck about with the internals of my router to have an easy way for my computers to communicate. I just want them to communicate. A *software* defined VPN like Tailscale makes that very easy and abstracts away the unpleasent parts of creating a VPN.
+
+Tailscale is what's called an overlay network. It routes traffic between devices running Tailscale, but doesn't touch the rest of your traffic. Thus, I've mostly been using it as an easy way to SSH into my computers when needed and then turning it off and turning on my everyday VPN ([NordVPN](https://nordvpn.com/)) in its place.
+
+This works just fine. I mean just fine. No problems here. Not. a. one.
+
+Buuuuuutttttt.
+
+It might be nice to not have to toggle between the two. Could be nice to enjoy the convenience of Tailscale while still keeping my public internet traffic protected as well. Luckily Tailscale has a feature called [exit nodes](https://tailscale.com/kb/1103/exit-nodes) that is built to work with the [Mullvad VPN service](https://tailscale.com/mullvad) to do just that.
+
+I'm going to see if I can figure out how to set up an exit node to my liking, and maybe from there see if I can turn it into a full-fledged home network.
+
+Sound fun? Well read on friend!
+
+## Setting up Tailscale
+
+Before we get too deep into this article, I should tell you that I'm not going to be covering the *initial* set up of Tailscale. Don't worry though, [Tailscale has an excellent quickstart](https://tailscale.com/kb/1017/install) that should get you up and running a network very quickly. 
+
+Once you've done that, come back to this article and I'll detail more about *my* process for setting up a network.
+
+## Mullvad
+
+Once you are set up and logged in, the option to add Mullvad to your Tailscale setup can be found in the [Mullvad section of the tailscale settings](https://login.tailscale.com/admin/settings/general/mullvad). It is a paid service with a cost of $5 USD per 5 devices per month. I love a free service as much as anyone, but I do think that is a reasonable price for the conveinence it offers. If you're not keen on paying that cost, no worries, but just know that you may not get much else out of this artice.
+
+You can find more info about [Mullvad integration with Tailscale here](https://tailscale.com/blog/mullvad-integration).
+
+As it happens, I have 4 devices that I currently have Tailscale on and one I will be setting up later in this artice. If you need more than 5 devices, it will be an additional $5 USD per each additional 5 devices. I.e. $10 for 6-10 devices, $15 for 11-15 etc.
+
+Once you've configured which devices you'd like to use Mullvad, you should see an option to access Mullvad exit nodes when you open up Tailscale on that device.
+
+If you're using Tailscale via the command line you can list available exit nodes by entering
+
+\`\`\`shell
+tailscale exit-node list
+\`\`\`
+
+After that, note which ip or hostname you wish to use and set it by entering
+
+\`\`\`shell
+tailscale set --exit-node='{{IP OR HOSTNAME}}'
+\`\`\`
+
+[More information about exit node usage can be found on the Tailscale's website](https://tailscale.com/kb/1103/exit-nodes?tab=linux#use-the-exit-node).
+
+I also wrote a few [conveinence functions that wrap around the Tailscale cli](https://github.com/timmalstead/tailscale-mullvad-vpn-functions). Feel free to use them if you like.
+
+## Taildrive
+
+## Physical Server
+
+I bought a computer https://www.newegg.com/genmachine-barebone-systems-mini-pc-amd-ryzen-5-3550h/p/2SW-0090-00002
+
+Setting up ubuntu server, booting from a flash drive
+
+Choosing an option for an sshd server, allowing password authentication via ssh
+
+ssh ubuntu-server, enter password. will leave at that for now.
+
+sudo apt install openssh-server
+
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+ssh timmalstead@ubuntu-server.local to test
+
+from connecting computer: ssh-keygen -t rsa -b 4096
+
+from connecting computer: cat ~/.ssh/ubuntu_server.pub | ssh timmalstead@ubuntu-server "cat >> ~/.ssh/authorized_keys"
+
+Haven't figured out the rhyme or reason for when you do or don't need .local
+
+add in following to ~/.ssh/config
+
+later add to other devices
+
+df -h to check that size is correct
+
+connect all computers together via ssh, connect external drives, set up rclone and rsync, put on regular schedule, get taildrive enabled for all computers
+
+install steps for tailscale: https://tailscale.com/kb/1476/install-ubuntu-2404
+
+tailscale up and add that bad boy to your tailnet!
+
+ssh should work when both machines are connected to tailscale
+
+systemctl status tailscaled.service to check to see that it should load at startup
+
+add the server to the mullvad vpn, make sure to hit save
+
+install helper functions from cloned public github repo
+~/tailscale-mullvad-vpn-functions/tailscale-vpn-helpers.sh
+
+use the tailscale helpers to set an endpoint
+
+create a key on phone, ssh copy it in to the authorized keys file on ubuntu server
+
+create an ssh config entry
+
+copy a shortcut file and update as needed
+
+did the same steps from the ipad
+
+mount the drives in ubuntu server
+
+lsblk -f
+
+mkdri drives
+
+sudo mount -t <Filesystem> /path/to/drive /mount/point
+
+sudo nano /etc/fstab
+
+/dev/Drive-name       /mounting-point           Filesystem    defaults        0       0
+
+make sure to not use a shortened path to your mount points, use a full from root
+
+if you use a realtive path, it will create that as a mount point from root
+
+## File sharing
+for mac  defaults write /Users/$(whoami)/Library/Preferences/io.tailscale.ipn.macsys.plist FileSharingConfiguration show
+
+followed the steps on https://tailscale.com/kb/1369/taildrive to set up my tailnet policy
+
+easy to share on mac
+
+easy to share on ubuntu
+
+iOS worked like a charm with no config at all
+
+It was a bummer, but the native way to do it via mac os finder was sloooooooow
+
+or maybe it just takes a while at first. I'll get to that. May be a better app for that.
+
+Nope, looks like it is just slow over webdav in general. slow with android too.
+
+Dang. in fact, when I had to force stop a frozen file transfer, material files wouldn't open up again. Had to restart my phone to use it again.
+
+So it looks like the webdav connection can't really be counted on. At first I thought it might be because they were external drives, but it looks like that's not it.
+
+And then all of a sudden it start working really well. Huh.
+So looks like it's not so great for large files and such. Can copy that via scp or ssh, so that's not too big a deal. Good for small documents though, it seems.
+
+Definitely think it has potential for the future. They just need to get it faster and more reliable.
+
+Guess that's why people get NAS.
+
+Did find a better option on Android called CX file explorer. There may be a better option on mac as well. Maybe on ipad too?
+
+Next I'll get backup working. Probably on the external drive and also a local copy on the server.
+
+Getting backup
+
+create a service account on google, can see steps here: https://rclone.org/drive/
+
+dpkg --print-architecture to make sure that the architecture is what's expected
+
+one liner to install one password on a server: https://developer.1password.com/docs/cli/install-server/
+
+may need to install unzip from apt and then sudo on that line
+
+op vault list
+
+sign in address is my.1password.com
+
+Auth code is in Authy
+
+$(op read op://Private/rclone/gdrive_credentials), although you can't copy it that way
+
+sudo apt install rclone
+
+need to enable google drive api on a google cloud account, then get a credential from ther that has a client_id and client_secret value, those will be setup when you create a new remote
+
+rclone config, enter values as needed
+
+will need to authorize drive from a machine with a gui and web browser available.
+
+you will get a config token, paste that in when setting up the remote
+
+can then use rclone listremotes to make sure things are working
+
+type this all up properly after first sync and THEN create the dang cron job
+
+rclone sync 'ubuntu-server-gdrive:/' '/home/timmalstead/local-gdrive/' --exclude='/old_do_not_add/**' --progress --drive-acknowledge-abuse 
+
+I guess they don't use the inplace flag on the linux implementation
+
+rsync -avP '/home/timmalstead/local-gdrive/' '/home/timmalstead/external-TOSHBIA-EXT/gdrive/'
+
+cron job
+
+timedatectl list-timezones | grep US
+
+sudo timedatectl set-timezone US/Pacific, this isn't working for some reason
+
+sudo apt install tzdata, or else there may not be timezone data
+
+sudo dpkg-reconfigure tzdata
+
+huh, didn't think it would need that but here we are
+
+which cron, make sure it's installed
+
+sudo systemctl enable cron, to make it run in background
+
+chmod +x {{script to run}}
+
+chmod -R 777 {{folder to target}}, to give permission to copy to/from all folders. -R makes it recursive. did it for local and external backup file folders
+
+chmod 777 * also in the directory itself.
+
+still seeing permission denied errors in rsync...
+
+also seeing the errors in rclone.
+
+looks like i may need to format the drives from *fat to ntfs? cat /etc/fstab 
+
+Okay, I did not know that.
+
+Looks like I'll have to reformat these to nfts before I can do rclone or rsync. Huh, I guess Mac plays nice with windows file systems in way that Linux does not.
+
+lsblk -f to list drives
+
+comment out the line in /etc/fstab that you are going to remove
+
+sudo umount {mountpoint} to unmount BEFORE you format
+
+formatting will take a bit
+
+formatted using steps from the following two links: https://linuxvox.com/blog/ubuntu-format-hard-drive/, https://cloudinfrastructureservices.co.uk/how-to-create-partitions-in-ubuntu-linux-using-fdisk/
+
+sudo mkfs.ntfs /dev/{{drive}} to format to nfts, then need to repartition and relabel
+
+sudo fdisk /dev/sdb, m, n, p, w
+
+need to reboot the system after creating the partition
+
+sudo chmod -R 777 external-D512 for permissions
+
+rsync -avP '/home/timmalstead/local-gdrive/' '/home/timmalstead/external-TOSHBIA-EXT/gdrive/'
+
+sudo e2label /dev/sda1 "LABEL NAME", to label a drive.
+
+have to unmount first though, 
+
+sudo mkfs.ext4 /dev/sdb1, on Toshiba AFTER it was partitoned. seems to have worked.
+
+so it seems I actually changed them to ext4, not ntfs
+
+SO unmount drives, format with mkfs.ntfs, (sudo fdisk /dev/sdb, m, n, p, w), sudo mkfs.ext4 if needed, sudo e2label {drive address} "LABEL NAME", mount, add to fstab, restart, sudo chmod -R 777 [mount point]
+
+should be able to rclone and rsync after that
+
+next is to put it in a cron job
+
+crontab -e
+
+https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
 `,
                         },
                         {
