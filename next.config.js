@@ -78,6 +78,13 @@ const nextConfig = {
                 "https://storage.googleapis.com/public-site-storage-6611b8f/:path*",
         },
     ],
+    redirects: async () => [
+        {
+            source: '/kagi-tryout',
+            destination: '/',
+            permanent: true,
+        }
+    ]
 }
 
 module.exports = nextConfig
