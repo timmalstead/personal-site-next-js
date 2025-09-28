@@ -1587,65 +1587,192 @@ I like the open web, and I like working with web technologies. For me, the web r
                         },
                         {
                             name: "Attribution",
-                            readingTime: 100000,
+                            readingTime: 8,
                         },
                         {
                             name: "Markdown",
                             text: `
-I've been enjoying using Tailscale for some time now.
+I’ve been enjoying using Tailscale for some time now.
 
-[Tailscale](https://tailscale.com) is a service built on the [WireGuard protocol](https://www.wireguard.com/protocol/) that allows for quick and easy setup of a software defined VPN. That last part is important. One of the things that I've always found most offputting and scary about VPNs is the hardware changes necessary to make them. I don't really want to mess around with hardware settings or muck about with the internals of my router to have an easy way for my computers to communicate. I just want them to communicate. A *software* defined VPN like Tailscale makes that very easy and abstracts away the unpleasent parts of creating a VPN.
+[Tailscale](https://tailscale.com) is a service built on the [WireGuard protocol](https://www.wireguard.com/protocol/) that allows for quick and easy setup of a software defined VPN.
 
-Tailscale is what's called an overlay network. It routes traffic between devices running Tailscale, but doesn't touch the rest of your traffic. Thus, I've mostly been using it as an easy way to SSH into my computers when needed and then turning it off and turning on my everyday VPN ([NordVPN](https://nordvpn.com/)) in its place.
+That last part, software defined VPN, is important. One of the things that I’ve always found most offputting and scary about VPNs is the hardware changes necessary to make them. I don’t really want to mess around with hardware settings or muck about with the internals of my router to have an easy way for my computers to communicate. I just want them to communicate.
+
+A *software* defined VPN like Tailscale makes that very easy and abstracts away the unpleasant parts of creating a VPN.
+
+Tailscale is what’s called an overlay network. It routes traffic between devices running Tailscale, but doesn’t touch the rest of your traffic. Thus, I’ve mostly been using it as an easy way to SSH into my computers when needed and then turning it off and turning on my everyday VPN ([NordVPN](https://nordvpn.com/)) in its place.
 
 This works just fine. I mean just fine. No problems here. Not. a. one.
 
 Buuuuuutttttt.
 
-It might be nice to not have to toggle between the two. Could be nice to enjoy the convenience of Tailscale while still keeping my public internet traffic protected as well. Luckily Tailscale has a feature called [exit nodes](https://tailscale.com/kb/1103/exit-nodes) that is built to work with the [Mullvad VPN service](https://tailscale.com/mullvad) to do just that.
+It might be nice to not have to toggle between the two so very much. Could be nice to enjoy the convenience of Tailscale while still keeping my public internet traffic protected as well. Luckily Tailscale has a feature called [exit nodes](https://tailscale.com/kb/1103/exit-nodes) that is built to work with the [Mullvad VPN service](https://tailscale.com/mullvad) to do just that.
 
-I'm going to see if I can figure out how to set up an exit node to my liking, and maybe from there see if I can turn it into a full-fledged home network.
+I’m going to see if I can figure out how to set up exit nodes to my liking, and maybe from there see if I can turn it into a full-fledged home network.
 
 Sound fun? Well read on friend!
 
 ## Setting up Tailscale
 
-Before we get too deep into this article, I should tell you that I'm not going to be covering the *initial* set up of Tailscale. Don't worry though, [Tailscale has an excellent quickstart](https://tailscale.com/kb/1017/install) that should get you up and running a network very quickly. 
+Before we get too deep into this article, I should tell you that I’m not going to be covering the *initial* set up of Tailscale. Don’t worry though, [Tailscale has an excellent quickstart](https://tailscale.com/kb/1017/install) that should get you up and running a network very quickly. 
 
-Once you've done that, come back to this article and I'll detail more about *my* process for setting up a network.
+Once you’ve done that, come back to this article and I’ll detail more about my experience adding exit nodes and a file sharing network.
 
 ## Mullvad
 
-Once you are set up and logged in, the option to add Mullvad to your Tailscale setup can be found in the [Mullvad section of the tailscale settings](https://login.tailscale.com/admin/settings/general/mullvad). It is a paid service with a cost of $5 USD per 5 devices per month. I love a free service as much as anyone, but I do think that is a reasonable price for the conveinence it offers. If you're not keen on paying that cost, no worries, but just know that you may not get much else out of this artice.
+Once you are set up and logged in, the option to add Mullvad to your Tailscale setup can be found in the [Mullvad section of the tailscale settings](https://login.tailscale.com/admin/settings/general/mullvad).
+
+It is a paid service with a cost of $5 USD per 5 devices per month. I love a free service as much as anyone, but I do think that is a reasonable price for the convenience it offers. If you’re not keen on paying that cost, no worries, but just know that you may not get much else out of this section.
 
 You can find more info about [Mullvad integration with Tailscale here](https://tailscale.com/blog/mullvad-integration).
 
 As it happens, I have exactly 5 devices set up with Tailscale. If you need more than 5 devices, it will be an additional $5 USD per each additional 5 devices. I.e. $10 for 6-10 devices, $15 for 11-15 etc.
 
-Once you've configured which devices you'd like to use Mullvad, you should see an option to access Mullvad exit nodes when you open up Tailscale on that device.
+Once you’ve configured which devices you’d like to use Mullvad in the settings, you should see an option to access Mullvad exit nodes when you next open up Tailscale on that device. I’d encourage you to try various exit nodes around the world and see what happens.
 
-If you're using Tailscale via the command line you can list available exit nodes by entering
+If you’re using Tailscale via the command line you can list available exit nodes, including their ip addresses and hostnames, by entering:
 
 \`\`\`shell
 tailscale exit-node list
 \`\`\`
 
-After that, note which ip or hostname you wish to use and set it by entering
+After that, note which ip or hostname you wish to use and set it by entering:
 
 \`\`\`shell
-tailscale set --exit-node='{{IP OR HOSTNAME}}'
+tailscale set --exit-node=’{{IP OR HOSTNAME}}’
 \`\`\`
 
-[More information about exit node usage can be found on the Tailscale's website](https://tailscale.com/kb/1103/exit-nodes?tab=linux#use-the-exit-node).
+[More information about exit node usage can be found on the Tailscale’s website](https://tailscale.com/kb/1103/exit-nodes?tab=linux#use-the-exit-node).
 
-I also wrote a few [conveinence functions that wrap around the Tailscale cli](https://github.com/timmalstead/tailscale-mullvad-vpn-functions). Feel free to use them if you like.
+I also wrote a few [convenience functions that wrap around the Tailscale cli](https://github.com/timmalstead/tailscale-mullvad-vpn-functions). Feel free to use them if you like.
 
 ## Taildrive
+
+Taildrive is Tailscale’s device to allow [folder sharing among devices on your Tailscale network](https://tailscale.com/kb/1369/taildrive). It’s in alpha as of this writing, and it’s not perfect, but it is pretty good and I think it will only get better. Plus, it’s pretty easy to set up.
+
+I’ll detail how I ended up setting mine up. Quite a bit of this info is taken directly from the above link, but it will also include my specific experience with the service and how I went about setting it up for each individual device.
+
+### Configuring Access Controls
+
+When this is out of alpha, I imagine there will be slick and friendly GUI to configure how you wish. For now though, you will need to [configure it as JSON in the admin section of the Tailscale site](https://login.tailscale.com/admin/acls/file). In the JSON, you should see an array of objects titled \`"nodeAttrs"\`. If you set up Mullvad as defined earlier in the article, these objects will have an \`"attr"\` key with a value of \`["mullvad"]\` in them. This is where we will start.
+
+Before we do any editing it is a good idea to make a copy of the existing JSON and put it somewhere safe. We really shouldn’t have any issues, but it’s best to have a clean config to go back to if necessary.
+
+I would suggest keeping your setup simple to start with. I will set it up so that all devices on my Taildrive can READ files and that two specific devices can SHARE files. In the aforementioned \`"nodeAttrs"\` array, add the following object to allow all devices to read on your Tailnet.
+
+\`\`\`json
+{"target": ["autogroup:member"], "attr": ["drive:access"]}
+\`\`\`
+
+This will allow you to access your Taildrive from each of your connected devices.
+
+Next, for each device you wish to SHARE from, add the following object to the \`"nodeAttrs"\` array where \`{{MACHINE_IP}}\` equals the Tailscale IP of the device as defined on your [machines page](https://login.tailscale.com/admin/machines).
+
+\`\`\`json
+{"target": ["{{MACHINE_IP}}"], "attr": ["drive:share"]}
+\`\`\`
+
+Next we need to let Tailscale know that Taildrive connections are allowed. Again, with the idea of a simple setup to start, add the following object in the \`"grants"\` array in the JSON.
+
+\`\`\`json
+{
+    "src": ["*"],
+    "dst": ["*"],
+    "app": {"tailscale.com/cap/drive": [{"shares": ["*"], "access": "rw"}]},
+}
+\`\`\`
+
+The combination of these config changes should allow you to access your Taildrive on all devices and share from whichever specific devices you have enabled.
+
+## Device Specific Implementations
+
+In this part of the article I will be detailing how I set up each of the devices in my Tailnet to work with Taildrive.
+
+The devices I will set up are:
+
+* [MacBook Pro](#macbook-pro)
+* [Ubuntu Server](#ubuntu-server)
+* [Pixel 9 Pro](#pixel-9-pro)
+* [iPad Air](#ipad-air)
+
+I also have a [Raspberry Pi Zero W](https://www.raspberrypi.com/products/raspberry-pi-zero-w/) on my Tailnet, but to be perfectly honest I haven’t really had a need to use it with Taildrive just yet. The capability is there, but no need. I’ll update if that changes.
+
+## Macbook Pro
+
+### Sharing
+
+I’m a developer, and Macs remain great machines to develop on. Every now and then, I bat around the idea of setting up an Arch Linux machine and being reborn as a *true* dev. Alas, I fear I like my conveniences too much.
+
+Software is complicated enough, and I don’t need my environment confounding me as well. In my experience, Macs make it about as easy as it probably can be to develop software. And, as you’ll see, they make it pretty easy to set up a Taildrive too.
+
+The first thing we have to do is make it show the Tailscale GUI will display the file sharing controls. Even though this is a GUI setting, we need to set it in the terminal (🤷). Luckily it’s just a one liner.
+
+\`\`\`shell
+defaults write /Users/$(whoami)/Library/Preferences/io.tailscale.ipn.macsys.plist FileSharingConfiguration show
+\`\`\`
+
+Again, these are the sorts of things I expect will be smoothed out and made more friendly if/when this feature moves out of alpha.
+
+After you run this command, you should be able to see a new tab called \`File Sharing\` in the Tailscale GUI \`Settings\` dropdown. You may need to restart the app.
+
+From here it’s dead simple to point and click to add any directory you would like to share. Simply click on the \`Choose Shared Folders\` button and add.
+
+### Accessing
+
+You can access Taildrive as a WebDAV server. You point it at the address \`100.100.100.100:8080\` and access it without https. Since you’re defining a local network with Tailscale, all your devices will still be able to access it securely. Instead of the https protocol, the security is provided with Tailscale and the WireGuard protocol. Cool, right?
+
+As [seen in the official direction](https://tailscale.com/kb/1369/taildrive?tab=macos+gui#access-directories-shared-with-taildrive), you can connect to Taildrive via a Mac using the \`Finder\` app. That worked okay for me, but I found a free program called [FTP Mounter Lite](https://apps.apple.com/us/app/ftp-mounter-lite/id1624888791) to be a bit snappier and easy to use. Your mileage may vary.
+
+## Ubuntu Server
+
+### Sharing
+
+I have a small mini computer that I’ve set up headless with [Ubuntu Server](https://ubuntu.com/download/server). I dial into it via SSH facilitated by, you guessed it, Tailscale.
+
+It’s already running Tailscale on the CLI, and it’s an easy one line command to share any directory you like.
+
+\`\`\`shell
+tailscale drive share <share-name> <path>
+\`\`\`
+
+\`<share-name>\` is what you would like to have the directory be displayed as in your Taildrive, and \`<path>\` is the path of the local machine. I put the absolute path to the directory I wanted to share, but I do not know if that is strictly necessary.
+
+I would recommend using [chmod](https://en.wikipedia.org/wiki/Chmod) to give the directories you want to share \`755\` permissions. Again, your mileage may vary and you may find other permissions work for you.
+
+### Accessing
+
+I’ve not yet had to access any file from the server, because that’s not really the way my network points. If I do ever have reason to do that, I will try to remember to update here.
+
+## Pixel 9 Pro
+
+### Sharing
+
+At current, Taildrive does not support sharing folders from Android devices.
+
+### Accessing
+
+The [official Taildrive documentation](https://tailscale.com/kb/1369/taildrive?tab=android#material-files) will recommend an app called [Material Files](https://play.google.com/store/apps/details?id=me.zhanghai.android.files). I found a much snappier experience with another file app called [Cx File Explorer](https://play.google.com/store/apps/details?id=com.cxinventor.file.explorer&hl=en_US). You may find a better experience with yet another app. The world is vast.
+
+## iPad Air
+
+### Sharing
+
+At current, Taildrive does not support sharing folders from iOS devices.
+
+### Accessing
+
+Accessing Taildrive files on iOS was for me the easiest way to access by far. Zero setup required. As soon as I enabled sharing as described above and restarted my iPad, a Tailscale button appeared in the native Files app, and it had access to the WebDav folder with zero config needed.
+
+Very, very well done. I hope that this level of ease will be brought to the other platforms as development continues.
+
+## Conclusion
+
+In this article, we’ve learned a quick, easy and inexpensive way to add an external facing VPN on top of Tailscale and create a file sharing system using Taildrive. I hope that you’ve enjoyed reading and I hope that you will have fun with little projects like this for a long time to come.
 `,
                         },
                         {
                             name: "LastModified",
-                            lastModifiedDate: 1758934965308,
+                            lastModifiedDate: 1759018209382,
                         },
                     ],
                 },
@@ -1702,7 +1829,7 @@ from connecting computer: ssh-keygen -t rsa -b 4096
 
 from connecting computer: cat ~/.ssh/ubuntu_server.pub | ssh timmalstead@ubuntu-server "cat >> ~/.ssh/authorized_keys"
 
-Haven't figured out the rhyme or reason for when you do or don't need .local
+Haven’t figured out the rhyme or reason for when you do or don't need .local
 
 add in following to ~/.ssh/config
 
