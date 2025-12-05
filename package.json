@@ -60,6 +60,7 @@
         "prismjs": "1.30.0",
         "form-data": " 2.5.5",
         "glob": "11.1.0",
-        "mdast-util-to-hast": "13.2.1"
+        "mdast-util-to-hast": "13.2.1",
+        "jws": "4.0.1"
     }
 }
