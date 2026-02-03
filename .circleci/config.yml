@@ -2,7 +2,7 @@ version: 2.1
 orbs:
     onepassword: onepassword/secrets@1.0.0
     snyk: snyk/snyk@2.3.0
-    docker: circleci/docker@2.8.2
+    docker: circleci/docker@3.0.1
 jobs:
     security_scan:
         docker:
@@ -61,6 +61,9 @@ jobs:
             - onepassword/export:
                   var-name: SNYK_TOKEN
                   secret-reference: op://personal-site-gcp/snyk/auth_token
+            - run:
+                  name: Add github.com to known hosts
+                  command: ssh-keyscan github.com >> ~/.ssh/known_hosts
             - setup_remote_docker
             - docker/check:
                   registry: $REGISTRY
