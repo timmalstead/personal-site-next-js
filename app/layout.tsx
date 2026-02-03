@@ -7,7 +7,7 @@ import {
     type ReducedMotion,
     type Browser,
     type SettingsDismiss,
-} from "@utils/server"
+} from "&utils/server"
 import {
     Header,
     Footer,

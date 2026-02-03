@@ -1,5 +1,5 @@
 "use client"
-import { useReadingTime } from "@utils/client"
+import { useReadingTime } from "&utils/client"
 
 const ReadingTime = () => {
     const readingTime = useReadingTime("main")

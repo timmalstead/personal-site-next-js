@@ -15,7 +15,7 @@ import { ReadPercentage } from "@components/client"
 import { getContent } from "@data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, JSX, type ReactNode } from "react"
-import { isEmptyObject } from "@utils/server"
+import { isEmptyObject } from "&utils/server"
 
 interface ResolverProps {
     dataPath: string | null

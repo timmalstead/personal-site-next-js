@@ -21,7 +21,7 @@
         "paths": {
             "@components/*": ["app/@components/*"],
             "@data/*": ["app/@data/*"],
-            "@utils/*": ["app/@utils/*"]
+            "&utils/*": ["app/&utils/*"]
         },
         "target": "ES2017"
     },

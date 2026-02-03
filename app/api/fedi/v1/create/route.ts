@@ -7,7 +7,7 @@ import {
     type BlueSkyPostArgs,
     type PostOnMastodonReturn,
     type PostOnBlueskyReturn,
-} from "@utils/server"
+} from "&utils/server"
 
 type FediArgs = {
     useBlueSky?: boolean
