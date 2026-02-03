@@ -3,7 +3,7 @@ const { join } = require("node:path")
 const { aliasedDirectories } = require("./aliasedDirectories")
 
 const resolvedAlaisedDirectories = aliasedDirectories.reduce((acc, dir) => {
-    if (dir === "&utils") {
+    if (dir === "&utils" || dir === "&data") {
         acc[dir] = join(__dirname, dir)
     } else {
         acc[dir] = join(__dirname, "app", dir)
@@ -51,7 +51,6 @@ const nextConfig = {
                 ...(useTestingFirestore && {
                     "@google-cloud/firestore": join(
                         __dirname,
-                        "app",
                         "&data",
                         "firestoreMock"
                     ),
@@ -69,7 +68,6 @@ const nextConfig = {
             ...(useTestingFirestore && {
                 "@google-cloud/firestore": join(
                     ".",
-                    "app",
                     "&data",
                     "firestoreMock"
                 ),

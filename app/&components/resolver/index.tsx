@@ -12,7 +12,7 @@ import {
     type AttributionProps,
 } from "app/&components/server"
 import { ReadPercentage } from "app/&components/client"
-import { getContent } from "app/&data/server"
+import { getContent } from "&data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, JSX, type ReactNode } from "react"
 import { isEmptyObject } from "&utils/server"
