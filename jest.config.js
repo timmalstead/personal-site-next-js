@@ -2,7 +2,7 @@ const { aliasedDirectories } = require("./aliasedDirectories")
 
 /** @type {import('jest').Config} */
 const jestConfig = {
-    roots: ["<rootDir>"],
+    roots: ["<rootDir>/&data"],
     transform: {
         "^.+\\.(ts|tsx)$": "ts-jest",
     },
