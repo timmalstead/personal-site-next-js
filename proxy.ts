@@ -3,7 +3,7 @@ import type { Browser } from "&utils/server"
 
 const restrictedRoutes = ["/component-data"]
 
-export const middleware = (request: NextRequest) => {
+export const proxy = (request: NextRequest) => {
     const {
         nextUrl: { pathname },
     } = request
