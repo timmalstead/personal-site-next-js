@@ -3,7 +3,12 @@ const { join } = require("node:path")
 const { aliasedDirectories } = require("./aliasedDirectories")
 
 const resolvedAlaisedDirectories = aliasedDirectories.reduce((acc, dir) => {
-    acc[dir] = join(__dirname, "app", dir)
+    if (dir === "&utils") {
+        acc[dir] = join(__dirname, dir)
+    } else {
+        acc[dir] = join(__dirname, "app", dir)
+    }
+    
     return acc
 }, {})
 

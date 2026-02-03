@@ -9,7 +9,7 @@ const jestConfig = {
     moduleNameMapper: aliasedDirectories.reduce(
         (acc, name) => ({
             ...acc,
-            [`${name}/(.*)`]: `<rootDir>/app/${name}/$1`,
+            [`${name}/(.*)`]: name === "&utils" ? `<rootDir>/${name}/$1` : `<rootDir>/app/${name}/$1`,
         }),
         {}
     ),

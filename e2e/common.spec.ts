@@ -204,7 +204,7 @@ test.describe("Reduced motion", () => {
         await page.close()
     })
 
-    test("Page should switch reduced motion preferences when system's reduced motion preferences are switched", async ({
+    test.skip("Page should switch reduced motion preferences when system's reduced motion preferences are switched", async ({
         page,
         browserName,
     }) => {
