@@ -15,14 +15,14 @@ import {
     CurrentVersion,
     DevTools,
     Verification,
-} from "app/&components/server"
+} from "&components/server"
 import {
     UserSettings,
     ColorSwitcher,
     ReduceMotion,
     LayoutZoom,
     PinchZoom,
-} from "app/&components/client"
+} from "&components/client"
 import "./layout.css"
 
 const notoSans = Noto_Sans({ subsets: ["latin"] })

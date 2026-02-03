@@ -1,4 +1,4 @@
-import { Heading } from "app/&components/server"
+import { Heading } from "&components/server"
 
 const NotFound = () => (
     <main

@@ -1,5 +1,5 @@
 // don't change the structure of the html or css too much so this will keep working!
-import { Code } from "app/&components/server"
+import { Code } from "&components/server"
 import type { ReactNode } from "react"
 
 type HtmlComponents =

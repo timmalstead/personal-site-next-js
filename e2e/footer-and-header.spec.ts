@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test"
-import { sharedFooterLogoProps } from "app/&components/server"
+import { sharedFooterLogoProps } from "&components/server"
 
 let page: Page
 

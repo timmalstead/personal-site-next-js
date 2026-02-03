@@ -2,6 +2,7 @@ const { aliasedDirectories } = require("./aliasedDirectories")
 
 /** @type {import('jest').Config} */
 const jestConfig = {
+    // change if any other jest tests are added OUTSIDE of the &data folder
     roots: ["<rootDir>/&data"],
     transform: {
         "^.+\\.(ts|tsx)$": "ts-jest",
@@ -9,7 +10,7 @@ const jestConfig = {
     moduleNameMapper: aliasedDirectories.reduce(
         (acc, name) => ({
             ...acc,
-            [`${name}/(.*)`]: name === "&utils" || name === "&data" ? `<rootDir>/${name}/$1` : `<rootDir>/app/${name}/$1`,
+            [`${name}/(.*)`]: `<rootDir>/${name}/$1`
         }),
         {}
     ),

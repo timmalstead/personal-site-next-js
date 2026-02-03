@@ -1,4 +1,4 @@
-import type { LogoProps } from "app/&components/server"
+import type { LogoProps } from "&components/server"
 
 const MastodonLogo = ({ fill, width, height }: LogoProps) => (
     <svg
