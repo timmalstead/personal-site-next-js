@@ -4,7 +4,7 @@ import {
     Heading,
     LastModified,
     Markdown,
-} from "@components/server"
+} from "app/&components/server"
 import { fetchKagiTryoutFiles } from "./fetchKagiTryoutFiles"
 import "./kagi-tryout-styles.css"
 

@@ -6,7 +6,7 @@ import {
     MastodonLogo,
     BlueskyLogo,
     type LogoProps,
-} from "@components/server"
+} from "app/&components/server"
 
 type LogoLinkProps = {
     key: string

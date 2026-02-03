@@ -1,4 +1,4 @@
 export {
     DynamicPageComponent as default,
     generateMetadata,
-} from "@components/server"
+} from "app/&components/server"

@@ -46,7 +46,7 @@ const sheetPath = join(
     __dirname,
     "..",
     "app",
-    "@components",
+    "&components",
     "code",
     "syntax-highlighter.css"
 )

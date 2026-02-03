@@ -1,4 +1,4 @@
-import { Link, Resolver as resolver } from "@components/server"
+import { Link, Resolver as resolver } from "app/&components/server"
 import type { Browser } from "&utils/server"
 import ClientHeader from "./ClientHeader"
 

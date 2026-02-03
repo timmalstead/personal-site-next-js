@@ -1,4 +1,4 @@
-import type { LogoProps } from "@components/server"
+import type { LogoProps } from "app/&components/server"
 
 const BlueskyLogo = ({ fill, width, height }: LogoProps) => (
     <svg

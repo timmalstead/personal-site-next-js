@@ -1,4 +1,4 @@
-import type { LogoProps } from "@components/server"
+import type { LogoProps } from "app/&components/server"
 
 const EmailLogo = ({ fill, width, height }: LogoProps) => (
     <svg

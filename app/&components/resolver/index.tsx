@@ -10,8 +10,8 @@ import {
     type ObjectComponentProps,
     Attribution,
     type AttributionProps,
-} from "@components/server"
-import { ReadPercentage } from "@components/client"
+} from "app/&components/server"
+import { ReadPercentage } from "app/&components/client"
 import { getContent } from "app/&data/server"
 import { notFound as redirectToNotFound } from "next/navigation"
 import { Fragment, JSX, type ReactNode } from "react"
