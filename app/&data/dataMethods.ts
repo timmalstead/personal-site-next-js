@@ -7,7 +7,7 @@ import {
     clearCacheKey,
     firestoreDatabase,
     createSitemap,
-} from "@data/server"
+} from "app/&data/server"
 import {
     isEven,
     reportError,

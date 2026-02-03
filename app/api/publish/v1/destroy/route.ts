@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { deleteContent } from "@data/server"
+import { deleteContent } from "app/&data/server"
 import { sendError } from "&utils/server"
 
 export const DELETE = async (request: NextRequest) => {

@@ -47,7 +47,7 @@ const nextConfig = {
                     "@google-cloud/firestore": join(
                         __dirname,
                         "app",
-                        "@data",
+                        "&data",
                         "firestoreMock"
                     ),
                 }),
@@ -65,7 +65,7 @@ const nextConfig = {
                 "@google-cloud/firestore": join(
                     ".",
                     "app",
-                    "@data",
+                    "&data",
                     "firestoreMock"
                 ),
             }),

@@ -3,7 +3,7 @@ const { join } = require("node:path")
 
 const [envFilePath, credentialsFilePath] = [
     join(__dirname, "..", ".env"),
-    join(__dirname, "..", "app", "@data", "credentials.ts"),
+    join(__dirname, "..", "app", "&data", "credentials.ts"),
 ]
 
 const [splitEnvFile, splitCredentialFile] = [
