@@ -1,0 +1,4 @@
+ignore:
+  SNYK-JS-NEXT-15954202:
+    - '*' :
+        reason: latest patched version is breaking build
