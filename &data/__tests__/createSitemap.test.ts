@@ -1,4 +1,7 @@
-import { createSitemap } from "&data/server"
+// note that I am importing directly for these tests as the previous pattern of importing from the '&data/server' catchall was causing the tests to break
+// this is because some of the OTHER files read in by that catchall had an es6 transpilation issue that only surfaced in a test environment.
+// this is the simplest way to fix it
+import { createSitemap } from "&data/createSitemap"
 
 let savedSitemap = ""
 jest.mock("&data/firestore", () => {
