@@ -57,6 +57,7 @@
     "overrides": {
         "prismjs": ">=1.30.0",
         "@tootallnate/once": ">=3.0.1",
+        "protobufjs": ">=7.5.5",
         "uuid": ">=14.0.0",
         "postcss": ">=8.5.10"
     }
