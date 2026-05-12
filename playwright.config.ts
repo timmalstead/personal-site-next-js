@@ -52,7 +52,7 @@ const localRunBrowsers = [
 ]
 
 const isLocalEnv = !isCiEnv
-// if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
+if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
 
 export default defineConfig({
     testDir: "./e2e",
@@ -73,6 +73,7 @@ export default defineConfig({
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
+        permissions: ["local-network-access"],
     },
 
     /* Configure projects for major browsers */
