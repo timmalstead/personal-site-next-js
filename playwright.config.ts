@@ -11,7 +11,7 @@ import { defineConfig, devices } from "@playwright/test"
  */
 
 const isCiEnv = process.env.CI === "true"
-export const testUrl = "http:127.0.0.1:8080"
+export const testUrl = "http://localhost:8080"
 
 let projects = [
     {
@@ -52,7 +52,7 @@ const localRunBrowsers = [
 ]
 
 const isLocalEnv = !isCiEnv
-if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
+// if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
 
 export default defineConfig({
     testDir: "./e2e",

@@ -26,7 +26,7 @@ const serverOnlyPackages = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // this allows the playwright server to work properly during testing
-    allowedDevOrigins: ['127.0.0.1'],
+    allowedDevOrigins: ['127.0.0.1', 'localhost'],
     output: "standalone",
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
