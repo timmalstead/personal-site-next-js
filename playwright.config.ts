@@ -57,7 +57,7 @@ if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
 export default defineConfig({
     testDir: "./e2e",
     /* Run tests in files in parallel */
-    fullyParallel: true,
+    fullyParallel: !isCiEnv,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: isCiEnv,
     /* Retry on CI only */
@@ -81,9 +81,10 @@ export default defineConfig({
 
     /* Run your local dev server before starting the tests */
     webServer: {
-        command: "npm run clear:next && npm run dev",
+        command: "npm run dev",
         url: testUrl,
-        reuseExistingServer: false,
+        wait: { stdout: /(Turbopack)/ },
+        reuseExistingServer: !isCiEnv,
         env: {
             USE_TESTING_FIRESTORE: "true",
             MIDDLEWARE_AUTHORIZATION: "SUPER_SECRET_SECRET_SQUIRREL",
