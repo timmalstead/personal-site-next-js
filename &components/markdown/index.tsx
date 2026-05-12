@@ -1,6 +1,7 @@
 import ReactMarkdown, { type Options } from "react-markdown"
 import { Heading, Image, Link, Code } from "&components/server"
 import { forwardRef } from "react"
+import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 // making children required
 interface MarkdownOptions extends Options {
@@ -26,7 +27,13 @@ const componentsConfig: MarkdownOptions["components"] = {
         ),
 
     img: ({ src, alt, title }) =>
-        src && <Image src={src} alt={alt || ""} title={title} />,
+        src && (
+            <Image
+                src={src as string | StaticImport}
+                alt={alt || ""}
+                title={title}
+            />
+        ),
     ul: ({ children }) => (
         <ul style={{ padding: "0 4rem", marginBottom: "1.5rem" }}>
             {children}
