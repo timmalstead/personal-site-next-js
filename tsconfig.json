@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "ignoreDeprecations": "6.0",
+        "types": ["jest"],
+        "rootDir": ".",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -17,11 +20,10 @@
                 "name": "next"
             }
         ],
-        "baseUrl": ".",
         "paths": {
-            "&components/*": ["&components/*"],
-            "&data/*": ["&data/*"],
-            "&utils/*": ["&utils/*"]
+            "&components/*": ["./&components/*"],
+            "&data/*": ["./&data/*"],
+            "&utils/*": ["./&utils/*"]
         },
         "target": "ES2017"
     },
