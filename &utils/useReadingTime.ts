@@ -19,11 +19,12 @@ export const useReadingTime = (cssSelector: string) => {
         const mainChildText = (
             document.querySelector(cssSelector) as HTMLElement | null
         )?.innerText
-        const strippedText = mainChildText?.replaceAll(NEWLINES, " ")
+        const strippedText = mainChildText?.replace(NEWLINES, " ")
 
         if (strippedText?.length) {
             const wordCount = strippedText.split(SPACES).length
             if (wordCount)
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setReadingTime(Math.ceil(wordCount / AVERAGE_READING_SPEED))
         }
     }, [cssSelector])
