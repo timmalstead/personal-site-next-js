@@ -57,7 +57,7 @@ if (isLocalEnv) projects = [...projects, ...localRunBrowsers]
 export default defineConfig({
     testDir: "./e2e",
     /* Run tests in files in parallel */
-    fullyParallel: isLocalEnv,
+    fullyParallel: false,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: isCiEnv,
     /* Retry on CI only */
