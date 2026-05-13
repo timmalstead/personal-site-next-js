@@ -1,10 +1,13 @@
+// note that I am importing directly for this as the previous pattern of importing from the '&data/server' catchall was causing the tests to break
+// this is because some of the OTHER files read in by that catchall had an es6 transpilation issue that only surfaced in a test environment.
+// this is the simplest way to fix it
+import { firestoreDatabase } from "&data/firestore"
+import { cloudStorage } from "&data/cloudStorage"
 import type {
     DocumentData,
     CollectionReference,
     DocumentReference,
 } from "@google-cloud/firestore"
-import { firestoreDatabase } from "&data/firestore"
-import { cloudStorage } from "&data/cloudStorage"
 
 interface AssembledData {
     id: string
