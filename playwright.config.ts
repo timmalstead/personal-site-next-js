@@ -11,7 +11,7 @@ import { defineConfig, devices } from "@playwright/test"
  */
 
 const isCiEnv = process.env.CI === "true"
-export const testUrl = "http://localhost:8080"
+export const testUrl = "http://127.0.0.1:8080"
 
 let projects = [
     {
@@ -83,7 +83,7 @@ export default defineConfig({
     webServer: {
         command: "npm run clear:next && npm run dev",
         url: testUrl,
-        wait: { stdout: /(Turbopack)/ },
+        wait: { stdout: /\(webpack\)/ },
         reuseExistingServer: isLocalEnv,
         env: {
             USE_TESTING_FIRESTORE: "true",
