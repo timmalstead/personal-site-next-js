@@ -29,6 +29,7 @@ const nextConfig = {
     allowedDevOrigins: ['127.0.0.1', 'localhost'],
     images: {qualities: [100, 75]},
     output: "standalone",
+    // webpack for dev and test
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
             ...config.resolve.alias,
@@ -57,6 +58,7 @@ const nextConfig = {
         }
         return config
     },
+    // turbopack for prod
     turbopack: {
         // I don't love that I can't use a __dirname variable for an alias
         resolveAlias: {
