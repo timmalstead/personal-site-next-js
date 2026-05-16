@@ -27,6 +27,7 @@ const serverOnlyPackages = [
 const nextConfig = {
     // this allows the playwright server to work properly during testing
     allowedDevOrigins: ['127.0.0.1', 'localhost'],
+    images: {qualities: [100, 75]},
     output: "standalone",
     webpack: (config, { isServer }) => {
         config.resolve.alias = {
@@ -41,7 +42,7 @@ const nextConfig = {
                 ...serverOnlyPackages,
             ]
 
-        if (isServer) {
+        if (isServer && useTestingFirestore) {
             console.info("Using testing Firestore")
             config.resolve.alias = {
                 ...config.resolve.alias,
