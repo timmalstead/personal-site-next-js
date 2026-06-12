@@ -44,7 +44,7 @@ This is setup using [config.yml](.circleci/config.yml) in the .circleci director
 
 Pushing to the `main` branch on the [GitHub repo for this project](https://github.com/timmalstead/personal-site-next-js) will trigger a pipeline connected to the [IAC repo for this project](https://github.com/timmalstead/personal-site-gcp-infra) and will automatically deploy the latest commit to the preview env.
 
-Deploys to prod are triggered manually.
+Deploys to prod are triggered manually via CircleCI ui.
 
 ## Page Data
 
