@@ -2,12 +2,3 @@ ignore:
   SNYK-JS-SHARP-18184259:
     - '*' :
         reason: latest patched version is breaking build
-  SNYK-JS-SHARP-18184418:
-    - '*' :
-        reason: latest patched version is breaking build
-  SNYK-JS-SHARP-18184262:
-    - '*' :
-        reason: latest patched version is breaking build
-  SNYK-JS-SHARP-18184416:
-    - '*' :
-        reason: latest patched version is breaking build
