@@ -81,6 +81,7 @@ export default defineConfig({
 
     /* Run your local dev server before starting the tests */
     webServer: {
+        // need to use turbopack for testing on circle ci. it will break and not allow connections using webpack for e2e testing
         command: "npm run clear:next && npm run dev:tests",
         url: testUrl,
         wait: { stdout: /(Turbopack)/ },
