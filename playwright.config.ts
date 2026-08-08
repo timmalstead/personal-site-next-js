@@ -81,9 +81,9 @@ export default defineConfig({
 
     /* Run your local dev server before starting the tests */
     webServer: {
-        command: "npm run clear:next && npm run dev",
+        command: "npm run clear:next && npm run dev:tests",
         url: testUrl,
-        wait: { stdout: /Using testing Firestore/ },
+        wait: { stdout: /(Turbopack)/ },
         reuseExistingServer: isLocalEnv,
         env: {
             USE_TESTING_FIRESTORE: "true",
