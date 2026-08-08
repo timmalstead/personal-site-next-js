@@ -11,3 +11,12 @@ ignore:
   SNYK-JS-SHARP-18184416:
     - '*' :
         reason: latest patched version is breaking build
+  SNYK-JS-BRACEEXPANSION-17706650:
+    - '*' :
+        reason: latest patched version is breaking build
+  SNYK-JS-BRACEEXPANSION-18313044:
+    - '*' :
+        reason: latest patched version is breaking build
+  SNYK-JS-BRACEEXPANSION-18512280:
+    - '*' :
+        reason: latest patched version is breaking build
