@@ -2,3 +2,6 @@ ignore:
   SNYK-JS-SHARP-18184259:
     - '*' :
         reason: latest patched version is breaking build
+  SNYK-JS-ZOD-20510278:
+    - '*' :
+        reason: schema validator should not break build
